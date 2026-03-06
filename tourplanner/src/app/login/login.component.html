@@ -1,13 +1,21 @@
 <div class="d-flex justify-content-center my-5">
-  <form class="border-black border shadow p-3 rounded abs" style="width:500px">
+  <form class="border-black border shadow p-3 rounded " (ngSubmit)="onLogin()" style="width:500px">
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
-      <input type="text" class="form-control" id="username" aria-describedby="emailHelp">
+      <input type="text" [value]="username()" (input)="onUsernameInput($event)" class="form-control" id="username"
+        aria-describedby="emailHelp">
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input type="password" class="form-control" id="password">
+      <input type="password" [value]="password()" (input)="onPasswordInput($event)" class="form-control" id="password">
     </div>
+
+    @if (errorMsg()){
+    <div class="alert alert-danger">
+        {{ errorMsg() }}
+      </div>
+    }
+
     <div class="d-flex justify-content-between mt-4">
       <span>Not a member? Sign up
         <a class="link" routerLink="/registration" routerLinkActive="fw-bold">here</a></span>
