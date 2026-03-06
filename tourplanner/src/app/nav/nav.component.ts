@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+
 @Component({
-  selector: 'app-registration',
+  selector: 'app-nav',
   standalone: true,
   imports: [RouterLink, RouterLinkActive],
-  templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss']
+  templateUrl: './nav.component.html',
 })
-export class RegistrationComponent {}
+export class NavComponent {}
