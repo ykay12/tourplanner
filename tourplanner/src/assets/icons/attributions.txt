@@ -1,0 +1,5 @@
+vacation: <a href="https://www.flaticon.com/free-icons/beach" title="beach icons">Beach icons created by monkik - Flaticon</a>
+
+walk: <a href="https://www.flaticon.com/free-icons/movement" title="movement icons">Movement icons created by Bogdan Rosu - Flaticon</a>
+
+Default: <a href="https://www.flaticon.com/free-icons/default" title="default icons">Default icons created by Tempo_doloe - Flaticon</a>
