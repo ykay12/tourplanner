@@ -1,0 +1,15 @@
+/*
+Steps corresponds to Route
+*/
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-steps',
+  imports: [],
+  templateUrl: './steps.component.html',
+  styleUrl: './steps.component.scss'
+})
+export class StepsComponent {
+
+}
