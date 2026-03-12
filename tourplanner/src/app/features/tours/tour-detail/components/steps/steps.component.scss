@@ -1,0 +1,61 @@
+/*******************************************
+    Allegmeines Styling
+*******************************************/
+.steps-card{
+    //allgemeine Attribute
+    border: solid;
+    border-radius: 10px;
+    border-color: #797979;
+    //padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    height: 400px;       // Fixe Höhe der Box -> je nach Bildschirmgröße ändern
+
+    display: flex;
+    flex-direction: column;
+}
+
+.steps-card-headline-box{
+    border: solid;
+    border-radius: 8px;
+    border-color:var(--primary-blue);
+    background: var(--primary-blue);
+    padding: 0.5rem;
+    width: 10rem;
+}
+
+.steps-card-headline {
+    color:aliceblue;
+}
+
+.steps-card-scrollable{
+    //border: solid;
+    //border-radius: 10px;
+    //border-color: #797979;
+
+    display: flex;
+    flex-direction: column;  // Inhalte von oben nach unten
+    gap: 1rem;
+    //margin: 1rem;
+    padding-top: 1rem;
+
+    height: 100%;       
+    width: 100%;             // nutzt den verfügbaren horizontalen Platz
+    overflow-y: auto;        // vertikal scrollbar, wenn Inhalt größer als max-height
+    overflow-x: hidden;      // horizontal nicht scrollbar
+}
+
+/*******************************************
+    Small-Screens
+*******************************************/
+//on small screens steps-card should be collapseable and steps-card-scrollable  should not be scrollable
+
+/*******************************************
+    Medium-Screens
+*******************************************/
+
+//on medium screens it should be collapseable instead of scrollable
+
+/*******************************************
+    Large-Screens
+*******************************************/

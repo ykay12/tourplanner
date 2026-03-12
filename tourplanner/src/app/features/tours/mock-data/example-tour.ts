@@ -11,7 +11,8 @@ export const exampleTour: Tour = {
     
     routes: [
         { id: 1, from: "Stephansplatz", to: "Prater", distance: 200, transportMode: "Bike" },
-        { id: 2, from: "Prater", to: "Donaukanal", distance: 150, transportMode: "Run" }
+        { id: 2, from: "Prater", to: "Donaukanal", distance: 150, transportMode: "Run" },
+        { id: 3, from: "Donaukanal", to: "idk", distance: 200, transportMode:"Walk"}
     ],
     
     logs: [

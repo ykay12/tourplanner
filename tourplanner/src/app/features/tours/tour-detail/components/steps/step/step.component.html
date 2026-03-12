@@ -1,7 +1,24 @@
 <!--steps.component.html-->
 
+
 <div class="step-card">
-  <h3>Step {{ step1.id }}: {{ step1.from }} → {{ step1.to }}</h3>
-  <p>Distance: {{ step1.distance }} meters</p>
-  <p>Transport: {{ step1.transportMode }}</p>
+    <div class="step-card-h">
+        <h3>Step 1</h3>
+    </div>
+
+    <div class="step-card-info">
+        <div class="step-card-info-devision">
+            <p class="step-card-info-p">From: {{step.from}}</p>
+            <p class="step-card-info-p">By: {{step.transportMode}}</p>
+        </div>
+
+        <div class="step-card-info-devision">
+            <p class="step-card-info-p">To: {{step.to}}</p>
+            <p class="step-card-info-p">Distance: {{step.distance}}</p>  
+        </div>
+    </div>
+
+    <div class="step-card-icon.div">
+            <img class="step-card-icon" [src]="'assets/icons/' + getTransportIcon()" [alt]="step.transportMode">
+    </div>
 </div>

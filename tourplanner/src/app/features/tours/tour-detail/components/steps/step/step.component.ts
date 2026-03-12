@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 
 import { Route } from '../../../../models/route.model'
-import { exampleTour } from '../../../../mock-data/example-tour';
 
 @Component({
   selector: 'app-step',
@@ -12,6 +11,15 @@ import { exampleTour } from '../../../../mock-data/example-tour';
 export class StepComponent {
 
   //nur eine gemockte Route damit ich beim designen sehen kann, wie ein Step aussieht
-  @Input() step1!: Route; //Aber welche Werte hat der jetzt?
+  @Input() step!: Route; //Aber welche Werte hat der jetzt?
 
+  getTransportIcon(): string {
+    switch(this.step.transportMode.toLowerCase()) {
+      case 'bike': return 'bike.png';
+      case 'walk': return 'walk.png';
+      case 'run': return 'run.png';
+      case 'hike': return 'hike.png';
+    default: return 'default.png';
+    }
+  }
 }

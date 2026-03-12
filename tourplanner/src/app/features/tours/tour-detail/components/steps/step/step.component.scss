@@ -1,0 +1,97 @@
+/*******************************************
+    Basis-Layout
+*******************************************/
+.step-card{
+    border: solid;
+    border-radius: 10px;
+    border-color: #9c9c9c;
+    padding: 1rem; /*innenabstand*/
+    //margin: 0.5rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    display: flex;
+    //align-items: center;  // vertikale Zentrierung
+    gap: 1rem;            // Abstand zwischen den Bereichen
+
+    
+}
+
+//soll ganz links in step-card, mit einer Maximal-Breite von seinem eigenen Inhalt sein
+.step-card-h{
+    //bootstrap-kind-attribute
+    flex: 0 0 auto; // nicht wachsen, nicht schrumpfen, Größe durch Inhalt
+    max-width: 10rem;
+
+    //allgemeine attribute
+    //background-color: cadetblue; //nur zum prüfen
+
+}
+
+//sell die restliche Breite innerhalb von step-card einnehmen
+.step-card-info {
+    //bootstrap-kind-attribute
+    flex: 1 1 auto; // wächst und schrumpft, nimmt Restplatz
+    
+    //bootstrap-eltern-attribute
+    display: flex;
+    flex-direction: row;  
+    justify-content: start;
+
+    //allgemeine attribute
+    //background-color: cornflowerblue; //nur zum prüfen
+    //border: solid; //nur zum prüfen
+    //border-color:cornflowerblue ; //nur zum prüfen
+}
+
+.step-card-info-devision {
+    //bootstrap-kind-attribute
+    
+    
+    //bootstrap-eltern-attribute
+
+
+    //allgemeine attribute
+    padding-left: 2rem;
+    padding-right: 2rem;
+    //background-color: blueviolet; //nur zum prüfen
+  
+}
+
+//soll ganz rechts in step-card, mit einer Maximalen-Breite von 10 rem sein
+.step-card-icon-div{
+    flex: 0 0 auto; // nicht wachsen, nicht schrumpfen
+    padding: 1rem;
+    display: flex;
+    align-items: center;       // vertikal zentrieren
+    justify-content: center;   // horizontal zentrieren
+
+    max-width: 10rem;
+
+    //allgemeine attribute
+    background-color: chocolate; //nur zum prüfen
+}
+.step-card-icon{
+    display: block;
+    max-width:8rem ;
+    max-height: 100%;
+}
+
+
+
+.step-card-info-p {
+    //font-size: medium;
+}
+
+/*******************************************
+    Small-Screens
+*******************************************/
+
+/*******************************************
+    Medium-Screens
+*******************************************/
+
+/*******************************************
+    Large-Screens
+*******************************************/

@@ -7,7 +7,7 @@ import { StepComponent } from './components/steps/step/step.component';
 
 @Component({
   selector: 'app-tour-detail',
-  imports: [StepComponent],
+  imports: [StepComponent, StepsComponent],
   templateUrl: './tour-detail.component.html',
   styleUrl: './tour-detail.component.scss'
 })

@@ -1,1 +1,15 @@
-<p>steps works!</p>
+<!--steps.component.html-->
+
+<div class="steps-card">
+    <div class="steps-card-headline-box">
+        <h2 class="steps-card-headline">  Steps  </h2>
+    </div>
+
+    <div class="steps-card-scrollable">
+        <app-step 
+            *ngFor="let step of tour.routes" 
+            [step]="step">
+        </app-step>
+    </div>
+</div>
+
