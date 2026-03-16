@@ -1,0 +1,49 @@
+.login-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #e4ecf7);
+}
+
+.login-card {
+  width: 420px;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  border: none;
+}
+
+.modern-input {
+  border-radius: 10px;
+  padding: 10px 14px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.2s ease;
+}
+
+.modern-input:focus {
+  border-color: #4f7cff;
+  box-shadow: 0 0 0 3px rgba(79,124,255,0.15);
+}
+
+.modern-btn {
+  background: linear-gradient(135deg, #4f7cff, #6ea8ff);
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.modern-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(79,124,255,0.25);
+}
+
+.signup-link {
+  text-decoration: none;
+  font-weight: 500;
+  color: #4f7cff;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+}

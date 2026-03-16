@@ -32,18 +32,14 @@ export class LoginComponent {
   }
 
 
-  onLogin() : void{
-    // const succes: Boolean = this.authService.login(this.username(), this.password())
-    //
-    // if(succes){
-    //   this.errorMsg.set('')
-    //   this.router.navigate(['/dashboard'])
-    // } else{
-    //   this.errorMsg.set("Whoops, something went wrong. Please try again.")
-    // }
+onLogin(): void {
+  const success: boolean = this.authService.login(this.username(), this.password());
 
-    this.authService.login(this.username(), this.password())
-    this.errorMsg.set('')
-    this.router.navigate(['/dashboard'])
+  if (success) {
+    this.errorMsg.set('');
+    this.router.navigate(['/dashboard']);
+  } else {
+    this.errorMsg.set('Whoops, something went wrong. Please try again.');
   }
+}
 }

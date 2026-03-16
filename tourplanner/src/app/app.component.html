@@ -1,14 +1,11 @@
-@if (!router.url.startsWith('/dashboard')) {
+<!-- @if (!router.url.startsWith('/dashboard')) {
   <header class="bg-body-secondary">
     <h1>TourPlanner</h1>
     <app-nav></app-nav>
   </header>
-}
+} -->
 
-<main class="container-fluid mt-4 h-100 px-0">
+<main>
   <router-outlet></router-outlet>
 </main>
 
-<footer class="footer mt-auto py-3 bg-body-secondary" style="height: 80px;">
-  <div class="container"> <span class="text-body-secondary">Tourplanner and some text  </span> </div>
-</footer>
