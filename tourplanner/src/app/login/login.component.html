@@ -2,34 +2,26 @@
 
   <form class="login-card" (ngSubmit)="onLogin()">
 
-    <h2 class="text-center mb-4 fw-semibold">TourPlanner</h2>
-
+    <div class="text-center mb-4">
+      <p class="auth-kicker">TourPlanner</p>
+      <h2 class="fw-semibold">Welcome back</h2>
+    </div>
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
-      <input
-        type="text"
-        class="form-control modern-input"
-        id="username"
-        [value]="username()"
-        (input)="onUsernameInput($event)"
-      />
+      <input type="text" class="form-control modern-input" id="username" [value]="username()"
+        (input)="onUsernameInput($event)" />
     </div>
 
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
-      <input
-        type="password"
-        class="form-control modern-input"
-        id="password"
-        [value]="password()"
-        (input)="onPasswordInput($event)"
-      />
+      <input type="password" class="form-control modern-input" id="password" [value]="password()"
+        (input)="onPasswordInput($event)" />
     </div>
 
     @if (errorMsg()){
-      <div class="alert alert-danger mt-3">
-        {{ errorMsg() }}
-      </div>
+    <div class="alert alert-danger mt-3">
+      {{ errorMsg() }}
+    </div>
     }
 
     <button type="submit" class="btn modern-btn w-100 mt-3">

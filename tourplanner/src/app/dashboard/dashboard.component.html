@@ -1,38 +1,84 @@
 <section class="dashboard-layout">
+
   <aside class="dashboard-sidebar">
-    <h2 class="sidebar-title">Overview</h2>
-    <nav>
-      <ul>
-        <li><button type="button" class="sidebar-button active" aria-current="page">Dashboard</button></li>
-        <li><button type="button" class="sidebar-button">Tours</button></li>
-        <li><button type="button" class="sidebar-button">Logs</button></li>
-      </ul>
-    </nav>
+    <div>
+      <p class="sidebar-label">TourPlanner</p>
+      <h2 class="sidebar-title">Overview</h2>
+
+      <nav>
+        <ul>
+          <li>
+            <button type="button" class="sidebar-button active" aria-current="page">
+              Dashboard
+            </button>
+          </li>
+          <li>
+            <button type="button" class="sidebar-button">
+              Tours
+            </button>
+          </li>
+          <li>
+            <button type="button" class="sidebar-button">
+              Logs
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <small>Your smart travel workspace</small>
+    </div>
   </aside>
 
   <div class="dashboard-content">
-    <h2>Welcome to TourPlanner</h2>
 
-    <section class="tour-slider-placeholder" aria-label="Tour image slider placeholder">
-      <div class="slider-header">Images from created tours</div>
-      <div class="slider-viewport">
-        <div class="slider-image-card">Tour Image 1</div>
-        <div class="slider-image-card">Tour Image 2</div>
-        <div class="slider-image-card">Tour Image 3</div>
-      </div>
-      <div class="slider-dots" aria-hidden="true">
-        <span class="slider-dot active"></span>
-        <span class="slider-dot"></span>
-        <span class="slider-dot"></span>
+    <section class="welcome-card">
+      <div>
+        <p class="welcome-kicker">Dashboard</p>
+        <h1>Welcome back to TourPlanner</h1>
+        <p>
+          Organize routes, manage your tours, and keep all your travel plans in one elegant workspace.
+        </p>
+        <button type="button" class="btn modern-btn mt-3">Create Tour</button>
       </div>
     </section>
 
-    <p>
-      This dashboard helps you plan, create,
-      and manage tours in one place. You can organize routes, track details, and keep your tours easy to
-      review and update.
-    </p>
+    <section class="tour-gallery-section" aria-label="Images from created tours">
+      <div class="section-header">
+        <h2>Recent Tours</h2>
+        <span>Inspiration from your latest adventures</span>
+      </div>
 
-    <button type="button" class="btn btn-primary mt-3">Create Tours</button>
+      <div class="tour-gallery">
+        <article class="tour-card">
+          <div class="tour-card-image image-one">
+            <div class="tour-card-overlay">
+              <h3>Alpine Escape</h3>
+              <p>Mountain route planning</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="tour-card">
+          <div class="tour-card-image image-two">
+            <div class="tour-card-overlay">
+              <h3>City Explorer</h3>
+              <p>Urban walking tour</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="tour-card">
+          <div class="tour-card-image image-three">
+            <div class="tour-card-overlay">
+              <h3>Lake View Trail</h3>
+              <p>Relaxed scenic route</p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
   </div>
 </section>
