@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 
 @Component({
@@ -10,4 +10,6 @@ import { NavComponent } from './nav/nav.component';
 })
 export class AppComponent {
   title = 'tourplanner';
+
+  constructor(public router: Router) {}
 }

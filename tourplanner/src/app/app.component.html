@@ -1,9 +1,11 @@
-<header class="bg-body-secondary">
-  <h1>TourPlanner</h1>
-  <app-nav></app-nav>
-</header>
+@if (!router.url.startsWith('/dashboard')) {
+  <header class="bg-body-secondary">
+    <h1>TourPlanner</h1>
+    <app-nav></app-nav>
+  </header>
+}
 
-<main class="container mt-4 h-100">
+<main class="container-fluid mt-4 h-100 px-0">
   <router-outlet></router-outlet>
 </main>
 
