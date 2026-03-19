@@ -5,6 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 //temporär zum Testen
 import {TourDetailComponent} from './features/tours/tour-detail/tour-detail.component'
+import { CreatetourComponent } from './createtour/createtour.component';
 //
 
 export const routes: Routes = [
@@ -12,6 +13,7 @@ export const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'registration', component: RegistrationComponent},
     { path: 'dashboard', component: DashboardComponent},
+    { path: 'createtour', component: CreatetourComponent},
 
     // temporär zum Testen
   { path: 'test-tour-detail', component: TourDetailComponent }

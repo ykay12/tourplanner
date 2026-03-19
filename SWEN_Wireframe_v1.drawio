@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36" version="29.5.0">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36" version="29.6.1">
   <diagram name="Seite-1" id="D814f-1gd9aNxls1mkAN">
-    <mxGraphModel dx="3804" dy="1506" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2308" dy="689" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1219,7 +1219,7 @@
           <mxGeometry height="30" width="180" x="16" y="157" as="geometry" />
         </mxCell>
         <mxCell id="K5whRTNLt02dNtwVT43Y-62" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Hier würde ich so ziemlich &quot;add new tour&quot; übernehmen und nur die Felder schon vorausfüllen" vertex="1">
-          <mxGeometry height="30" width="360" x="5210" y="3650" as="geometry" />
+          <mxGeometry height="30" width="360" x="4110" y="4960" as="geometry" />
         </mxCell>
         <mxCell id="K5whRTNLt02dNtwVT43Y-74" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Damit Import hier funktioniert, müssten alle weiteren Informationen:&lt;div&gt;in diesem fall die Vorhandenen Logs ebenfalls bereits auf dieser Seite gespeichert werden und bei create in die DB eingetragen&lt;/div&gt;&lt;div&gt;-&amp;gt; bei einer tatsächlich neu erstellten Tour wäre das nicht der Fall&lt;/div&gt;&lt;div&gt;Außerdem hätte ich als Userin wsl gerne visuelles feedback, dass diese auch geladen wurden&amp;nbsp;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Antwort im Unterricht: eine Tour muss nicht die Logs enthalten, da diese individuell pro user sind, aber Tour infos wie childfriendlieness sollten mitgeschickt werden&lt;/div&gt;" vertex="1">
           <mxGeometry height="93" width="250" x="1890" y="5280" as="geometry" />
