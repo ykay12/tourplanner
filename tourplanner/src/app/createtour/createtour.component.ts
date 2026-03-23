@@ -1,11 +1,13 @@
 import { Component, signal, Signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 
 type TourType = "bike" | "hike" | "run" | "vacation" | "mixed"
 
 @Component({
   selector: 'app-createtour',
-  imports: [],
+  imports: [FormsModule],
   standalone: true,
   templateUrl: './createtour.component.html',
   styleUrl: './createtour.component.scss'
@@ -21,8 +23,10 @@ export class CreatetourComponent {
   from = signal('');
   to = signal('');
   tourType = signal<TourType>('bike');
+  errorMsg = signal('');
 
-  constructor() { }
+
+  constructor(private router: Router) { }
 
   onTourName(event: Event): void {
     const value = (event.target as HTMLInputElement).value
@@ -59,5 +63,24 @@ export class CreatetourComponent {
   removeStep(index: number): void {
     const updatedSteps = this.steps().filter((_, i) => i !== index);
     this.steps.set(updatedSteps);
+  }
+
+  onSubmit(): void{
+    if(!this.tourName() || !this.tourDescription() || !this.from() || !this.to()){
+      this.errorMsg.set("Please fill in all required fields.")
+      return
+    }
+
+    if(this.tourType() === "mixed"){
+      const hasEmptySteps = this.steps().some(step => !step.trim())
+
+      if(hasEmptySteps){
+        this.errorMsg.set("Please fill in all route steps.")
+        return
+      }
+    }
+
+    this.errorMsg.set("")
+    this.router.navigate(['/dashboard'])
   }
 }
