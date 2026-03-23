@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 
+import { AppStateService } from '../../../app-state.service';
 import { Tour } from '../models/tour.model';
 import { exampleTour } from '../mock-data/example-tour';
 import { StepsComponent } from './components/steps/steps.component';
@@ -14,6 +15,6 @@ import { StepComponent } from './components/steps/step/step.component';
 export class TourDetailComponent {
 
   //mock-data zum designen  
-  mock_tour: Tour = exampleTour; 
+  constructor(public state: AppStateService) {}
 
 }

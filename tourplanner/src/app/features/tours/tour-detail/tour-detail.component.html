@@ -1,10 +1,13 @@
 <!-- tour-detail.component.html -->
 
 <!-- Versuch einen step darzustellen im Browser -->
-<h2>Test StepComponent</h2>
-<app-step [step]="mock_tour.routes[0]"></app-step>
+ @if(state.selectedTour(); as tour){
+    <h2>Test StepComponent</h2>
+    <app-step [step]="tour.routes[0]"></app-step>
 
 <p>___________________________________________________________</p>
 
 <h2>Test StepsComponent</h2>
-<app-steps [tour]="mock_tour"></app-steps>
+<app-steps [tour]="tour"></app-steps>
+
+ }
