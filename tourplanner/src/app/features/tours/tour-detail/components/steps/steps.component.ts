@@ -5,10 +5,10 @@
 Steps corresponds to Route
 */
 
-import { Component, Input } from '@angular/core';
-import { Tour } from '../../../models/tour.model';
+import { Component, Inject } from '@angular/core';
 import { StepComponent } from './step/step.component';
 import { CommonModule } from '@angular/common';
+import { AppStateService } from '../../../../../app-state.service';
 
 @Component({
   selector: 'app-steps',
@@ -18,5 +18,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './steps.component.scss'
 })
 export class StepsComponent {
-  @Input() tour!: Tour;
+  constructor(@Inject(AppStateService) public state: AppStateService) {}
+
+  // computed getter für selectedTour
+  get tour() {
+    return this.state.selectedTour();
+  }
 }

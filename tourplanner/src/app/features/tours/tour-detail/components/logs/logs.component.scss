@@ -1,0 +1,26 @@
+.logs-card{
+        //allgemeine Attribute
+    border: solid;
+    border-radius: 10px;
+    border-color: #797979;
+    //padding: 1rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+    height: 400px;       // Fixe Höhe der Box -> je nach Bildschirmgröße ändern
+
+    display: flex;
+    flex-direction: column;
+}
+
+.logs-card-headline-box{
+    border: solid;
+    border-radius: 8px;
+    border-color:var(--primary-blue);
+    background: var(--primary-blue);
+    padding: 0.5rem;
+    width: 10rem;
+}
+
+.logs-card-headline {
+    color:aliceblue;
+}

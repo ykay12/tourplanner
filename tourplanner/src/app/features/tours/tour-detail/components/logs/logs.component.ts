@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
+import { AppStateService } from '../../../../../app-state.service';
 
 @Component({
   selector: 'app-logs',
@@ -7,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './logs.component.scss'
 })
 export class LogsComponent {
+
+  constructor(@Inject(AppStateService) public state: AppStateService){
+
+  }
+
+  // computed getter für selectedTour
+  get tour() {
+    return this.state.selectedTour();
+  }
 
 }

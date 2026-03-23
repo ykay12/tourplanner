@@ -1,1 +1,15 @@
 <p>logs works!</p>
+
+
+<div class="logs-card">
+    <div class="logs-card-headline-box">
+        <h2 class="logs-card-headline">  Logs  </h2>
+    </div>
+
+    <div class="logs-card-scrollable">
+        @if (tour; as t) {
+            <p *ngFor="let log of t.logs">{{log}}</p>
+        }
+    </div>
+
+</div>

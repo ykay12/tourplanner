@@ -1,0 +1,7 @@
+.map-box {
+  width: 100%;             // volle Breite
+  height: 400px;       // Fixe Höhe der Box -> je nach Bildschirmgröße ändern
+  background-color: #e0e0e0; // grauer Platzhalter
+  border: 1px solid #ccc;    // optional: Rahmen
+  box-sizing: border-box;    // Padding/Rand zählen zur Größe
+}

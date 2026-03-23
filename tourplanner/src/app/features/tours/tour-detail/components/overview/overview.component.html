@@ -1,0 +1,29 @@
+@if (state.selectedTour(); as tour) {
+  <div class="overview">
+    <h2>{{ tour.name }}</h2>
+    <p>{{ tour.description }}</p>
+
+    <!-- Startpunkt: from des ersten Route-Eintrags -->
+    <p>From: {{ state.selectedTour()?.getStart() }}</p>
+
+    <!-- Endpunkt: to des letzten Route-Eintrags -->
+    <p>To: {{ state.selectedTour()?.getEnd() }}</p>
+
+    <!-- Gesamtstrecke: Summe der Distanzen aller Route-Einträge -->
+    <p>Distance: {{ state.selectedTour()?.getTotalDistance() }} m</p>
+
+    <p>Estimated Time: {{ tour.estimated_time }} seconds</p>
+    <p>Popularity: {{ tour.popularity }}</p>
+    @if (tour.isChildfriendly) {
+      <p>Child friendly: Yes</p>
+    } @else {
+      <p>Child friendly: No</p>
+    }
+
+    <button>Edit Tour</button>
+
+    <button>Delete Tour</button>
+
+    <button>Export Tour</button>
+  </div>
+}

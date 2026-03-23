@@ -4,6 +4,7 @@ import { Route } from '../../../../models/route.model'
 
 @Component({
   selector: 'app-step',
+  standalone: true,
   imports: [],
   templateUrl: './step.component.html',
   styleUrl: './step.component.scss'

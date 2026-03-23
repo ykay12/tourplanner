@@ -6,10 +6,9 @@
     </div>
 
     <div class="steps-card-scrollable">
-        <app-step 
-            *ngFor="let step of tour.routes" 
-            [step]="step">
-        </app-step>
+        @if (tour; as t) {
+            <app-step *ngFor="let step of t.routes" [step]="step"></app-step>
+        }
     </div>
 </div>
 
