@@ -1,3 +1,5 @@
+//app-state.service.ts
+
 import { Injectable, computed, signal } from '@angular/core';
 
 import { Tour } from '../models/tour.model';
@@ -8,31 +10,47 @@ import { Route } from '../models/route.model';
   providedIn: 'root' //Bedeutet: Dieser Service wird auf der Root-Ebene bereitgestellt und ist damit in der gesamten Anwendung verfügbar. Es wird eine einzige Instanz dieses Services erstellt, die von allen Komponenten und anderen Services, die ihn injizieren, geteilt wird.
 })
 export class AppStateService {
-
+  ///////////////////////////
   // Writable State (privat)
+  ///////////////////////////
+  /*
+  As Signals, weil:
+    - Signals den Überblick behalten, wer von ihnen abhängt 
+    - wenn sich ihr value ändert dort automatisch updates triggern
+    - sie sind "synchronous" -> wenn ich setze, dass die selectedTourId 2 ist, dann ist sie sofort 2 und nicht erst nach einer kurzen Zeit (wie es bei Observables der Fall sein könnte)
+  */
   private readonly _tours = signal<Tour[]>(seedTours());
   private readonly _selectedTourId = signal<number | null>(null);
 
+  //////////////////////////////////////////////////////////////  
   // Readonly State (für Components -> die dürfen nur auslesen)
+  //////////////////////////////////////////////////////////////
   readonly tours = this._tours.asReadonly();
   readonly selectedTourId = this._selectedTourId.asReadonly();
 
+  //////////////////
   // Derived State
-  readonly selectedTour = computed<Tour | null>(() => { //ToDo: warum ist selected Tour computed?
+  //////////////////
+  readonly selectedTour = computed<Tour | null>(() => {
     const id = this._selectedTourId();
     if (id === null) return null;
 
     return this._tours().find(t => t.id === id) ?? null;
   });
 
+  
   constructor() {
     // nur für Test
-    if (this._tours().length > 0) {
+    
+    if (this._tours().length > 0) { //wenn wir das auskommentieren, dann wird bei der Route keine slectedTour Angezeigt
       this._selectedTourId.set(this._tours()[0].id);
     }
+
   }
 
+  /////////////////////////////////
   // Intent Methods (State ändern)
+  /////////////////////////////////
   selectTour(id: number) {
     this._selectedTourId.set(id);
   }
@@ -55,8 +73,9 @@ export class AppStateService {
 
 }
 
-
+/////////////////////////////////////////
 //Funktionen um Mock-Daten zu erstellen
+/////////////////////////////////////////
 export function seedTours(): Tour[] {
   return [
     new Tour(
