@@ -1,7 +1,8 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { Tour } from './models/tour.model';
-import { Log } from './models/log.model';
-import { Route } from './models/route.model';
+
+import { Tour } from '../models/tour.model';
+import { Log } from '../models/log.model';
+import { Route } from '../models/route.model';
 
 @Injectable({
   providedIn: 'root' //Bedeutet: Dieser Service wird auf der Root-Ebene bereitgestellt und ist damit in der gesamten Anwendung verfügbar. Es wird eine einzige Instanz dieses Services erstellt, die von allen Komponenten und anderen Services, die ihn injizieren, geteilt wird.
