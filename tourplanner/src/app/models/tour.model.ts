@@ -1,7 +1,7 @@
 import { Log } from './log.model';
 import { Route } from './route.model';
 
-type TourType = 'Bike' | 'Hike' | 'Vacation' | 'Mixed' | 'Running';
+export type TourType = 'Bike' | 'Hike' | 'Vacation' | 'Mixed' | 'Running';
 
 export class Tour {
   id: number; //Wir haben uns noch nicht geeinigt wie wir die ID anlegen wollen number/string/UUID?
