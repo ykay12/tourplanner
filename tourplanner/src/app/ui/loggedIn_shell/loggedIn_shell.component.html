@@ -1,49 +1,56 @@
-<!--dashboard.component.html-->
+<!-- dashboard.component.html -->
 
 <section class="dashboard-layout">
-<!-- Sidebar: should be seen from every page a logged in user can see-->
+  <!-- Sidebar / Navigation -->
   <aside class="dashboard-sidebar">
-    <div>
-      <p class="sidebar-label">TourPlanner</p>
-      <h2 class="sidebar-title">Overview</h2>
+    <div class="sidebar-top">
+      <div class="sidebar-brand">
+        <p class="sidebar-label">TourPlanner</p>
+        <h2 class="sidebar-title">Overview</h2>
+      </div>
 
-      <nav>
-        <ul>
+      <nav class="sidebar-nav" aria-label="Dashboard Navigation">
+        <ul class="sidebar-nav-list">
           <li>
-            <a routerLink="/dashboard"
-               routerLinkActive="active"
-               class="sidebar-button">
+            <a
+              routerLink="/dashboard"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="sidebar-button"
+            >
               Dashboard
             </a>
           </li>
 
           <li>
-            <a routerLink="/dashboard/createtour"
-               routerLinkActive="active"
-               class="sidebar-button">
+            <a
+              routerLink="/dashboard/createtour"
+              routerLinkActive="active"
+              class="sidebar-button"
+            >
               Create new Tour
             </a>
           </li>
 
           <li>
-            <a routerLink="/dashboard/tours-overview"
-               routerLinkActive="active"
-               class="sidebar-button">
+            <a
+              routerLink="/dashboard/tours-overview"
+              routerLinkActive="active"
+              class="sidebar-button"
+            >
               View my Tours
             </a>
           </li>
 
           <li>
-            <a routerLink="/dashboard/tour-detail"
-               routerLinkActive="active"
-               class="sidebar-button">
+            <a
+              routerLink="/dashboard/tour-detail"
+              routerLinkActive="active"
+              class="sidebar-button"
+            >
               Latest viewed Tour
             </a>
           </li>
-
-          <!--Create Log macht keinen Sinn in der Sidebar, weil ein Log immernur zu einer Tour dazuerstellt werden kann-->
-
-
         </ul>
       </nav>
     </div>
@@ -53,10 +60,8 @@
     </div>
   </aside>
 
-
-  <!-- Main content area / is basically the shell: Depending on the state this should show: the dashboard, the tour-overview-screen, the tour-detail-screen, the tour-create-screen etc-->
-  <div class="dashboard-content">
+  <!-- Main content -->
+  <main class="dashboard-content">
     <router-outlet></router-outlet>
-
-  </div>
+  </main>
 </section>

@@ -13,6 +13,7 @@
       {{ errorMsg() }}
     </div>
     }
+
     <form class="tour-form" (ngSubmit)="onSubmit()">
       <div class="mb-3">
         <label for="tourname" class="form-label">Tour Name</label>
@@ -26,11 +27,11 @@
           (input)="onTourDescription($event)"></textarea>
       </div>
 
-      <div class="btn-group mb-3" role="group" aria-label="Tour type">
+      <div class="tour-type-group" role="group" aria-label="Tour type">
         @for (type of tourTypes; track type) {
         <input type="radio" class="btn-check" name="tourType" [id]="'radio-' + type" [checked]="tourType() === type"
-          (change)="setTourType(type)">
-        <label class="btn btn-outline-primary" [for]="'radio-' + type">
+          (change)="setTourType(type)" />
+        <label class="tour-type-btn" [for]="'radio-' + type">
           {{ type }}
         </label>
         }
@@ -69,10 +70,10 @@
         }
       </div>
       }
+
       <button type="submit" class="btn modern-btn mt-2">
         Create Tour
       </button>
-
     </form>
   </section>
 </div>
