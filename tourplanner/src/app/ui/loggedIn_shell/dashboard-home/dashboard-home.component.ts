@@ -5,6 +5,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-home',
+  standalone: true,
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './dashboard-home.component.html',
   styleUrl: './dashboard-home.component.scss'

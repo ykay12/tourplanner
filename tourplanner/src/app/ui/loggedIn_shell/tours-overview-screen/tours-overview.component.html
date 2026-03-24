@@ -1,1 +1,27 @@
-<p>tours-overview works!</p>
+<!-- tours-overview.component.html -->
+<p>This should be the "tours-overview" screen from the wireframe.</p>
+<p>It should contain a search bar, a Button to create a new tour and a Scrollable list of all tours (only tour name, trip-type, to and from)</p>
+
+<!--Liste aller Touren-->
+
+@if (state.tours(); as tours) {
+
+  <ul>
+    @for (tour of tours; track tour.id) {
+      <li>
+        <a class="tour-link" (click)="goToTour(tour.id)">
+          {{ tour.name }}
+        </a>
+      </li>
+    }
+  </ul>
+
+} @else {
+
+  <p class="text-center mt-5">
+    No tours found. Please create a tour to see it here.
+  </p>
+
+}
+
+
