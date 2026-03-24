@@ -3,12 +3,21 @@
 
 <div class="logs-card">
     <div class="logs-card-headline-box">
-        <h2 class="logs-card-headline">  Logs  </h2>
+        <h2 class="logs-card-headline"> Logs </h2>
     </div>
 
     <div class="logs-card-scrollable">
         @if (tour; as t) {
-            <p *ngFor="let log of t.logs">{{log}}</p>
+        @for (log of t.logs; track $index) {
+        <div class="log-item">
+            <p><strong>Comment:</strong> {{ log.comment }}</p>
+            <p><strong>Date:</strong> {{ log.createdAt }}</p>
+            <p><strong>Difficulty:</strong> {{ log.difficulty }}</p>
+            <p><strong>Distance:</strong> {{ log.total_distance }} km</p>
+            <p><strong>Duration:</strong> {{ log.total_time }} s</p>
+            <p><strong>Rating:</strong> {{ log.rating }}</p>
+        </div>
+        }
         }
     </div>
 
