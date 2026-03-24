@@ -1,9 +1,10 @@
-import { Component, signal, Signal } from '@angular/core';
+import { Component, computed, signal, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { distinct } from 'rxjs';
+import { Tour, TourType } from '../../../models/tour.model';
+import { Route } from '../../../models/route.model';
 
-
-type TourType = "bike" | "hike" | "run" | "vacation" | "mixed"
 
 @Component({
   selector: 'app-createtour',
@@ -15,16 +16,18 @@ type TourType = "bike" | "hike" | "run" | "vacation" | "mixed"
 
 
 export class CreatetourComponent {
-  tourTypes: TourType[] = ['bike', 'hike', 'run', 'vacation', 'mixed']; steps = signal<string[]>(['']);
+  tourTypes: TourType[] = ['Bike', 'Hike', 'Vacation', 'Mixed', 'Running'];
+  steps = signal<string[]>(['']);
 
 
   tourName = signal('');
   tourDescription = signal('');
   from = signal('');
   to = signal('');
-  tourType = signal<TourType>('bike');
+  tourType = signal<TourType>('Bike');
   errorMsg = signal('');
 
+  isMixedTour = computed(() => this.tourType() === "Mixed")
 
   constructor(private router: Router) { }
 
@@ -65,22 +68,78 @@ export class CreatetourComponent {
     this.steps.set(updatedSteps);
   }
 
-  onSubmit(): void{
-    if(!this.tourName() || !this.tourDescription() || !this.from() || !this.to()){
+  private validate(): boolean {
+    if (!this.tourName() || !this.tourDescription() || !this.from() || !this.to()) {
       this.errorMsg.set("Please fill in all required fields.")
-      return
+      return false
     }
 
-    if(this.tourType() === "mixed"){
+    if (this.isMixedTour()) {
       const hasEmptySteps = this.steps().some(step => !step.trim())
 
-      if(hasEmptySteps){
+      if (hasEmptySteps) {
         this.errorMsg.set("Please fill in all route steps.")
-        return
+        return false
       }
     }
 
     this.errorMsg.set("")
+    return true
+  }
+
+
+  private buildRoutes(): Route[] {
+    if (!this.isMixedTour()) {
+      return [{
+        id: 0,
+        from: this.from(),
+        to: this.to(),
+        distance: 0,
+        transportMode: "Bike"
+      }]
+    }
+
+    const filledSteps = this.steps().filter(step => step.trim())
+    const _steps = [this.from(), ...filledSteps, this.to()]
+
+    const routes: Route[] = []
+
+    for (let i = 0; i < _steps.length - 1; i++) {
+      routes.push({
+        id: 0,
+        from: _steps[i],
+        to: _steps[i + 1],
+        distance: 0,
+        transportMode: "Bike"
+      })
+
+    }
+
+    return routes
+
+  }
+
+  private buildTour(): Tour {
+    return new Tour(
+      0,
+      this.tourName(),
+      this.tourDescription(),
+      0,
+      0,
+      false,
+      this.tourType(),
+      this.buildRoutes(),
+      []
+    )
+  }
+  onSubmit(): void {
+    if (!this.validate()) {
+      return
+    }
+
+    const tour = this.buildTour()
+    console.log("Created new Tour: ", tour)
+
     this.router.navigate(['/dashboard'])
   }
 }
