@@ -1,10 +1,10 @@
 import { Injectable, computed, signal } from '@angular/core';
-import { Tour } from './features/tours/models/tour.model';
-import { Log } from './features/tours/models/log.model';
-import { Route } from './features/tours/models/route.model';
+import { Tour } from './models/tour.model';
+import { Log } from './models/log.model';
+import { Route } from './models/route.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' //Bedeutet: Dieser Service wird auf der Root-Ebene bereitgestellt und ist damit in der gesamten Anwendung verfügbar. Es wird eine einzige Instanz dieses Services erstellt, die von allen Komponenten und anderen Services, die ihn injizieren, geteilt wird.
 })
 export class AppStateService {
 
@@ -56,41 +56,56 @@ export class AppStateService {
 
 
 //Funktionen um Mock-Daten zu erstellen
-function seedTours(): Tour[] {
+export function seedTours(): Tour[] {
   return [
-    {
-      id: 1,
-      name: "Donauinsel Runde",
-      description: "Eine entspannte Fahrradtour entlang der Donauinsel.",
-      estimated_time: 7200,
-      popularity: 4,
-      isChildfriendly: true,
-      tourType: "Bike",
-      routes: seedRoutes(),
-      logs: seedLogs()
-    },
-    {
-      id: 2,
-      name: "Rax Wanderung",
-      description: "Schöne Wanderung auf der Rax mit toller Aussicht.",
-      estimated_time: 14400,
-      popularity: 5,
-      isChildfriendly: false,
-      tourType: "Hike",
-      routes: [],
-      logs: []
-    },
-    {
-      id: 3,
-      name: "Stadtlauf Wien",
-      description: "Running Tour durch die Wiener Innenstadt.",
-      estimated_time: 3600,
-      popularity: 3,
-      isChildfriendly: true,
-      tourType: "Running",
-      routes: [],
-      logs: []
-    }
+    new Tour(
+      1,
+      "Donauinsel Runde",
+      "Eine entspannte Fahrradtour entlang der Donauinsel.",
+      7200,   // estimated_time
+      4,      // popularity
+      true,   // isChildfriendly
+      "Bike", // tourType
+      seedRoutes(),
+      seedLogs()
+    ),
+    new Tour(
+      2,
+      "Rax Wanderung",
+      "Schöne Wanderung auf der Rax mit toller Aussicht.",
+      14400,
+      5,
+      false,
+      "Hike",
+      [ // 1 Route
+        { id: 4, from: "Hauptplatz", to: "Rax Gipfel", distance: 12000, transportMode: "Walk" }
+      ],     
+      [ // Zumindest 1 Log
+        {
+          id: 4,
+          createdAt: new Date(),
+          comment: "Tolle Aussicht, anstrengend aber lohnend.",
+          difficulty: 4,
+          total_distance: 12000,
+          total_time: 14400,
+          rating: 5
+        }
+      ]      
+    ),
+    new Tour(
+      3,
+      "Stadtlauf Wien",
+      "Running Tour durch die Wiener Innenstadt.",
+      3600,
+      3,
+      true,
+      "Running",
+      [ //jede Tour braucht mindestens eine Route,
+        { id: 5, from: "Stephansplatz", to: "Rathausplatz", distance: 5000, transportMode: "Run" }
+      ],     
+      //keine Logs zum testen -> kann ja vorkommen, dass eine Tour noch keine logs hat
+      []      
+    )
   ];
 }
 

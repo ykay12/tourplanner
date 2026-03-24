@@ -1,0 +1,17 @@
+<!-- tour-detail.component.html -->
+
+<!-- Wir wollen das TourDetail nur darstellen, wenn eine Tour ausgewählt ist -->
+@if(state.selectedTour(); as tour){
+  <app-overview></app-overview>
+
+  <div class="row g-3"> <!-- g-3 = Grid-Gap 1rem -->
+    <div class="col-12 col-md-6">
+      <app-map></app-map>
+    </div>
+    <div class="col-12 col-md-6">
+      <app-steps></app-steps>
+    </div>
+  </div>
+  
+  <app-logs></app-logs>
+}
