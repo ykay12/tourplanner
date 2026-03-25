@@ -1,19 +1,15 @@
-
 @if (state.selectedTour(); as tour) {
-  <div class="dashboard-content">
-
-    <!-- Overview Card -->
-    <div class="welcome-card">
-      <div class="welcome-kicker">Tour Overview</div>
-      <h1>{{ tour.name }}</h1>
-      <p>{{ tour.description }}</p>
+  <section class="tour-overview-page">
+    <div class="tour-overview-card">
+      <div class="tour-overview-header">
+        <p class="overview-kicker">Tour Overview</p>
+        <h1>{{ tour.name }}</h1>
+        <p class="overview-description">{{ tour.description }}</p>
+      </div>
 
       <div class="tour-info">
-        <!-- Startpunkt: from des ersten Route-Eintrags -->
         <p><strong>From:</strong> {{ tour.getStart() }}</p>
-        <!-- Endpunkt: to des letzten Route-Eintrags -->
         <p><strong>To:</strong> {{ tour.getEnd() }}</p>
-        <!-- Gesamtstrecke: Summe der Distanzen aller Route-Einträge -->
         <p><strong>Distance:</strong> {{ tour.getTotalDistance() }} m</p>
         <p><strong>Estimated Time:</strong> {{ tour.estimated_time }} seconds</p>
         <p><strong>Popularity:</strong> {{ tour.popularity }}</p>
@@ -21,12 +17,10 @@
       </div>
 
       <div class="tour-buttons">
-        <button class="modern-btn">Edit Tour</button>
-        <button class="modern-btn">Delete Tour</button>
-        <button class="modern-btn">Export Tour</button>
+        <button class="modern-btn" type="button">Edit Tour</button>
+        <button class="modern-btn" type="button">Delete Tour</button>
+        <button class="modern-btn" type="button">Export Tour</button>
       </div>
     </div>
-
-  </div>
+  </section>
 }
-

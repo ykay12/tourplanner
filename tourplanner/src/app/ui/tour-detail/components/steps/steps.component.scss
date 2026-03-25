@@ -1,61 +1,100 @@
-/*******************************************
-    Allegmeines Styling
-*******************************************/
-.steps-card{
-    //allgemeine Attribute
-    border: solid;
-    border-radius: 10px;
-    border-color: #797979;
-    //padding: 1rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-
-    height: 400px;       // Fixe Höhe der Box -> je nach Bildschirmgröße ändern
-
-    display: flex;
-    flex-direction: column;
-}
-
-.steps-card-headline-box{
-    border: solid;
-    border-radius: 8px;
-    border-color:var(--primary-blue);
-    background: var(--primary-blue);
-    padding: 0.5rem;
-    width: 10rem;
-}
-
-.steps-card-headline {
-    color:aliceblue;
-}
-
-.steps-card-scrollable{
-    //border: solid;
-    //border-radius: 10px;
-    //border-color: #797979;
-
-    display: flex;
-    flex-direction: column;  // Inhalte von oben nach unten
-    gap: 1rem;
-    //margin: 1rem;
-    padding-top: 1rem;
-
-    height: 100%;       
-    width: 100%;             // nutzt den verfügbaren horizontalen Platz
-    overflow-y: auto;        // vertikal scrollbar, wenn Inhalt größer als max-height
-    overflow-x: hidden;      // horizontal nicht scrollbar
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 /*******************************************
-    Small-Screens
+  CARD
 *******************************************/
-//on small screens steps-card should be collapseable and steps-card-scrollable  should not be scrollable
+.steps-card {
+  background: #ffffff;
+  border: 1px solid #e6edf7;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  min-height: 300px;
+}
 
 /*******************************************
-    Medium-Screens
+  HEADER
 *******************************************/
+.steps-card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #eef2f7;
+}
 
-//on medium screens it should be collapseable instead of scrollable
+.steps-card-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
 
 /*******************************************
-    Large-Screens
+  SCROLL AREA
 *******************************************/
+.steps-card-scrollable {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  padding: 1rem 1.25rem;
+
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/*******************************************
+  OPTIONAL SCROLLBAR STYLING
+*******************************************/
+.steps-card-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.steps-card-scrollable::-webkit-scrollbar-thumb {
+  background: rgba(124, 108, 255, 0.25);
+  border-radius: 999px;
+}
+
+/*******************************************
+  SMALL SCREENS
+*******************************************/
+@media (max-width: 768px) {
+  .steps-card {
+    border-radius: 18px;
+    min-height: unset;
+  }
+
+  .steps-card-header {
+    padding: 0.85rem 1rem;
+  }
+
+  .steps-card-scrollable {
+    padding: 0.85rem 1rem;
+    overflow: visible;
+  }
+}
+
+/*******************************************
+  MOBILE
+*******************************************/
+@media (max-width: 480px) {
+  .steps-card {
+    border-radius: 16px;
+  }
+
+  .steps-card-title {
+    font-size: 1.05rem;
+  }
+
+  .steps-card-scrollable {
+    gap: 0.85rem;
+  }
+}

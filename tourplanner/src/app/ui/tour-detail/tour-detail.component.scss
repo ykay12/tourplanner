@@ -1,0 +1,134 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* PAGE */
+
+.tour-detail-page {
+  width: 100%;
+}
+
+/* CARD */
+
+.tour-detail-card {
+  background: linear-gradient(135deg, #ffffff, #f8faff);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 12px 30px rgba(31, 27, 46, 0.08);
+  border: 1px solid rgba(124, 108, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* HEADER (Overview Component) */
+
+.tour-detail-header {
+  width: 100%;
+}
+
+/* GRID */
+
+.tour-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* BLOCKS (Map + Steps) */
+
+.tour-detail-block {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1rem;
+  border: 1px solid #e6edf7;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+  min-width: 0;
+}
+
+/* LOGS */
+
+.tour-detail-logs {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 1.25rem;
+  border: 1px solid #e6edf7;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+/* EMPTY STATE */
+
+.tour-detail-empty {
+  border: 1px dashed #dbe4f0;
+  background: #fbfcff;
+  border-radius: 20px;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* BUTTON (dein bestehender Stil bleibt gleich) */
+
+.modern-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  background: linear-gradient(135deg, #7c6cff, #9b8cff);
+  border-radius: 14px;
+  padding: 0.9rem 1.25rem;
+  color: white;
+  box-shadow: 0 10px 22px rgba(124, 108, 255, 0.22);
+}
+
+.modern-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(124, 108, 255, 0.28);
+}
+
+.modern-btn:active {
+  transform: translateY(0);
+}
+
+/* TABLET */
+
+@media (max-width: 768px) {
+  .tour-detail-card {
+    padding: 1.25rem;
+    border-radius: 20px;
+    gap: 1.25rem;
+  }
+
+  .tour-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tour-detail-block {
+    padding: 0.9rem;
+  }
+
+  .tour-detail-logs {
+    padding: 1rem;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+  .tour-detail-card {
+    padding: 1rem;
+    border-radius: 16px;
+  }
+
+  .tour-detail-block,
+  .tour-detail-logs {
+    border-radius: 16px;
+  }
+
+  .tour-detail-empty {
+    padding: 1.5rem 1rem;
+    border-radius: 16px;
+  }
+}

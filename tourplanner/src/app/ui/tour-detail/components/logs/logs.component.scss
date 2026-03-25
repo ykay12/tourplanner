@@ -1,26 +1,132 @@
-.logs-card{
-        //allgemeine Attribute
-    border: solid;
-    border-radius: 10px;
-    border-color: #797979;
-    //padding: 1rem;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-
-    height: 400px;       // Fixe Höhe der Box -> je nach Bildschirmgröße ändern
-
-    display: flex;
-    flex-direction: column;
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-.logs-card-headline-box{
-    border: solid;
-    border-radius: 8px;
-    border-color:var(--primary-blue);
-    background: var(--primary-blue);
-    padding: 0.5rem;
-    width: 10rem;
+/* CARD */
+
+.logs-card {
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e6edf7;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  min-height: 300px;
 }
 
-.logs-card-headline {
-    color:aliceblue;
+/* HEADER */
+
+.logs-card-header {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #eef2f7;
+}
+
+.logs-card-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* SCROLL AREA */
+
+.logs-card-scrollable {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.25rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+/* LOG ITEM */
+
+.log-item {
+  background: #f8faff;
+  border: 1px solid #e6edf7;
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+
+  transition: all 0.2s ease;
+}
+
+.log-item:hover {
+  border-color: rgba(124, 108, 255, 0.35);
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+  transform: translateY(-1px);
+}
+
+/* TEXT */
+
+.log-item p {
+  margin: 0 0 0.25rem;
+  color: #374151;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.log-item p:last-child {
+  margin-bottom: 0;
+}
+
+.log-item strong {
+  color: #1f2937;
+  font-weight: 600;
+}
+
+/* SCROLLBAR (optional nice touch) */
+
+.logs-card-scrollable::-webkit-scrollbar {
+  width: 6px;
+}
+
+.logs-card-scrollable::-webkit-scrollbar-thumb {
+  background: rgba(124, 108, 255, 0.25);
+  border-radius: 999px;
+}
+
+/* TABLET */
+
+@media (max-width: 768px) {
+  .logs-card {
+    border-radius: 18px;
+  }
+
+  .logs-card-header {
+    padding: 0.85rem 1rem;
+  }
+
+  .logs-card-scrollable {
+    padding: 0.85rem 1rem;
+  }
+
+  .log-item {
+    padding: 0.8rem;
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 480px) {
+  .logs-card {
+    border-radius: 16px;
+  }
+
+  .logs-card-title {
+    font-size: 1.05rem;
+  }
+
+  .log-item {
+    border-radius: 14px;
+  }
+
+  .log-item p {
+    font-size: 0.88rem;
+  }
 }

@@ -1,14 +1,13 @@
-<!--steps.component.html-->
-
 <div class="steps-card">
-    <div class="steps-card-headline-box">
-        <h2 class="steps-card-headline">  Steps  </h2>
-    </div>
+  <div class="steps-card-header">
+    <h2 class="steps-card-title">Steps</h2>
+  </div>
 
-    <div class="steps-card-scrollable">
-        @if (tour; as t) {
-            <app-step *ngFor="let step of t.routes" [step]="step"></app-step>
-        }
-    </div>
+  <div class="steps-card-scrollable">
+    @if (tour; as t) {
+      @for (step of t.routes; track $index; let i = $index) {
+        <app-step [step]="step" [stepNumber]="i + 1"></app-step>
+      }
+    }
+  </div>
 </div>
-
