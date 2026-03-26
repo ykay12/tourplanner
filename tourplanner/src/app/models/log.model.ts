@@ -7,5 +7,4 @@ export interface Log{
     total_distance: number,
     total_time: number /*man erhält die Zeit wohl in Sekunden von der API*/
     rating: number 
-
 }

@@ -13,7 +13,7 @@ export class Tour {
   tourType: TourType;
   routes: Route[]; //Array in Typescript funktionieren wie wir es von List<> gewöhnt sind
   logs: Log[]; //Array in Typescript funktionieren wie wir es von List<> gewöhnt sind
-  //Every Tour needs at least one Route because it contains the distance as well as the start and end point
+  //Every Tour needs at least one Route because it contains the distance as well as the start and end point - jkgzdfrszwrer
 
   constructor(
     id: number,
