@@ -2,13 +2,13 @@
 
 import { Component } from '@angular/core';
 import { AppStateService } from '../../../states/app-state.service';
-import { RouterLink, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-tours-overview',
   standalone: true,
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './tours-overview.component.html',
   styleUrl: './tours-overview.component.scss'
 })

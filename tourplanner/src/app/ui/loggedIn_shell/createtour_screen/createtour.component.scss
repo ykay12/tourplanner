@@ -267,3 +267,13 @@
     flex: 1 1 100%;
   }
 }
+
+.step-select {
+  min-width: 140px;
+}
+
+@media (max-width: 768px) {
+  .step-select {
+    min-width: 100%;
+  }
+}

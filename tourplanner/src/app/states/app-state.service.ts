@@ -1,15 +1,24 @@
 //app-state.service.ts
 
-import { Injectable, computed, signal } from '@angular/core';
+import { Injectable, computed, inject, signal } from '@angular/core';
 
-import { Tour } from '../models/tour.model';
+import { Tour, TourType } from '../models/tour.model';
 import { Log } from '../models/log.model';
 import { Route } from '../models/route.model';
+import { HttpClient } from '@angular/common/http';
+import { TourDto } from '../dto/TourDto';
+import { dot } from 'node:test/reporters';
 
 @Injectable({
   providedIn: 'root' //Bedeutet: Dieser Service wird auf der Root-Ebene bereitgestellt und ist damit in der gesamten Anwendung verfügbar. Es wird eine einzige Instanz dieses Services erstellt, die von allen Komponenten und anderen Services, die ihn injizieren, geteilt wird.
 })
 export class AppStateService {
+
+  // brauchen wir um aus einem json lesen zu können (weil es behandelt wird als würde es im backend liegen)
+  private http = inject(HttpClient)
+
+  tourIdCounter = 4 // wir haben im json aktuell 3, ist mal nur hardcoded
+
   ///////////////////////////
   // Writable State (privat)
   ///////////////////////////
@@ -19,7 +28,7 @@ export class AppStateService {
     - wenn sich ihr value ändert dort automatisch updates triggern
     - sie sind "synchronous" -> wenn ich setze, dass die selectedTourId 2 ist, dann ist sie sofort 2 und nicht erst nach einer kurzen Zeit (wie es bei Observables der Fall sein könnte)
   */
-  private readonly _tours = signal<Tour[]>(seedTours());
+  private readonly _tours = signal<Tour[]>([]);
   private readonly _selectedTourId = signal<number | null>(null);
 
   //////////////////////////////////////////////////////////////  
@@ -38,16 +47,54 @@ export class AppStateService {
     return this._tours().find(t => t.id === id) ?? null;
   });
 
-  
+
   constructor() {
     // nur für Test
-    
-    if (this._tours().length > 0) { //wenn wir das auskommentieren, dann wird bei der Route keine slectedTour Angezeigt
-      this._selectedTourId.set(this._tours()[0].id);
-    }
+
+    // if (this._tours().length > 0) { //wenn wir das auskommentieren, dann wird bei der Route keine slectedTour Angezeigt
+    //   this._selectedTourId.set(this._tours()[0].id);
+    // }
+
+    this.loadMockTours()
 
   }
 
+  loadMockTours() {
+    this.http.get<TourDto[]>('assets/mocks/tours.json').subscribe({
+      next: (data) => {
+        const tours = data.map(dto => this.mapDtoToTour(dto))
+        this._tours.set(tours)
+
+        if (tours.length > 0) {
+          this._selectedTourId.set(tours[0].id)
+        }
+      },
+      error: (e) => {
+        console.log("Error while loading Mock-Tours", e)
+      }
+    })
+  }
+
+
+  private mapDtoToTour(dto: TourDto): Tour {
+    const logs: Log[] = dto.logs.map(log => ({
+      ...log, createdAt: new Date(log.createdAt)
+    }))
+
+
+    return new Tour(
+      dto.id,
+      dto.name,
+      dto.description,
+      dto.estimated_time,
+      dto.popularity,
+      dto.isChildfriendly,
+      dto.tourType as TourType,
+      dto.routes,
+      logs
+    )
+
+  }
   /////////////////////////////////
   // Intent Methods (State ändern)
   /////////////////////////////////
@@ -60,6 +107,7 @@ export class AppStateService {
   }
 
   addTour(tour: Tour) {
+    tour.id = this.tourIdCounter++
     this._tours.update(arr => [...arr, tour]);
   }
 
@@ -72,121 +120,4 @@ export class AppStateService {
   }
 
 }
-
-/////////////////////////////////////////
-//Funktionen um Mock-Daten zu erstellen
-/////////////////////////////////////////
-export function seedTours(): Tour[] {
-  return [
-    new Tour(
-      1,
-      "Donauinsel Runde",
-      "Eine entspannte Fahrradtour entlang der Donauinsel.",
-      7200,   // estimated_time
-      4,      // popularity
-      true,   // isChildfriendly
-      "Bike", // tourType
-      seedRoutes(),
-      seedLogs()
-    ),
-    new Tour(
-      2,
-      "Rax Wanderung",
-      "Schöne Wanderung auf der Rax mit toller Aussicht.",
-      14400,
-      5,
-      false,
-      "Hike",
-      [ // 1 Route
-        { id: 4, from: "Hauptplatz", to: "Rax Gipfel", distance: 12000, transportMode: "Walk" }
-      ],     
-      [ // Zumindest 1 Log
-        {
-          id: 4,
-          createdAt: new Date(),
-          comment: "Tolle Aussicht, anstrengend aber lohnend.",
-          difficulty: 4,
-          total_distance: 12000,
-          total_time: 14400,
-          rating: 5
-        }
-      ]      
-    ),
-    new Tour(
-      3,
-      "Stadtlauf Wien",
-      "Running Tour durch die Wiener Innenstadt.",
-      3600,
-      3,
-      true,
-      "Running",
-      [ //jede Tour braucht mindestens eine Route,
-        { id: 5, from: "Stephansplatz", to: "Rathausplatz", distance: 5000, transportMode: "Run" }
-      ],     
-      //keine Logs zum testen -> kann ja vorkommen, dass eine Tour noch keine logs hat
-      []      
-    )
-  ];
-}
-
-function seedLogs(): Log[] {
-  return [
-    {
-      id: 1,
-      createdAt: new Date(),
-      comment: "Sehr schöne Strecke entlang der Donau.",
-      difficulty: 2,
-      total_distance: 11500,
-      total_time: 7200,
-      rating: 4
-    },
-    {
-      id: 2,
-      createdAt: new Date(),
-      comment: "Perfekt für eine entspannte Fahrradtour.",
-      difficulty: 1,
-      total_distance: 11500,
-      total_time: 6800,
-      rating: 5
-    },
-    {
-      id: 3,
-      createdAt: new Date(),
-      comment: "Teilweise viel Wind, aber tolle Aussicht.",
-      difficulty: 3,
-      total_distance: 11500,
-      total_time: 7500,
-      rating: 4
-    }
-  ];
-}
-
-
-
-function seedRoutes(): Route[] {
-  return [
-    {
-      id: 1,
-      from: "Donauinsel Nord",
-      to: "Floridsdorfer Brücke",
-      distance: 3500,
-      transportMode: "Bike"
-    },
-    {
-      id: 2,
-      from: "Floridsdorfer Brücke",
-      to: "Reichsbrücke",
-      distance: 4200,
-      transportMode: "Bike"
-    },
-    {
-      id: 3,
-      from: "Reichsbrücke",
-      to: "Donauinsel Süd",
-      distance: 3800,
-      transportMode: "Bike"
-    }
-  ];
-}
-
 

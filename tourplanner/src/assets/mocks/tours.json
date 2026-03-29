@@ -1,0 +1,61 @@
+[
+  {
+    "id": 1,
+    "name": "Vienna City Ride",
+    "description": "A relaxed bike tour through Vienna.",
+    "estimated_time": 3600,
+    "popularity": 4,
+    "isChildfriendly": true,
+    "routes": [
+      {
+        "id": 1,
+        "from": "Stephansplatz",
+        "to": "Prater",
+        "transportMode": "bike",
+        "distance": 2500
+      },
+      {
+        "id": 2,
+        "from": "Prater",
+        "to": "Donauinsel",
+        "transportMode": "bike",
+        "distance": 3000
+      }
+    ],
+    "logs": [
+      {
+        "comment": "Nice ride!",
+        "createdAt": "2026-03-20",
+        "difficulty": 2,
+        "total_distance": 5500,
+        "total_time": 3600,
+        "rating": 4
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Mountain Hike",
+    "description": "Challenging hike with great views.",
+    "estimated_time": 7200,
+    "popularity": 5,
+    "isChildfriendly": false,
+    "routes": [
+      {
+        "id": 1,
+        "from": "Base Camp",
+        "to": "Mid Point",
+        "transportMode": "hike",
+        "distance": 4000
+      },
+      {
+        "id": 2,
+        "from": "Mid Point",
+        "to": "Summit",
+        "transportMode": "hike",
+        "distance": 3500
+      }
+    ],
+    "logs": []
+  }
+]

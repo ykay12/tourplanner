@@ -1,9 +1,9 @@
 import { Component, computed, signal, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { distinct } from 'rxjs';
 import { Tour, TourType } from '../../../models/tour.model';
-import { Route } from '../../../models/route.model';
+import { MixedSegment, Route, TransportMode } from '../../../models/route.model';
+import { AppStateService } from '../../../states/app-state.service';
 
 
 @Component({
@@ -17,8 +17,8 @@ import { Route } from '../../../models/route.model';
 
 export class CreatetourComponent {
   tourTypes: TourType[] = ['Bike', 'Hike', 'Vacation', 'Mixed', 'Running'];
-  steps = signal<string[]>(['']);
-
+  segments = signal<MixedSegment[]>([]);
+  transportModes: TransportMode[] = ["Bike", "Walk", "Run"]
 
   tourName = signal('');
   tourDescription = signal('');
@@ -26,10 +26,10 @@ export class CreatetourComponent {
   to = signal('');
   tourType = signal<TourType>('Bike');
   errorMsg = signal('');
-
+  transportMode = signal<TransportMode>('Bike')
   isMixedTour = computed(() => this.tourType() === "Mixed")
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private appState: AppStateService) { }
 
   onTourName(event: Event): void {
     const value = (event.target as HTMLInputElement).value
@@ -41,6 +41,10 @@ export class CreatetourComponent {
   }
   setTourType(type: TourType): void {
     this.tourType.set(type);
+
+    if (type !== 'Mixed') {
+      this.segments.set([]);
+    }
   }
   onFromInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
@@ -52,22 +56,41 @@ export class CreatetourComponent {
     this.to.set(value);
   }
 
-  onStepChange(index: number, event: Event): void {
+  onTransportModeChange(event: Event): void {
+    const value = (event.target as HTMLSelectElement).value as TransportMode;
+    this.transportMode.set(value);
+  }
+
+  onSegmentToChange(index: number, event: Event): void {
     const value = (event.target as HTMLInputElement).value;
-    const updatedSteps = [...this.steps()];
-    updatedSteps[index] = value;
-    this.steps.set(updatedSteps);
+
+    this.segments.update(segments =>
+      segments.map((segment, i) =>
+        i === index ? { ...segment, to: value } : segment
+      )
+    );
   }
 
-  addStep(): void {
-    this.steps.set([...this.steps(), '']);
+  onSegmentTransportModeChange(index: number, event: Event): void {
+    const value = (event.target as HTMLSelectElement).value as TransportMode;
+
+    this.segments.update(segments =>
+      segments.map((segment, i) =>
+        i === index ? { ...segment, transportMode: value } : segment
+      )
+    );
   }
 
-  removeStep(index: number): void {
-    const updatedSteps = this.steps().filter((_, i) => i !== index);
-    this.steps.set(updatedSteps);
+  addSegment(): void {
+    this.segments.update(segments => [
+      ...segments,
+      { to: '', transportMode: 'Bike' }
+    ]);
   }
 
+  removeSegment(index: number): void {
+    this.segments.update(segments => segments.filter((_, i) => i !== index));
+  }
   private validate(): boolean {
     if (!this.tourName() || !this.tourDescription() || !this.from() || !this.to()) {
       this.errorMsg.set("Please fill in all required fields.")
@@ -75,11 +98,16 @@ export class CreatetourComponent {
     }
 
     if (this.isMixedTour()) {
-      const hasEmptySteps = this.steps().some(step => !step.trim())
+      const hasEmptySegments = this.segments().some(segment => !segment.to.trim());
 
-      if (hasEmptySteps) {
-        this.errorMsg.set("Please fill in all route steps.")
-        return false
+      if (hasEmptySegments) {
+        this.errorMsg.set('Please fill in all route segments.');
+        return false;
+      }
+
+      if (this.segments().length === 0) {
+        this.errorMsg.set('Please add at least one route segment for a mixed tour.');
+        return false;
       }
     }
 
@@ -90,33 +118,47 @@ export class CreatetourComponent {
 
   private buildRoutes(): Route[] {
     if (!this.isMixedTour()) {
-      return [{
-        id: 0,
-        from: this.from(),
-        to: this.to(),
-        distance: 0,
-        transportMode: "Bike"
-      }]
+      return [
+        {
+          id: 0,
+          from: this.from(),
+          to: this.to(),
+          distance: 0,
+          transportMode: this.transportMode()
+        }
+      ];
     }
 
-    const filledSteps = this.steps().filter(step => step.trim())
-    const _steps = [this.from(), ...filledSteps, this.to()]
+    const filledSegments = this.segments().filter(segment => segment.to.trim());
+    const routes: Route[] = [];
 
-    const routes: Route[] = []
+    let currentFrom = this.from();
 
-    for (let i = 0; i < _steps.length - 1; i++) {
+    for (let i = 0; i < filledSegments.length; i++) {
+      const segment = filledSegments[i];
+
       routes.push({
-        id: 0,
-        from: _steps[i],
-        to: _steps[i + 1],
+        id: i,
+        from: currentFrom,
+        to: segment.to,
         distance: 0,
-        transportMode: "Bike"
-      })
+        transportMode: segment.transportMode
+      });
 
+      currentFrom = segment.to;
     }
 
-    return routes
+    routes.push({
+      id: filledSegments.length,
+      from: currentFrom,
+      to: this.to(),
+      distance: 0,
+      transportMode: filledSegments.length > 0
+        ? filledSegments[filledSegments.length - 1].transportMode
+        : this.transportMode()
+    });
 
+    return routes;
   }
 
   private buildTour(): Tour {
@@ -138,6 +180,7 @@ export class CreatetourComponent {
     }
 
     const tour = this.buildTour()
+    this.appState.addTour(tour)
     console.log("Created new Tour: ", tour)
 
     this.router.navigate(['/dashboard'])
