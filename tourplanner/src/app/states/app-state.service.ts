@@ -118,6 +118,15 @@ export class AppStateService {
       this._selectedTourId.set(null);
     }
   }
+  updateTour(updatedTour: Tour) {
+    this._tours.update(tours =>
+      tours.map(t => t.id === updatedTour.id ? updatedTour : t)
+    );
+
+    if (this._selectedTourId() === updatedTour.id) {
+      this._selectedTourId.set(updatedTour.id);
+    }
+  }
 
 }
 

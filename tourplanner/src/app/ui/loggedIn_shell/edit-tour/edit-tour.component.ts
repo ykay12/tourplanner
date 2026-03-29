@@ -1,44 +1,99 @@
-import { Component, computed, signal, Signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Tour, TourType } from '../../../models/tour.model';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MixedSegment, Route, TransportMode } from '../../../models/route.model';
 import { AppStateService } from '../../../states/app-state.service';
-
+import { Tour, TourType } from '../../../models/tour.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { elementAt } from 'rxjs';
 
 @Component({
-  selector: 'app-createtour',
-  imports: [FormsModule],
+  selector: 'app-edit-tour',
   standalone: true,
-  templateUrl: './createtour.component.html',
-  styleUrl: './createtour.component.scss'
+  imports: [FormsModule],
+  templateUrl: './edit-tour.component.html',
+  styleUrl: './edit-tour.component.scss'
 })
+export class EditTourComponent {
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly appState = inject(AppStateService);
 
-
-export class CreatetourComponent {
   tourTypes: TourType[] = ['Bike', 'Hike', 'Vacation', 'Mixed', 'Running'];
-  segments = signal<MixedSegment[]>([]);
-  transportModes: TransportMode[] = ["Bike", "Walk", "Run"]
+  transportModes: TransportMode[] = ['Bike', 'Walk', 'Run'];
 
+  segments = signal<MixedSegment[]>([]);
+
+  tourId = signal<number | null>(null);
   tourName = signal('');
   tourDescription = signal('');
   from = signal('');
   to = signal('');
   tourType = signal<TourType>('Bike');
+  transportMode = signal<TransportMode>('Bike');
   errorMsg = signal('');
-  transportMode = signal<TransportMode>('Bike')
-  isMixedTour = computed(() => this.tourType() === "Mixed")
 
-  constructor(private router: Router, private appState: AppStateService) { }
+  isMixedTour = computed(() => this.tourType() === 'Mixed');
+
+
+  constructor() {
+    const id = Number(this.activatedRoute.snapshot.paramMap.get('id'));
+
+    if (!id) {
+      this.errorMsg.set('No valid tour id found.');
+      return;
+    }
+
+    this.tourId.set(id);
+    this.appState.selectTour(id);
+
+    const tour = this.appState.selectedTour();
+
+    if (!tour) {
+      this.errorMsg.set('Tour not found.');
+      return;
+    }
+
+    this.fillForm(tour);
+  }
+
+  private fillForm(tour: Tour): void {
+    this.tourName.set(tour.name);
+    this.tourDescription.set(tour.description);
+    this.tourType.set(tour.tourType);
+
+    const routes = tour.routes ?? [];
+
+    if (routes.length > 0) {
+      this.from.set(routes[0].from);
+      this.to.set(routes[routes.length - 1].to);
+    }
+
+    if (tour.tourType === 'Mixed') {
+      const middleRoutes = routes.slice(0, -1);
+
+      this.segments.set(
+        middleRoutes.map(route => ({
+          to: route.to,
+          transportMode: route.transportMode
+        }))
+      );
+    } else {
+      this.transportMode.set(routes[0]?.transportMode ?? 'Bike');
+      this.segments.set([]);
+    }
+  }
+
 
   onTourName(event: Event): void {
-    const value = (event.target as HTMLInputElement).value
-    this.tourName.set(value)
+    const value = (event.target as HTMLInputElement).value;
+    this.tourName.set(value);
   }
+
   onTourDescription(event: Event): void {
-    const value = (event.target as HTMLTextAreaElement).value
-    this.tourDescription.set(value)
+    const value = (event.target as HTMLTextAreaElement).value;
+    this.tourDescription.set(value);
   }
+
   setTourType(type: TourType): void {
     this.tourType.set(type);
 
@@ -54,6 +109,7 @@ export class CreatetourComponent {
       this.transportMode.set('Bike')
     }
   }
+
   onFromInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.from.set(value);
@@ -99,30 +155,35 @@ export class CreatetourComponent {
   removeSegment(index: number): void {
     this.segments.update(segments => segments.filter((_, i) => i !== index));
   }
+
   private validate(): boolean {
-    if (!this.tourName() || !this.tourDescription() || !this.from() || !this.to()) {
-      this.errorMsg.set("Please fill in all required fields.")
-      return false
+    if (
+      !this.tourName().trim() ||
+      !this.tourDescription().trim() ||
+      !this.from().trim() ||
+      !this.to().trim()
+    ) {
+      this.errorMsg.set('Please fill in all required fields.');
+      return false;
     }
 
     if (this.isMixedTour()) {
+      if (this.segments().length === 0) {
+        this.errorMsg.set('Please add at least one route segment for a mixed tour.');
+        return false;
+      }
+
       const hasEmptySegments = this.segments().some(segment => !segment.to.trim());
 
       if (hasEmptySegments) {
         this.errorMsg.set('Please fill in all route segments.');
         return false;
       }
-
-      if (this.segments().length === 0) {
-        this.errorMsg.set('Please add at least one route segment for a mixed tour.');
-        return false;
-      }
     }
 
-    this.errorMsg.set("")
-    return true
+    this.errorMsg.set('');
+    return true;
   }
-
 
   private buildRoutes(): Route[] {
     if (!this.isMixedTour()) {
@@ -161,36 +222,45 @@ export class CreatetourComponent {
       from: currentFrom,
       to: this.to(),
       distance: 0,
-      transportMode: filledSegments.length > 0
-        ? filledSegments[filledSegments.length - 1].transportMode
-        : this.transportMode()
+      transportMode:
+        filledSegments.length > 0
+          ? filledSegments[filledSegments.length - 1].transportMode
+          : 'Bike'
     });
 
     return routes;
   }
 
-  private buildTour(): Tour {
+  private buildUpdatedTour(oldTour: Tour): Tour {
     return new Tour(
-      0,
+      oldTour.id,
       this.tourName(),
       this.tourDescription(),
-      0,
-      0,
-      false,
+      oldTour.estimated_time,
+      oldTour.popularity,
+      oldTour.isChildfriendly,
       this.tourType(),
       this.buildRoutes(),
-      []
-    )
+      oldTour.logs
+    );
   }
+
   onSubmit(): void {
-    if (!this.validate()) {
-      return
+    if (!this.validate()) return;
+
+    const currentTour = this.appState.selectedTour();
+    if (!currentTour) {
+      this.errorMsg.set('Tour not found.');
+      return;
     }
 
-    const tour = this.buildTour()
-    this.appState.addTour(tour)
-    console.log("Created new Tour: ", tour)
+    const updatedTour = this.buildUpdatedTour(currentTour);
+    this.appState.updateTour(updatedTour);
 
-    this.router.navigate(['/dashboard'])
+    this.router.navigate(['/dashboard/tour-detail']);
+  }
+
+  onCancel(): void {
+    this.router.navigate(['/dashboard/tour-detail']);
   }
 }

@@ -34,4 +34,12 @@ export class OverviewComponent {
     this.router.navigate(['/dashboard']);
 
   }
+
+  onEditTour(): void {
+    const id = this.state.selectedTourId()
+
+    if (id === null) return
+
+    this.router.navigate(['/dashboard/edit-tour', id])
+  }
 }
