@@ -1,26 +1,44 @@
 @if (state.selectedTour(); as tour) {
-  <section class="tour-overview-page">
-    <div class="tour-overview-card">
-      <div class="tour-overview-header">
-        <p class="overview-kicker">Tour Overview</p>
-        <h1>{{ tour.name }}</h1>
-        <p class="overview-description">{{ tour.description }}</p>
-      </div>
-
-      <div class="tour-info">
-        <p><strong>From:</strong> {{ tour.getStart() }}</p>
-        <p><strong>To:</strong> {{ tour.getEnd() }}</p>
-        <p><strong>Distance:</strong> {{ tour.getTotalDistance() }} m</p>
-        <p><strong>Estimated Time:</strong> {{ tour.estimated_time }} seconds</p>
-        <p><strong>Popularity:</strong> {{ tour.popularity }}</p>
-        <p><strong>Child friendly:</strong> {{ tour.isChildfriendly ? 'Yes' : 'No' }}</p>
-      </div>
-
-      <div class="tour-buttons">
-        <button class="modern-btn" type="button">Edit Tour</button>
-        <button class="modern-btn" type="button">Delete Tour</button>
-        <button class="modern-btn" type="button">Export Tour</button>
-      </div>
+<section class="tour-overview-page">
+  <div class="tour-overview-card">
+    <div class="tour-overview-header">
+      <p class="overview-kicker">Tour Overview</p>
+      <h1>{{ tour.name }}</h1>
+      <p class="overview-description">{{ tour.description }}</p>
     </div>
-  </section>
+
+    <div class="tour-info">
+      <p><strong>From:</strong> {{ tour.getStart() }}</p>
+      <p><strong>To:</strong> {{ tour.getEnd() }}</p>
+      <p><strong>Distance:</strong> {{ tour.getTotalDistance() }} m</p>
+      <p><strong>Estimated Time:</strong> {{ tour.estimated_time }} seconds</p>
+      <p><strong>Popularity:</strong> {{ tour.popularity }}</p>
+      <p><strong>Child friendly:</strong> {{ tour.isChildfriendly ? 'Yes' : 'No' }}</p>
+    </div>
+
+    <div class="tour-buttons">
+      <button class="modern-btn" type="button">Edit Tour</button>
+      <button class="modern-btn" type="button" (click)="(openDeleteModal())">Delete Tour</button>
+      <button class="modern-btn" type="button">Export Tour</button>
+    </div>
+  </div>
+  @if (showDeleteModal()) {
+  <div class="modal-backdrop" (click)="closeDeleteModal()"></div>
+
+  <div class="modal-card">
+    <h3>Delete Tour</h3>
+    <p>Are you sure you want to delete this tour? This cannot be undone.</p>
+
+    <div class="modal-actions">
+      <button class="btn cancel-btn" (click)="closeDeleteModal()">
+        Cancel
+      </button>
+
+      <button class="btn danger-btn" (click)="onDeleteTour()">
+        Delete
+      </button>
+    </div>
+  </div>
+  }
+</section>
 }
