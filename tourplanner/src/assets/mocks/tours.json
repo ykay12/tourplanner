@@ -10,14 +10,18 @@
       {
         "id": 1,
         "from": "Stephansplatz",
+        "fromCoordinates": { "lat": 48.2082, "lng": 16.3738 },
         "to": "Prater",
+        "toCoordinates": { "lat": 48.2167, "lng": 16.4000 },
         "transportMode": "bike",
         "distance": 2500
       },
       {
         "id": 2,
         "from": "Prater",
+        "fromCoordinates": { "lat": 48.2167, "lng": 16.4000 },
         "to": "Donauinsel",
+        "toCoordinates": { "lat": 48.2200, "lng": 16.4200 },
         "transportMode": "bike",
         "distance": 3000
       }
@@ -44,14 +48,18 @@
       {
         "id": 1,
         "from": "Base Camp",
+        "fromCoordinates": { "lat": 47.0707, "lng": 15.4395 },
         "to": "Mid Point",
+        "toCoordinates": { "lat": 47.0800, "lng": 15.4500 },
         "transportMode": "hike",
         "distance": 4000
       },
       {
         "id": 2,
         "from": "Mid Point",
+        "fromCoordinates": { "lat": 47.0800, "lng": 15.4500 },
         "to": "Summit",
+        "toCoordinates": { "lat": 47.0900, "lng": 15.4600 },
         "transportMode": "hike",
         "distance": 3500
       }
