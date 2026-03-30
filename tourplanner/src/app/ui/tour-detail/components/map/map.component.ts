@@ -20,6 +20,11 @@ import { Coordinates } from '../../../../models/coordinates.model';
   templateUrl: './map.component.html',
   styleUrl: './map.component.scss',
 })
+
+/* Component entspricht ViewModel
+ Hier mediiert sie zwischen template und AppStateService und nutzt die LeafletFacadeService um die Map zu rendern.
+
+*/
 export class MapComponent implements AfterViewInit, OnDestroy {
   private state = inject(AppStateService);
   private mapFacade = inject(LeafletFacadeService);
@@ -28,13 +33,10 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
   constructor() {
     //in den Unterlagen wird Effect genutzt um die Map anzupassen, aber bei uns wird die Map
-    //nur verändert, nach einem rerouting, und da wird die Componente und mit ihr die Map ja komplett zerstört und neu initialisiert,
+    // nur nach einem Rerouting verändert (Rerouting zerstört die Componente und die in ihr gehaltene Map)
     // deshalb brauche ich hier eigentlich kein Effect, weil die Map ja sowieso jedes Mal neu gerendert wird,
     // wenn ich sie betrete, und da wird dann automatisch die aktuelle selectedTour gerendert.
-    // Aber ich lasse es erstmal so, damit ich es im Hinterkopf habe, dass ich hier eigentlich kein Effect brauche,
-    // und falls ich doch irgendwann mal die Map so erweitere,
-    // dass sie sich auch während des Aufenthalts auf der Detailseite anpasst,
-    // dann habe ich den Effect schon drin und muss ihn nicht erst noch hinzufügen
+    // Aber ich lasse den leeren Effekt darweil da, als Erinnerung, falls sich mir später der Sinn erschließt
     effect(() => {
       //this.renderTourOnMap(this.state.selectedTour() as Tour);
     });
@@ -50,7 +52,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     this.renderTourOnMap(tour);
   }
 
-  //Beim Rerouting will ich die Map kaputt machen, damit sie neu initialisiert wird, wenn ich wieder auf der Detailseite bin. Sonst könnte es Probleme mit mehreren Map Instanzen geben, die gleichzeitig exist
+  //Beim Rerouting will ich die Map kaputt machen, damit sie neu initialisiert wird, wenn ich wieder auf der Detailseite bin. -> Sonst könnte es Probleme mit mehreren Map Instanzen geben, die gleichzeitig exist
   ngOnDestroy(): void {
     this.mapFacade.destroyMap?.(this.containerId);
     //ich muss this.mapReady nicht auf false setzen, weil die Komponente ja komplett zerstört wird, wenn ich sie verlasse, und wenn ich wiederkomme, wird eine neue Instanz der Komponente erstellt, in der mapReady dann automatisch wieder auf false ist

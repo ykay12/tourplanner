@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Tour, TourType } from '../../../models/tour.model';
 import { MixedSegment, TourRoute, TransportMode } from '../../../models/tourRoute.model';
 import { AppStateService } from '../../../states/app-state.service';
+//for faking coordinates while we don't have a real geocoding service:
+import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates';
 
 
 @Component({
@@ -130,9 +132,9 @@ export class CreatetourComponent {
         {
           id: 0,
           from: this.from(),
-          fromCoordinates: null,
+          fromCoordinates: getFakeCoordinates(this.from()),
           to: this.to(),
-          toCoordinates: null,
+          toCoordinates: getFakeCoordinates(this.to()),
           distance: 0,
           transportMode: this.transportMode()
         }
@@ -150,9 +152,9 @@ export class CreatetourComponent {
       routes.push({
         id: i,
         from: currentFrom,
-        fromCoordinates: null,
+        fromCoordinates: getFakeCoordinates(currentFrom),
         to: segment.to,
-        toCoordinates: null,
+        toCoordinates: getFakeCoordinates(segment.to),
         distance: 0,
         transportMode: segment.transportMode
       });
@@ -163,9 +165,9 @@ export class CreatetourComponent {
     routes.push({
       id: filledSegments.length,
       from: currentFrom,
-      fromCoordinates: null,
+      fromCoordinates: getFakeCoordinates(currentFrom),
       to: this.to(),
-      toCoordinates: null,
+      toCoordinates: getFakeCoordinates(this.to()),
       distance: 0,
       transportMode: filledSegments.length > 0
         ? filledSegments[filledSegments.length - 1].transportMode

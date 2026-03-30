@@ -3,7 +3,8 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 
 import { Coordinates } from '../../models/coordinates.model';
 
-//import * as L from 'leaflet';
+//import * as L from 'leaflet'; //Das darf ich nicht machen, weil Angular dann versucht die Library auf dem Server zu laden -> das darf aber nur im Browser passieren (SSR geht mit Leaflet nicht)
+
 
 /*External APIs schould never be accessed directly from the template,
 therefore we create a facade service to encapsulate the logic.
@@ -30,7 +31,9 @@ Responsibilities of the LeafletFacadeService:
 @Injectable({
   providedIn: 'root',
 })
+
 export class LeafletFacadeService {
+  //für SSR muss ich prüfen ob wir im Browser sind!
   private platformId = inject(PLATFORM_ID);
   private isBrowser = isPlatformBrowser(this.platformId);
 
@@ -38,20 +41,19 @@ export class LeafletFacadeService {
   private L: typeof import('leaflet') | null = null;
 
   // For the Tours-Overview screen we need multiple maps, since they are the "picture" of the tour
-  // I am using a Map so that I can easily access the map instance for a given containerId (which is the id of the div where the map should be rendered)
+  // I am using a Map<> so that I can easily access the map instance for a given containerId (which is the id of the div where the map should be rendered)
   private maps: Map<string, any> = new Map();
-  //private mapLastViewedTour: L.Map | null = null; //For the Tour-Details screen we only have one map, so we can store it in a separate variable, do I need to though? -> probs better to render from selectedTourId -> not two states to manage?
+  private markers: Map<string, any> = new Map(); //marker for every map, (I need to remember them to clear them)
 
-  //marker for every map, so that we can easily clear them when we need to
-  private markers: Map<string, any> = new Map();
 
+  //This function is needed to load the Leaflet library dynamically (in the Browser)
   private async loadLeaflet() {
     if (!this.isBrowser) return null;
 
     if (!this.L) {
       const leaflet = await import('leaflet');
 
-      // ✅ FIX DEFAULT ICONS (wichtig!)
+      // telling Leaflet where to find the marker icons
       const iconRetinaUrl = 'assets/leaflet/marker-icon-2x.png';
       const iconUrl = 'assets/leaflet/marker-icon.png';
       const shadowUrl = 'assets/leaflet/marker-shadow.png';
@@ -104,8 +106,11 @@ export class LeafletFacadeService {
   async setMarker(
     containerId: string,
     coordinates: Coordinates,
-  ): Promise<void> {
+  ): Promise<void> 
+  {
+    //DEBUGGING-START
     console.log('📍 setMarker called', coordinates);
+    //DEBUGGING-END
 
     const L = await this.loadLeaflet();
     if (!L) return;
@@ -120,11 +125,12 @@ export class LeafletFacadeService {
       this.markers.set(containerId, layerGroup);
     }
 
-    // 🟢 DEFAULT LEAFLET ICON (automatisch)
+    //Leaflet funktion zum setzen eines Markers
     L.marker([coordinates.lat, coordinates.lng]).addTo(layerGroup);
   }
 
   //clear all markers from the map, e.g. when we want to display a new tour on the same map -> Details screen
+  // actually not needed right now -> but if we had a map that was dependent on a signal, that changes while on the same screen
   clearMarkers(containerId: string): void {
     const layerGroup = this.markers.get(containerId);
     layerGroup?.clearLayers();
@@ -160,8 +166,8 @@ export class LeafletFacadeService {
     const bounds = L.latLngBounds(coordinates.map((c) => [c.lat, c.lng]));
 
     map.fitBounds(bounds, {
-      padding: [50, 50], // Abstand zu den Rändern
-      maxZoom: 15, // verhindert zu starkes Reinzoomen
+      padding: [50, 50], 
+      maxZoom: 15, // verhindert zu starken Zoom
       animate: true,
     });
   }

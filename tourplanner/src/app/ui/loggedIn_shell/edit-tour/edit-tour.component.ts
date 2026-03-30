@@ -5,6 +5,9 @@ import { Tour, TourType } from '../../../models/tour.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { elementAt } from 'rxjs';
+//for faking coordinates while we don't have a real geocoding service:
+import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates';
+
 
 @Component({
   selector: 'app-edit-tour',
@@ -191,9 +194,9 @@ export class EditTourComponent {
         {
           id: 0,
           from: this.from(),
-          fromCoordinates: null,
+          fromCoordinates: getFakeCoordinates(this.from()), //fake koordinaten, solange wir keinen echten geocoding service haben
           to: this.to(),
-          toCoordinates: null,
+          toCoordinates: getFakeCoordinates(this.to()), //fake koordinaten, solange wir keinen echten geocoding service haben
           distance: 0,
           transportMode: this.transportMode()
         }
@@ -211,9 +214,9 @@ export class EditTourComponent {
       routes.push({
         id: i,
         from: currentFrom,
-        fromCoordinates: null,
+        fromCoordinates: getFakeCoordinates(currentFrom), //fake koordinaten, solange wir keinen echten geocoding service haben
         to: segment.to,
-        toCoordinates: null,
+        toCoordinates: getFakeCoordinates(segment.to), //fake koordinaten, solange wir keinen echten geocoding service haben
         distance: 0,
         transportMode: segment.transportMode
       });
@@ -224,9 +227,9 @@ export class EditTourComponent {
     routes.push({
       id: filledSegments.length,
       from: currentFrom,
-      fromCoordinates: null,
+      fromCoordinates: getFakeCoordinates(currentFrom), //fake koordinaten, solange wir keinen echten geocoding service haben
       to: this.to(),
-      toCoordinates: null,
+      toCoordinates: getFakeCoordinates(this.to()), //fake koordinaten, solange wir keinen echten geocoding service haben
       distance: 0,
       transportMode:
         filledSegments.length > 0
