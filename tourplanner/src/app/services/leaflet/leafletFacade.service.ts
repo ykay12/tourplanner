@@ -5,7 +5,6 @@ import { Coordinates } from '../../models/coordinates.model';
 
 //import * as L from 'leaflet'; //Das darf ich nicht machen, weil Angular dann versucht die Library auf dem Server zu laden -> das darf aber nur im Browser passieren (SSR geht mit Leaflet nicht)
 
-
 /*External APIs schould never be accessed directly from the template,
 therefore we create a facade service to encapsulate the logic.
 
@@ -31,7 +30,6 @@ Responsibilities of the LeafletFacadeService:
 @Injectable({
   providedIn: 'root',
 })
-
 export class LeafletFacadeService {
   //für SSR muss ich prüfen ob wir im Browser sind!
   private platformId = inject(PLATFORM_ID);
@@ -44,7 +42,6 @@ export class LeafletFacadeService {
   // I am using a Map<> so that I can easily access the map instance for a given containerId (which is the id of the div where the map should be rendered)
   private maps: Map<string, any> = new Map();
   private markers: Map<string, any> = new Map(); //marker for every map, (I need to remember them to clear them)
-
 
   //This function is needed to load the Leaflet library dynamically (in the Browser)
   private async loadLeaflet() {
@@ -106,8 +103,7 @@ export class LeafletFacadeService {
   async setMarker(
     containerId: string,
     coordinates: Coordinates,
-  ): Promise<void> 
-  {
+  ): Promise<void> {
     //DEBUGGING-START
     console.log('📍 setMarker called', coordinates);
     //DEBUGGING-END
@@ -127,6 +123,27 @@ export class LeafletFacadeService {
 
     //Leaflet funktion zum setzen eines Markers
     L.marker([coordinates.lat, coordinates.lng]).addTo(layerGroup);
+  }
+
+  async drawRoute(
+    containerId: string,
+    coordinates: Coordinates[],
+  ): Promise<void> {
+    const L = await this.loadLeaflet();
+    if (!L) return;
+
+    const map = this.maps.get(containerId);
+    if (!map) return;
+
+    if (coordinates.length < 2) return;
+
+    const latLngs: [number, number][] = coordinates.map((c) => [c.lat, c.lng]);
+
+    L.polyline(latLngs, {
+      color: 'blue',
+      weight: 4,
+      opacity: 0.7,
+    }).addTo(map);
   }
 
   //clear all markers from the map, e.g. when we want to display a new tour on the same map -> Details screen
@@ -166,7 +183,7 @@ export class LeafletFacadeService {
     const bounds = L.latLngBounds(coordinates.map((c) => [c.lat, c.lng]));
 
     map.fitBounds(bounds, {
-      padding: [50, 50], 
+      padding: [50, 50],
       maxZoom: 15, // verhindert zu starken Zoom
       animate: true,
     });

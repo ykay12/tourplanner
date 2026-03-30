@@ -3,6 +3,7 @@
     "id": 1,
     "name": "Vienna City Ride",
     "description": "A relaxed bike tour through Vienna.",
+    "tourType": "Bike",
     "estimated_time": 3600,
     "popularity": 4,
     "isChildfriendly": true,
@@ -41,6 +42,7 @@
     "id": 2,
     "name": "Mountain Hike",
     "description": "Challenging hike with great views.",
+    "tourType": "Hike",
     "estimated_time": 7200,
     "popularity": 5,
     "isChildfriendly": false,
@@ -61,6 +63,45 @@
         "to": "Summit",
         "toCoordinates": { "lat": 47.0900, "lng": 15.4600 },
         "transportMode": "hike",
+        "distance": 3500
+      }
+    ],
+    "logs": []
+  },
+  {
+    "id": 3,
+    "name": "MixedTour",
+    "description": "a mixed tour.",
+    "tourType": "Mixed",
+    "estimated_time": 7200,
+    "popularity": 5,
+    "isChildfriendly": false,
+    "routes": [
+      {
+        "id": 1,
+        "from": "Stephansplatz",
+        "fromCoordinates": { "lat": 48.2082, "lng": 16.3738 },
+        "to": "Donauinsel",
+        "toCoordinates": { "lat": 48.2200, "lng": 16.4200 },
+        "transportMode": "walk",
+        "distance": 4000
+      },
+      {
+        "id": 2,
+        "from": "Donauinsel",
+        "fromCoordinates": { "lat": 48.2200, "lng": 16.4200 },
+        "to": "Hauptbahnhof",
+        "toCoordinates": { "lat": 48.1859, "lng": 16.3750 },
+        "transportMode": "hike",
+        "distance": 3500
+      },
+      {
+        "id": 3,
+        "from": "Hauptbahnhof",
+        "fromCoordinates": { "lat": 48.1859, "lng": 16.3750 },
+        "to": "Westbahnhof",
+        "toCoordinates": { "lat": 48.1965, "lng": 16.3370 },
+        "transportMode": "bike",
         "distance": 3500
       }
     ],

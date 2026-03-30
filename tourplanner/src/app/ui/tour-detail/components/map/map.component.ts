@@ -68,11 +68,13 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
     const start = routes[0].fromCoordinates;
 
+    //start-marker setzen (aus fromCooridnate der ersten TourRoute)
     if (start) {
       this.mapFacade.setMarker(this.containerId, start);
-      coords.push(start);
+      coords.push(start); 
     }
 
+    //alle weiteren marker setzen (aus toCoordinates)
     for (const route of routes) {
       if (route.toCoordinates) {
         this.mapFacade.setMarker(this.containerId, route.toCoordinates);
@@ -80,6 +82,11 @@ export class MapComponent implements AfterViewInit, OnDestroy {
       }
     }
 
+    //map zwischen markern zentrieren
     this.mapFacade.setCenterToFitCoordinates(this.containerId, coords);
+
+    //polylines zwischen den markern zeichnen
+    this.mapFacade.drawRoute(this.containerId, coords);
+
   }
 }
