@@ -1,5 +1,5 @@
 import { Log } from "../models/log.model";
-import { Route } from "../models/route.model";
+import { TourRoute } from "../models/tourRoute.model";
 import { TourType } from "../models/tour.model";
 
 export type TourDto = {
@@ -10,6 +10,6 @@ export type TourDto = {
     popularity: number;
     isChildfriendly: boolean;
     tourType: string;
-    routes: Route[];
+    routes: TourRoute[];
     logs: Array<Log & { createdAt: string }>;
 }

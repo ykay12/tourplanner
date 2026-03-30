@@ -1,5 +1,5 @@
 import { Log } from './log.model';
-import { Route } from './route.model';
+import { TourRoute } from './tourRoute.model';
 
 export type TourType = 'Bike' | 'Hike' | 'Vacation' | 'Mixed' | 'Running';
 
@@ -11,7 +11,7 @@ export class Tour {
   popularity: number;
   isChildfriendly: boolean;
   tourType: TourType;
-  routes: Route[]; //Array in Typescript funktionieren wie wir es von List<> gewöhnt sind
+  routes: TourRoute[]; //Array in Typescript funktionieren wie wir es von List<> gewöhnt sind
   logs: Log[]; //Array in Typescript funktionieren wie wir es von List<> gewöhnt sind
   //Every Tour needs at least one Route because it contains the distance as well as the start and end point - jkgzdfrszwrer
 
@@ -23,7 +23,7 @@ export class Tour {
     popularity: number,
     isChildfriendly: boolean,
     tourType: TourType,
-    routes: Route[],
+    routes: TourRoute[],
     logs: Log[],
   ) {
     this.id = id;

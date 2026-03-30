@@ -2,7 +2,7 @@ import { Component, computed, signal, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Tour, TourType } from '../../../models/tour.model';
-import { MixedSegment, Route, TransportMode } from '../../../models/route.model';
+import { MixedSegment, TourRoute, TransportMode } from '../../../models/tourRoute.model';
 import { AppStateService } from '../../../states/app-state.service';
 
 
@@ -124,13 +124,15 @@ export class CreatetourComponent {
   }
 
 
-  private buildRoutes(): Route[] {
+  private buildRoutes(): TourRoute[] {
     if (!this.isMixedTour()) {
       return [
         {
           id: 0,
           from: this.from(),
+          fromCoordinates: null,
           to: this.to(),
+          toCoordinates: null,
           distance: 0,
           transportMode: this.transportMode()
         }
@@ -138,7 +140,7 @@ export class CreatetourComponent {
     }
 
     const filledSegments = this.segments().filter(segment => segment.to.trim());
-    const routes: Route[] = [];
+    const routes: TourRoute[] = [];
 
     let currentFrom = this.from();
 
@@ -148,7 +150,9 @@ export class CreatetourComponent {
       routes.push({
         id: i,
         from: currentFrom,
+        fromCoordinates: null,
         to: segment.to,
+        toCoordinates: null,
         distance: 0,
         transportMode: segment.transportMode
       });
@@ -159,7 +163,9 @@ export class CreatetourComponent {
     routes.push({
       id: filledSegments.length,
       from: currentFrom,
+      fromCoordinates: null,
       to: this.to(),
+      toCoordinates: null,
       distance: 0,
       transportMode: filledSegments.length > 0
         ? filledSegments[filledSegments.length - 1].transportMode

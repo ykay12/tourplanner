@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Route } from '../../../../../models/route.model'
+import { TourRoute } from '../../../../../models/tourRoute.model'
 
 @Component({
   selector: 'app-step',
@@ -12,7 +12,7 @@ import { Route } from '../../../../../models/route.model'
 export class StepComponent {
 
   //nur eine gemockte Route damit ich beim designen sehen kann, wie ein Step aussieht
-  @Input() step!: Route; //Aber welche Werte hat der jetzt?
+  @Input() step!: TourRoute; 
   @Input() stepNumber!: number;
   
   getTransportIcon(): string {

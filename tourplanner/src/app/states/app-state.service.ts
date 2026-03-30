@@ -4,7 +4,7 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 
 import { Tour, TourType } from '../models/tour.model';
 import { Log } from '../models/log.model';
-import { Route } from '../models/route.model';
+import { TourRoute } from '../models/tourRoute.model';
 import { HttpClient } from '@angular/common/http';
 import { TourDto } from '../dto/TourDto';
 import { dot } from 'node:test/reporters';
