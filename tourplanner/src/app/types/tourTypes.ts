@@ -1,0 +1,1 @@
+export type TourType = 'Bike' | 'Hike' | 'Vacation' | 'Mixed' | 'Running';

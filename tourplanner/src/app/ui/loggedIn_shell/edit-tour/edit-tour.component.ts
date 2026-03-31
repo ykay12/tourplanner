@@ -1,7 +1,9 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { MixedSegment, TourRoute, TransportMode } from '../../../models/tourRoute.model';
+import { MixedSegment, TourRoute } from '../../../models/tourRoute.model';
+import { TransportMode } from '../../../types/transportModes';
 import { AppStateService } from '../../../states/app-state.service';
-import { Tour, TourType } from '../../../models/tour.model';
+import { Tour } from '../../../models/tour.model';
+import { TourType } from '../../../types/tourTypes';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { elementAt } from 'rxjs';

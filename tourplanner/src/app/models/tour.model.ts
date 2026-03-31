@@ -1,7 +1,6 @@
 import { Log } from './log.model';
 import { TourRoute } from './tourRoute.model';
-
-export type TourType = 'Bike' | 'Hike' | 'Vacation' | 'Mixed' | 'Running';
+import { TourType } from '../types/tourTypes';
 
 export class Tour {
   id: number; //Wir haben uns noch nicht geeinigt wie wir die ID anlegen wollen number/string/UUID?

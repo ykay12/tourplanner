@@ -1,4 +1,4 @@
-import { TourType } from "./tour.model";
+import { TourType } from "../types/tourTypes";
 
 export interface CreateTourFormData{
     name: string;

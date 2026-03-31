@@ -1,7 +1,6 @@
 import { from } from "rxjs";
 import { Coordinates } from "./coordinates.model";
-
-export type TransportMode = "Bike" | "Walk" | "Run"
+import { TransportMode } from "../types/transportModes";
 
 export interface TourRoute {
     id: number, //Wir haben uns noch nicht geeinigt wie wir die ID anlegen wollen number/string/UUID?
