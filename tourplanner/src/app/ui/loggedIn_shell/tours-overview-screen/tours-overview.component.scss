@@ -1,26 +1,5 @@
-.modern-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  background: linear-gradient(135deg, #7c6cff, #9b8cff);
-  border-radius: 14px;
-  padding: 0.9rem 1.25rem;
-  color: white;
-  box-shadow: 0 10px 22px rgba(124, 108, 255, 0.22);
-}
-
-.modern-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 28px rgba(124, 108, 255, 0.28);
-}
-
-.modern-btn:active {
-  transform: translateY(0);
-}
-
 .tours-page-card {
-  background: #1e1e1e;
+  background: #f4f7fb;
   border-radius: 12px;
   padding: 16px;
   max-width: 900px;
@@ -41,7 +20,44 @@
   margin-bottom: 12px;
 }
 
+//Liste
 .tours-list {
   max-height: 500px;
   overflow-y: auto;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+//Buttons
+.tour-overview-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0.75rem 1rem;
+  border-radius: 14px;
+  border: 1px solid #dbe4f0;
+  background: #ffffff;
+  color: #374151;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.tour-overview-btn:hover {
+  border-color: #b9c7dd;
+  background: #f9fbff;
+}
+
+.tour-overview-btn-check:checked + .tour-type-btn {
+  background: linear-gradient(135deg, #7c6cff, #9b8cff);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(124, 108, 255, 0.2);
 }

@@ -1,25 +1,17 @@
 <!-- tours-overview.component.html -->
-<p>This should be the "tours-overview" screen from the wireframe.</p>
-<p>It should contain a search bar, a Button to create a new tour and a Scrollable list of all tours (only tour name, trip-type, to and from)</p>
 
-
-
-<!-- Search Bar-->
-
-
-<!--Liste aller Touren -> should be tour-previews, once they exist-->
 <div class="tours-page-card">
 
   <!-- HEADER -->
   <div class="tours-header">
     <h2>Tours Overview</h2>
 
-    <button class="create-btn" (click)="createTour()">
+    <button class="create-btn, tour-overview-btn" (click)="createTour()">
       + New Tour
     </button>
   </div>
 
-  <!-- SEARCH -->
+  <!-- SEARCH-BAR -->
   <div class="search-bar">
     <input
       type="text"
@@ -29,7 +21,7 @@
     />
   </div>
 
-  <!-- LIST -->
+  <!-- LIST of all Tours as TOUR-PREVIEWS -->
   <div class="tours-list">
   @if (filteredTours(); as tours) {
 

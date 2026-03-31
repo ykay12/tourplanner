@@ -2,40 +2,51 @@
 
 <!-- Every tour preview should contain a leaflet-map (needs a unique ID),
  the tour name, a symbol for the tour type, the from (of the first TourRoute) and the to (of the last TourRoute) -->
- <div class="tour-card">
+<div class="tour-card">
 
   <!-- HEADER -->
   <div class="tour-card-header">
     <h3>{{ tour.name }}</h3>
   </div>
 
-  <!-- CONTENT -->
-  <div class="tour-card-content">
+  <!-- BODY ROW -->
+  <div class="tour-card-row">
 
-    <!-- LEFT INFO -->
-    <div class="tour-card-info">
-      <div>
-        <p>From: {{ getFrom() }}</p>
-        <p>To: {{ getTo() }}</p>
-      </div>
+    <!-- MAP -->
+    <div class="tour-card-map" [id]="mapId"></div>
 
-      <div>
-        <p>Type: {{ tour.tourType }}</p>
-      </div>
+    <!-- FROM -->
+    <div class="tour-card-field">
+      <span class="label">From:</span>
+      <span>{{ getFrom() }}</span>
     </div>
 
-    <!-- RIGHT ICON -->
+    <!-- TO -->
+    <div class="tour-card-field">
+      <span class="label">To:</span>
+      <span>{{ getTo() }}</span>
+    </div>
+
+    <!-- POPULARITY -->
+    <div class="tour-card-field">
+      <span class="label">Popularity:</span>
+      <span>{{ tour.popularity }}</span>
+    </div>
+
+    <!-- Estimated Time -->
+    <div class="tour-card-field">
+      <span class="label">Time:</span>
+      <span>{{ tour.estimated_time }}</span>
+    </div>  
+
+    <!-- ICON (ganz rechts) -->
     <div class="tour-card-icon">
-        <!--realtive path?-->
-        <img
-        [src]="'assets/icons/' + getTourTypeIcon()" 
+      <img
+        [src]="'assets/icons/' + getTourTypeIcon()"
         [alt]="tour.tourType"
       />
     </div>
 
   </div>
-
-  <!-- MAP -->
-  <div class="tour-card-map" [id]="'map-' + tour.id"></div>
 
 </div>
