@@ -38,25 +38,24 @@ ul {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 46px;
-  padding: 0.75rem 1rem;
+  min-height: 48px;
+  background: linear-gradient(135deg, #7c6cff, #9b8cff);
   border-radius: 14px;
-  border: 1px solid #dbe4f0;
-  background: #ffffff;
-  color: #374151;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  user-select: none;
+  padding: 0.9rem 1.25rem;
+  color: white;
+  box-shadow: 0 10px 22px rgba(124, 108, 255, 0.22);
 }
 
 .tour-overview-btn:hover {
-  border-color: #b9c7dd;
-  background: #f9fbff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(124, 108, 255, 0.28);
 }
 
 .tour-overview-btn-check:checked + .tour-type-btn {
   background: linear-gradient(135deg, #7c6cff, #9b8cff);
+  border-color: transparent;
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(124, 108, 255, 0.2); background: linear-gradient(135deg, #7c6cff, #9b8cff);
   border-color: transparent;
   color: #ffffff;
   box-shadow: 0 10px 22px rgba(124, 108, 255, 0.2);

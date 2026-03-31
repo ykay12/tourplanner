@@ -42,5 +42,7 @@ export class ToursOverviewComponent {
   }
 
   //Funktion die beim Klick auf den Button zu createtour_screen navigiert
-  createTour() {}
+  createTour() {
+    this.router.navigate(['/dashboard/createtour']);
+  }
 }
