@@ -1,6 +1,6 @@
 import { Log } from "../models/log.model";
 import { TourRoute } from "../models/tourRoute.model";
-import { TourType } from "../models/tour.model";
+import { TourType } from "../types/tourTypes";
 
 export type TourDto = {
     id: number;

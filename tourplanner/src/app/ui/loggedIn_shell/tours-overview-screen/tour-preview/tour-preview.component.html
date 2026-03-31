@@ -2,3 +2,40 @@
 
 <!-- Every tour preview should contain a leaflet-map (needs a unique ID),
  the tour name, a symbol for the tour type, the from (of the first TourRoute) and the to (of the last TourRoute) -->
+ <div class="tour-card">
+
+  <!-- HEADER -->
+  <div class="tour-card-header">
+    <h3>{{ tour.name }}</h3>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="tour-card-content">
+
+    <!-- LEFT INFO -->
+    <div class="tour-card-info">
+      <div>
+        <p>From: {{ getFrom() }}</p>
+        <p>To: {{ getTo() }}</p>
+      </div>
+
+      <div>
+        <p>Type: {{ tour.tourType }}</p>
+      </div>
+    </div>
+
+    <!-- RIGHT ICON -->
+    <div class="tour-card-icon">
+        <!--realtive path?-->
+        <img
+        [src]="'assets/icons/' + getTourTypeIcon()" 
+        [alt]="tour.tourType"
+      />
+    </div>
+
+  </div>
+
+  <!-- MAP -->
+  <div class="tour-card-map" [id]="'map-' + tour.id"></div>
+
+</div>

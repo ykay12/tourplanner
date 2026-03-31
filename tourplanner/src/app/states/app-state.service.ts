@@ -1,8 +1,8 @@
 //app-state.service.ts
 
 import { Injectable, computed, inject, signal } from '@angular/core';
-
-import { Tour, TourType } from '../models/tour.model';
+import { Tour} from '../models/tour.model';
+import { TourType } from '../types/tourTypes';
 import { Log } from '../models/log.model';
 import { TourRoute } from '../models/tourRoute.model';
 import { HttpClient } from '@angular/common/http';

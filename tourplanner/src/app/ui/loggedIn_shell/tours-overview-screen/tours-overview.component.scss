@@ -18,3 +18,30 @@
 .modern-btn:active {
   transform: translateY(0);
 }
+
+.tours-page-card {
+  background: #1e1e1e;
+  border-radius: 12px;
+  padding: 16px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.tours-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.tours-list {
+  max-height: 500px;
+  overflow-y: auto;
+}

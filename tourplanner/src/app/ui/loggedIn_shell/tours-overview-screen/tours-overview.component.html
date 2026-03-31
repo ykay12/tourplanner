@@ -3,19 +3,44 @@
 <p>It should contain a search bar, a Button to create a new tour and a Scrollable list of all tours (only tour name, trip-type, to and from)</p>
 
 
+
 <!-- Search Bar-->
 
+
 <!--Liste aller Touren -> should be tour-previews, once they exist-->
-@if (state.tours(); as tours) {
+<div class="tours-page-card">
+
+  <!-- HEADER -->
+  <div class="tours-header">
+    <h2>Tours Overview</h2>
+
+    <button class="create-btn" (click)="createTour()">
+      + New Tour
+    </button>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="search-bar">
+    <input
+      type="text"
+      placeholder="Search tours..."
+      [value]="searchTerm()" 
+      (input)="searchTerm.set($any($event.target).value)"
+    />
+  </div>
+
+  <!-- LIST -->
+  <div class="tours-list">
+  @if (filteredTours(); as tours) {
+
   <ul>
     @for (tour of tours; track tour.id) {
       <li>
         <app-tour-preview
-        [tour]="tour"
-        (click)="goToTour(tour.id)"
+          [tour]="tour"
+          (click)="goToTour(tour.id)"
         ></app-tour-preview>
-</li>
-
+      </li>
     }
   </ul>
 
@@ -26,5 +51,8 @@
   </p>
 
 }
+  </div>
+</div>
+
 
 

@@ -1,8 +1,10 @@
 import { Component, computed, signal, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Tour, TourType } from '../../../models/tour.model';
-import { MixedSegment, TourRoute, TransportMode } from '../../../models/tourRoute.model';
+import { Tour } from '../../../models/tour.model';
+import { TourType } from '../../../types/tourTypes';
+import { MixedSegment, TourRoute } from '../../../models/tourRoute.model';
+import { TransportMode } from '../../../types/transportModes';
 import { AppStateService } from '../../../states/app-state.service';
 //for faking coordinates while we don't have a real geocoding service:
 import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates';

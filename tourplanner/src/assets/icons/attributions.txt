@@ -3,3 +3,5 @@ vacation: <a href="https://www.flaticon.com/free-icons/beach" title="beach icons
 walk: <a href="https://www.flaticon.com/free-icons/movement" title="movement icons">Movement icons created by Bogdan Rosu - Flaticon</a>
 
 Default: <a href="https://www.flaticon.com/free-icons/default" title="default icons">Default icons created by Tempo_doloe - Flaticon</a>
+
+route: <a href="https://www.flaticon.com/free-icons/road-trip" title="road trip icons">Road trip icons created by Triangle Squad - Flaticon</a>
