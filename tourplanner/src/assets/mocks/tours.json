@@ -44,7 +44,7 @@
     "description": "Challenging hike with great views.",
     "tourType": "Hike",
     "estimated_time": 7200,
-    "popularity": 5,
+    "popularity": 3,
     "isChildfriendly": false,
     "routes": [
       {
