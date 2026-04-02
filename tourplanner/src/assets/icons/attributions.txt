@@ -5,3 +5,5 @@ walk: <a href="https://www.flaticon.com/free-icons/movement" title="movement ico
 Default: <a href="https://www.flaticon.com/free-icons/default" title="default icons">Default icons created by Tempo_doloe - Flaticon</a>
 
 route: <a href="https://www.flaticon.com/free-icons/road-trip" title="road trip icons">Road trip icons created by Triangle Squad - Flaticon</a>
+
+minimize: <a href="https://www.flaticon.com/free-icons/collapse" title="collapse icons">Collapse icons created by sonnycandra - Flaticon</a>

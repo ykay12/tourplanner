@@ -201,3 +201,14 @@
 .danger-btn:hover {
   box-shadow: 0 10px 20px rgba(239, 68, 68, 0.3);
 }
+
+.export-btn {
+  background: linear-gradient(135deg, #4bb8f3, #85cbf1);
+  color: white;
+  border-radius: 12px;
+  padding: 0.6rem 1rem;
+}
+
+.export-btn:hover {
+  box-shadow: 0 10px 20px rgba(18, 77, 145, 0.3);
+}

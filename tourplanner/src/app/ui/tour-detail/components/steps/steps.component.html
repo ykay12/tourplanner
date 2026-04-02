@@ -1,9 +1,19 @@
 <div class="steps-card">
-  <div class="steps-card-header">
+  <div class="steps-card-header" (click)="toggle()">
     <h2 class="steps-card-title">Steps</h2>
+
+    <img 
+        class="minimize-icon"
+        [src]="'assets/icons/minimize.png'"
+        [alt]="'collapse steps'"
+        
+      >
+    
+    
   </div>
 
-  <div class="steps-card-scrollable">
+  <div class="steps-card-scrollable"
+  [class.collapsed]="collapsed()">
     @if (tour; as t) {
       @for (step of t.routes; track $index; let i = $index) {
         <app-step [step]="step" [stepNumber]="i + 1"></app-step>
