@@ -17,9 +17,18 @@
     </div>
 
     <div class="tour-buttons">
-      <button class="modern-btn" type="button" (click)="(onEditTour())">Edit Tour</button>
-      <button class="modern-btn danger-btn" type="button" (click)="(openDeleteModal())">Delete Tour</button>
-      <button class="modern-btn export-btn" type="button">Export Tour</button>
+      <button class="modern-btn" type="button" (click)="(onEditTour())">
+        Edit Tour
+        <img src="assets/icons/edit.png" alt="Edit" class="btn-icon">
+      </button>
+      <button class="modern-btn danger-btn" type="button" (click)="(openDeleteModal())">
+        Delete Tour
+        <img src="assets/icons/delete.png" alt="Delete" class="btn-icon">
+      </button>
+      <button class="modern-btn export-btn" type="button">
+        Export Tour
+        <img src="assets/icons/import-export.png" alt="Export" class="btn-icon">
+      </button>
     </div>
   </div>
   @if (showDeleteModal()) {

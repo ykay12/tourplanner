@@ -7,3 +7,9 @@ Default: <a href="https://www.flaticon.com/free-icons/default" title="default ic
 route: <a href="https://www.flaticon.com/free-icons/road-trip" title="road trip icons">Road trip icons created by Triangle Squad - Flaticon</a>
 
 minimize: <a href="https://www.flaticon.com/free-icons/collapse" title="collapse icons">Collapse icons created by sonnycandra - Flaticon</a>
+
+import-export: <a href="https://www.flaticon.com/free-icons/export" title="export icons">Export icons created by Triam Studio - Flaticon</a>
+
+edit: <a href="https://www.flaticon.com/free-icons/edit" title="edit icons">Edit icons created by Pixel perfect - Flaticon</a>
+
+delete: <a href="https://www.flaticon.com/free-icons/delete" title="delete icons">Delete icons created by Ilham Fitrotul Hayat - Flaticon</a>
