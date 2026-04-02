@@ -1,5 +1,12 @@
-.tours-page-card {
-  background: #f4f7fb;
+.tours-page {
+  background: linear-gradient(135deg, #ffffff, #f8faff);
+  border-radius: 12px;
+  padding: 16px;
+  width: 100%;
+}
+
+.tours-card {
+  background: linear-gradient(135deg, #ffffff, #f8faff);
   border-radius: 12px;
   padding: 16px;
   max-width: 900px;
@@ -34,7 +41,9 @@ ul {
 
 
 //Buttons
-.tour-overview-btn {
+/* BUTTON (dein bestehender Stil bleibt gleich) */
+
+.modern-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -46,17 +55,11 @@ ul {
   box-shadow: 0 10px 22px rgba(124, 108, 255, 0.22);
 }
 
-.tour-overview-btn:hover {
+.modern-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 14px 28px rgba(124, 108, 255, 0.28);
 }
 
-.tour-overview-btn-check:checked + .tour-type-btn {
-  background: linear-gradient(135deg, #7c6cff, #9b8cff);
-  border-color: transparent;
-  color: #ffffff;
-  box-shadow: 0 10px 22px rgba(124, 108, 255, 0.2); background: linear-gradient(135deg, #7c6cff, #9b8cff);
-  border-color: transparent;
-  color: #ffffff;
-  box-shadow: 0 10px 22px rgba(124, 108, 255, 0.2);
+.modern-btn:active {
+  transform: translateY(0);
 }
