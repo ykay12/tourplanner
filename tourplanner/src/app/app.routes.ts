@@ -12,6 +12,8 @@ import { DashboardHomeComponent } from './ui/loggedIn_shell/dashboard-home/dashb
 import { ToursOverviewComponent } from './ui/loggedIn_shell/tours-overview-screen/tours-overview.component';
 import { EditTourComponent } from './ui/loggedIn_shell/edit-tour/edit-tour.component';
 
+import { authGuard } from './services/auth/auth.guard';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -20,6 +22,7 @@ export const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate: [authGuard], 
     children: [
       { path: '', component: DashboardHomeComponent },
       { path: 'createtour', component: CreatetourComponent },

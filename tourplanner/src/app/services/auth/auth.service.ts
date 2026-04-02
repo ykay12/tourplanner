@@ -1,11 +1,13 @@
 import { Injectable, signal } from '@angular/core';
+import { AppStateService } from '../../states/app-state.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor() {
+  constructor(private appState: AppStateService) {
   }
 
 
@@ -14,6 +16,7 @@ export class AuthService {
     const success = username === "test" && password === "123"
 
     if (success) {
+      this.appState.logUserIn()
       return true
     }
     return false

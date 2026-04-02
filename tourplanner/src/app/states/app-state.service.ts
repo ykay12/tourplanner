@@ -30,15 +30,17 @@ export class AppStateService {
   */
   private readonly _tours = signal<Tour[]>([]);
   private readonly _selectedTourId = signal<number | null>(null);
+  private readonly _loggedIn = signal<boolean>(false);
 
   //////////////////////////////////////////////////////////////  
   // Readonly State (für Components -> die dürfen nur auslesen)
   //////////////////////////////////////////////////////////////
   readonly tours = this._tours.asReadonly();
   readonly selectedTourId = this._selectedTourId.asReadonly();
+  readonly loggedIn = this._loggedIn.asReadonly();
 
   //////////////////
-  // Derived State
+  // Derived States
   //////////////////
   readonly selectedTour = computed<Tour | null>(() => {
     const id = this._selectedTourId();
@@ -49,14 +51,7 @@ export class AppStateService {
 
 
   constructor() {
-    // nur für Test
-
-    // if (this._tours().length > 0) { //wenn wir das auskommentieren, dann wird bei der Route keine slectedTour Angezeigt
-    //   this._selectedTourId.set(this._tours()[0].id);
-    // }
-
     this.loadMockTours()
-
   }
 
   loadMockTours() {
@@ -126,6 +121,13 @@ export class AppStateService {
     if (this._selectedTourId() === updatedTour.id) {
       this._selectedTourId.set(updatedTour.id);
     }
+  }
+  logUserIn() {
+    this._loggedIn.set(true)
+  }
+  
+  logUserOut() {
+    this._loggedIn.set(false)
   }
 
 }

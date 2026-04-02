@@ -204,8 +204,6 @@ export class CreatetourComponent {
 
     // Diese Tour als latest-selected und Verlinkung zu dieser Tour
     this.appState.selectTour(tour.id) 
-
-
     this.router.navigate(['/dashboard/tour-detail'])
   }
 }
