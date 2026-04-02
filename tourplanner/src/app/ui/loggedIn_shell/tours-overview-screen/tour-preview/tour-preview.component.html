@@ -13,7 +13,10 @@
   <div class="tour-card-row">
 
     <!-- MAP -->
-    <div class="tour-card-map" [id]="mapId"></div>
+  <div class="tour-card-map" 
+    [id]="mapId"
+    (click)="$event.stopPropagation()"> <!--So that a klick on the tour does not link to the detail screen or set selected_tour-->
+  </div>
 
     <!-- FROM -->
     <div class="tour-card-field">
