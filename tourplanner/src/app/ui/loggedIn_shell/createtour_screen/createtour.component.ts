@@ -192,6 +192,7 @@ export class CreatetourComponent {
       []
     )
   }
+
   onSubmit(): void {
     if (!this.validate()) {
       return
@@ -201,6 +202,10 @@ export class CreatetourComponent {
     this.appState.addTour(tour)
     console.log("Created new Tour: ", tour)
 
-    this.router.navigate(['/dashboard'])
+    // Diese Tour als latest-selected und Verlinkung zu dieser Tour
+    this.appState.selectTour(tour.id) 
+
+
+    this.router.navigate(['/dashboard/tour-detail'])
   }
 }
