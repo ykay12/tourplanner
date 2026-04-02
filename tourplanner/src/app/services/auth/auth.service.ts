@@ -24,5 +24,6 @@ export class AuthService {
 
 
   logout() {
+    this.appState.logUserOut()
   }
 }

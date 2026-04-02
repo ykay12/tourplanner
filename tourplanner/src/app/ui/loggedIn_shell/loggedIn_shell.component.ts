@@ -2,7 +2,8 @@
 
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,4 +12,15 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   templateUrl: './loggedIn_shell.component.html',
   styleUrl: './loggedIn_shell.component.scss'
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  onLogout(){
+      this.authService.logout()
+      this.router.navigate(['/login']);
+  }
+}
