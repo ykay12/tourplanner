@@ -29,6 +29,7 @@
     ],
     "logs": [
       {
+        "id": 1001,
         "comment": "Nice ride!",
         "createdAt": "2026-03-20",
         "difficulty": 2,
@@ -108,3 +109,6 @@
     "logs": []
   }
 ]
+
+
+

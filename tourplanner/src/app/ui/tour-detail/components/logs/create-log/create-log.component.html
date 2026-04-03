@@ -1,0 +1,87 @@
+<div class="create-log-form">
+  <div class="create-log-header">
+    <h3 class="create-log-title">Create New Log</h3>
+  </div>
+
+  <div class="create-log-form-content">
+    @if (errorMsg(); as error) {
+      <div class="error-message">{{ error }}</div>
+    }
+
+    <div class="form-group">
+      <label for="comment">Comment</label>
+      <textarea 
+        id="comment"
+        class="form-input form-textarea"
+        [value]="comment()"
+        (change)="onCommentChange($event)"
+        placeholder="Enter your comment about this tour"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="date">Date</label>
+      <input 
+        id="date"
+        type="date" 
+        class="form-input"
+        [value]="date()"
+        (change)="onDateChange($event)">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="difficulty">Difficulty (1-10)</label>
+        <input 
+          id="difficulty"
+          type="number" 
+          class="form-input"
+          min="1"
+          max="10"
+          [value]="difficulty()"
+          (change)="onDifficultyChange($event)">
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Rating (1-10)</label>
+        <input 
+          id="rating"
+          type="number" 
+          class="form-input"
+          min="1"
+          max="10"
+          [value]="rating()"
+          (change)="onRatingChange($event)">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="distance">Distance (km)</label>
+        <input 
+          id="distance"
+          type="number" 
+          class="form-input"
+          step="0.1"
+          min="0"
+          [value]="distance()"
+          (change)="onDistanceChange($event)">
+      </div>
+
+      <div class="form-group">
+        <label for="duration">Duration (seconds)</label>
+        <input 
+          id="duration"
+          type="number" 
+          class="form-input"
+          min="0"
+          [value]="duration()"
+          (change)="onDurationChange($event)">
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <button class="btn btn-primary" (click)="submitLog()">Save Log</button>
+      <button class="btn btn-secondary" (click)="cancelForm()">Cancel</button>
+    </div>
+  </div>
+</div>

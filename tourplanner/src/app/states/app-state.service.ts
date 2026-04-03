@@ -130,5 +130,27 @@ export class AppStateService {
     this._loggedIn.set(false)
   }
 
+  addLogToTour(log: Log) {
+    const selectedTour = this.selectedTour();
+    if (selectedTour) {
+      // Generate a simple ID for the log (using timestamp + random number)
+      log.id = Date.now() + Math.floor(Math.random() * 1000);
+      
+      const updatedTour = new Tour(
+        selectedTour.id,
+        selectedTour.name,
+        selectedTour.description,
+        selectedTour.estimated_time,
+        selectedTour.popularity,
+        selectedTour.isChildfriendly,
+        selectedTour.tourType,
+        selectedTour.routes,
+        [...selectedTour.logs, log]
+      );
+      
+      this.updateTour(updatedTour);
+    }
+  }
+
 }
 
