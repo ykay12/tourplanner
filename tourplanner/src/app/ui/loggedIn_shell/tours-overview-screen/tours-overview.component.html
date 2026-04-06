@@ -1,52 +1,42 @@
-<!-- tours-overview.component.html -->
-
 <section class="tours-page">
-<div class="tours-card">
+  <div class="tours-card">
+    <!-- HEADER -->
+    <div class="tours-header">
+      <div class="tours-header-copy">
+        <p class="tours-kicker">TourPlanner</p>
+        <h2>My Tours</h2>
+        <p class="tours-subtitle">
+          Browse your tours, search quickly, or create a new one.
+        </p>
+      </div>
 
-  <!-- HEADER -->
-  <div class="tours-header">
-    <h2>My Tours</h2>
+      <button class="modern-btn" type="button" (click)="createTour()">
+        Create New Tour
+      </button>
+    </div>
+    <!-- SEARCH-BAR -->
+    <div class="search-bar">
+      <input type="text" class="modern-input" placeholder="Search tours..." [value]="searchTerm()"
+        (input)="searchTerm.set($any($event.target).value)" />
+    </div>
 
-    <button class="modern-btn" (click)="createTour()">
-      Create New Tour
-    </button>
+    <!-- LIST of all Tours as TOUR-PREVIEWS -->
+    <div class="tours-list">
+      @if (filteredTours(); as tours) {
+      @if (tours.length > 0) {
+      <ul class="tours-list-reset">
+        @for (tour of tours; track tour.id) {
+        <li class="tour-list-item">
+          <app-tour-preview [tour]="tour" (click)="goToTour(tour.id)"></app-tour-preview>
+        </li>
+        }
+      </ul>
+      } @else {
+      <div class="empty-state">
+        <p>No tours found. Please create a tour to see it here.</p>
+      </div>
+      }
+      }
+    </div>
   </div>
-
-  <!-- SEARCH-BAR -->
-  <div class="search-bar">
-    <input
-      type="text"
-      placeholder="Search tours..."
-      [value]="searchTerm()" 
-      (input)="searchTerm.set($any($event.target).value)"
-    />
-  </div>
-
-  <!-- LIST of all Tours as TOUR-PREVIEWS -->
-  <div class="tours-list">
-  @if (filteredTours(); as tours) {
-
-  <ul>
-    @for (tour of tours; track tour.id) {
-      <li>
-        <app-tour-preview
-          [tour]="tour"
-          (click)="goToTour(tour.id)"
-        ></app-tour-preview>
-      </li>
-    }
-  </ul>
-
-} @else {
-
-  <p class="text-center mt-5">
-    No tours found. Please create a tour to see it here.
-  </p>
-
-}
-  </div>
-</div>
 </section>
-
-
-

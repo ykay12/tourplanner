@@ -1,133 +1,126 @@
 <div class="logs-card">
-
   <div class="logs-card-header">
-    <h2 class="logs-card-title">Logs</h2>
-    <button class="btn-add-log" (click)="toggleForm()" title="Add new log">
+    <div class="logs-card-header-copy">
+      <p class="logs-kicker">TourPlanner</p>
+      <h2 class="logs-card-title">Logs</h2>
+    </div>
+
+    <button class="btn-add-log" type="button" (click)="toggleForm()" title="Add new log">
       +
     </button>
   </div>
-
   <!-- Logs Display -->
   <div class="logs-card-scrollable">
     @if (tour; as t) {
-      @if (t.logs.length > 0) {
-        @for (log of t.logs; track $index) {
-          <div class="log-item">
-            <div class="log-item-header">
-              <div class="log-content">
-                <p><strong>Comment:</strong> {{ log.comment }}</p>
-                <p><strong>Created at:</strong> {{ log.createdAt | date: 'short' }}</p>
-                <p><strong>Difficulty:</strong> {{ log.difficulty }}/5</p>
-                <p><strong>Distance:</strong> {{ log.total_distance }} km</p>
-                <p><strong>Duration:</strong> {{ log.total_time }} s</p>
-                <p><strong>Rating:</strong> {{ log.rating }}/5</p>
-              </div>
-              <div class="log-actions">
-                <button class="btn-edit" (click)="editLog(log)" title="Edit log">✎</button>
-                <button class="btn-delete" (click)="deleteLog(log.id)" title="Delete log">✕</button>
-              </div>
-            </div>
-          </div>
-        }
-      } @else {
-        <p class="no-logs-message">No logs yet. Click the + button to add one!</p>
-      }
+    @if (t.logs.length > 0) {
+    @for (log of t.logs; track $index) {
+    <div class="log-item">
+      <div class="log-item-header">
+        <div class="log-content">
+          <p><strong>Comment:</strong> {{ log.comment }}</p>
+          <p><strong>Created at:</strong> {{ log.createdAt | date: 'short' }}</p>
+          <p><strong>Difficulty:</strong> {{ log.difficulty }}/5</p>
+          <p><strong>Distance:</strong> {{ log.total_distance }} km</p>
+          <p><strong>Duration:</strong> {{ log.total_time }} s</p>
+          <p><strong>Rating:</strong> {{ log.rating }}/5</p>
+        </div>
+
+        <div class="log-actions">
+          <button class="btn-edit" type="button" (click)="editLog(log)" title="Edit log">✎</button>
+          <button class="btn-delete" type="button" (click)="deleteLog(log.id)" title="Delete log">✕</button>
+        </div>
+      </div>
+    </div>
+    }
+    } @else {
+    <div class="empty-state">
+      <p>No logs yet. Click the + button to add one.</p>
+    </div>
+    }
     }
   </div>
-
 </div>
-
 <!-- Modal Overlay -->
 @if (showForm()) {
-  <div class="modal-overlay" (click)="closeForm()"></div>
-
-  <!-- Modal Popup -->
-  <div class="modal-popup">
-    <div class="modal-header">
+<div class="modal-overlay" (click)="closeForm()"></div>
+<!-- Modal Popup -->
+<div class="modal-popup">
+  <div class="modal-header">
+    <div>
+      <p class="modal-kicker">TourPlanner</p>
       <h3 class="modal-title">{{ editingLogId() ? 'Edit Log' : 'Create New Log' }}</h3>
-      <button class="modal-close-btn" (click)="closeForm()" aria-label="Close">✕</button>
     </div>
 
-    <div class="modal-body">
-      <form [formGroup]="logForm" (ngSubmit)="onSubmit()" class="logs-form">
+    <button class="modal-close-btn" type="button" (click)="closeForm()" aria-label="Close">✕</button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="logForm" (ngSubmit)="onSubmit()" class="logs-form">
+      <div class="form-group">
+        <label for="comment">Comment</label>
+        <textarea id="comment" formControlName="comment" placeholder="Enter log comment" rows="3"></textarea>
+        @if (logForm.get('comment')?.invalid && logForm.get('comment')?.touched) {
+        <span class="error-message">Comment is required</span>
+        }
+      </div>
+
+      <div class="form-row">
         <div class="form-group">
-          <label for="comment">Comment:</label>
-          <textarea 
-            id="comment" 
-            formControlName="comment" 
-            placeholder="Enter log comment"
-            rows="3">
-          </textarea>
-          @if (logForm.get('comment')?.invalid && logForm.get('comment')?.touched) {
-            <span class="error-message">Comment is required</span>
+          <label for="difficulty">Difficulty</label>
+          <select id="difficulty" formControlName="difficulty">
+            <option value="">Select Difficulty</option>
+            <option value="1">1 - Very Easy</option>
+            <option value="2">2 - Easy</option>
+            <option value="3">3 - Medium</option>
+            <option value="4">4 - Hard</option>
+            <option value="5">5 - Very Hard</option>
+          </select>
+          @if (logForm.get('difficulty')?.invalid && logForm.get('difficulty')?.touched) {
+          <span class="error-message">Difficulty is required (1-5)</span>
           }
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="difficulty">Difficulty (1-5):</label>
-            <select id="difficulty" formControlName="difficulty">
-              <option value="">Select Difficulty</option>
-              <option value="1">1 - Very Easy</option>
-              <option value="2">2 - Easy</option>
-              <option value="3">3 - Medium</option>
-              <option value="4">4 - Hard</option>
-              <option value="5">5 - Very Hard</option>
-            </select>
-            @if (logForm.get('difficulty')?.invalid && logForm.get('difficulty')?.touched) {
-              <span class="error-message">Difficulty is required (1-5)</span>
-            }
-          </div>
+        <div class="form-group">
+          <label for="rating">Rating</label>
+          <select id="rating" formControlName="rating">
+            <option value="">Select Rating</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐⭐</option>
+            <option value="3">3 ⭐⭐⭐</option>
+            <option value="4">4 ⭐⭐⭐⭐</option>
+            <option value="5">5 ⭐⭐⭐⭐⭐</option>
+          </select>
+          @if (logForm.get('rating')?.invalid && logForm.get('rating')?.touched) {
+          <span class="error-message">Rating is required (1-5)</span>
+          }
+        </div>
+      </div>
 
-          <div class="form-group">
-            <label for="rating">Rating (1-5):</label>
-            <select id="rating" formControlName="rating">
-              <option value="">Select Rating</option>
-              <option value="1">1 ⭐</option>
-              <option value="2">2 ⭐⭐</option>
-              <option value="3">3 ⭐⭐⭐</option>
-              <option value="4">4 ⭐⭐⭐⭐</option>
-              <option value="5">5 ⭐⭐⭐⭐⭐</option>
-            </select>
-            @if (logForm.get('rating')?.invalid && logForm.get('rating')?.touched) {
-              <span class="error-message">Rating is required (1-5)</span>
-            }
-          </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="total_distance">Distance (km)</label>
+          <input id="total_distance" type="number" step="0.1" formControlName="total_distance" placeholder="0.0" />
+          @if (logForm.get('total_distance')?.invalid && logForm.get('total_distance')?.touched) {
+          <span class="error-message">Distance is required and must be >= 0</span>
+          }
         </div>
 
-        <div class="form-row">
-          <div class="form-group">
-            <label for="total_distance">Distance (km):</label>
-            <input 
-              id="total_distance" 
-              type="number" 
-              step="0.1"
-              formControlName="total_distance"
-              placeholder="0.0">
-            @if (logForm.get('total_distance')?.invalid && logForm.get('total_distance')?.touched) {
-              <span class="error-message">Distance is required and must be >= 0</span>
-            }
-          </div>
-
-          <div class="form-group">
-            <label for="total_time">Duration (seconds):</label>
-            <input 
-              id="total_time" 
-              type="number" 
-              step="1"
-              formControlName="total_time"
-              placeholder="0">
-            @if (logForm.get('total_time')?.invalid && logForm.get('total_time')?.touched) {
-              <span class="error-message">Duration is required and must be >= 0</span>
-            }
-          </div>
+        <div class="form-group">
+          <label for="total_time">Duration (seconds)</label>
+          <input id="total_time" type="number" step="1" formControlName="total_time" placeholder="0" />
+          @if (logForm.get('total_time')?.invalid && logForm.get('total_time')?.touched) {
+          <span class="error-message">Duration is required and must be >= 0</span>
+          }
         </div>
+      </div>
 
-        <div class="modal-buttons">
-          <button type="submit" [disabled]="logForm.invalid" class="btn-submit">{{ editingLogId() ? 'Update Log' : 'Save Log' }}</button>
-          <button type="button" class="btn-cancel" (click)="closeForm()">Cancel</button>
-        </div>
-      </form>
-    </div>
+      <div class="modal-buttons">
+        <button type="button" class="btn-cancel" (click)="closeForm()">Cancel</button>
+        <button type="submit" [disabled]="logForm.invalid" class="btn-submit">
+          {{ editingLogId() ? 'Update Log' : 'Save Log' }}
+        </button>
+      </div>
+    </form>
   </div>
+</div>
 }
