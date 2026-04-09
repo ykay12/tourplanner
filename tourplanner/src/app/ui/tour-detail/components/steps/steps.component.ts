@@ -26,7 +26,7 @@ export class StepsComponent {
     return this.state.selectedTour();
   }
 
-  //trying stuff for collapsing on mobile:
+  //collapsing on mobile:
   collapsed = signal(window.innerWidth < 768);
 
   toggle() {

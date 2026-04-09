@@ -1,5 +1,5 @@
 <div class="logs-card">
-  <div class="logs-card-header">
+  <div class="logs-card-header" (click)="toggle()">
     <div class="logs-card-header-copy">
       <p class="logs-kicker">TourPlanner</p>
       <h2 class="logs-card-title">Logs</h2>
@@ -8,9 +8,17 @@
     <button class="btn-add-log" type="button" (click)="toggleForm()" title="Add new log">
       +
     </button>
+
+    <img 
+        class="minimize-icon"
+        [src]="'assets/icons/minimize.png'"
+        [alt]="'collapse logs'"
+        
+      >
   </div>
   <!-- Logs Display -->
-  <div class="logs-card-scrollable">
+  <div class="logs-card-scrollable"
+  [class.collapsed]="collapsed()">
     @if (tour; as t) {
     @if (t.logs.length > 0) {
     @for (log of t.logs; track $index) {

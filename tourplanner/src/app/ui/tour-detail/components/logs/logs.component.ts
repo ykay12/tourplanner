@@ -127,4 +127,11 @@ export class LogsComponent {
     }
   }
 
+   //collapsing on mobile:
+  collapsed = signal(window.innerWidth < 768);
+
+  toggle() {
+    this.collapsed.update((v) => !v);
+  }
+
 }
