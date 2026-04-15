@@ -1,0 +1,2 @@
+Services contain our business logik -> here we make null checks, check if the data is correct usw.
+

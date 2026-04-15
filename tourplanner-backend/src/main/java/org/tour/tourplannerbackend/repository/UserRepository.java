@@ -5,6 +5,7 @@ import org.tour.tourplannerbackend.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 
@@ -15,9 +16,9 @@ public class UserRepository {
     private final List<User> users = new ArrayList<>();
 
     public User save(User user) {
-        // If user has no ID, assign one (optional depending on your design)
+        // If user has no ID, assign one (optional depending on our design) -> I think this should actualy happen in the service
         if (user.getId() == null) {
-            user.setId(UUID.randomUUID());
+            user.setId(Math.abs(new Random().nextLong()));
         } else {
             // If user already exists, remove old version (update case)
             deleteById(user.getId());
@@ -26,11 +27,13 @@ public class UserRepository {
         return user;
     }
 
+
     public List<User> findAll() {
         return users;
     }
 
-    public User findById(UUID id) {
+
+    public User findById(Long id) {
         for (User user : users) {
             if (user.getId().equals(id)) {
                 return user;
@@ -39,7 +42,7 @@ public class UserRepository {
         return null; //ToDo:  -> throw exception
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
         users.removeIf(user -> user.getId().equals(id));
     }
 }
