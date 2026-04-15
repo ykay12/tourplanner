@@ -8,6 +8,7 @@ import { TourRoute } from '../models/tourRoute.model';
 import { HttpClient } from '@angular/common/http';
 import { TourDto } from '../dto/TourDto';
 import { dot } from 'node:test/reporters';
+import { BackendFacadeService } from '../services/backend/backendFacade.service';
 
 @Injectable({
   providedIn: 'root' //Bedeutet: Dieser Service wird auf der Root-Ebene bereitgestellt und ist damit in der gesamten Anwendung verfügbar. Es wird eine einzige Instanz dieses Services erstellt, die von allen Komponenten und anderen Services, die ihn injizieren, geteilt wird.
@@ -15,7 +16,11 @@ import { dot } from 'node:test/reporters';
 export class AppStateService {
 
   // brauchen wir um aus einem json lesen zu können (weil es behandelt wird als würde es im backend liegen)
-  private http = inject(HttpClient)
+  //private http = inject(HttpClient)
+  
+  //brauchen wir um Anfragen an unser Backend zu stellen
+  private backendFacade = inject(BackendFacadeService);
+
 
   tourIdCounter = 4 // wir haben im json aktuell 3, ist mal nur hardcoded
 
@@ -51,10 +56,13 @@ export class AppStateService {
 
 
   constructor() {
-    this.loadMockTours()
+    //this.loadMockToursFromJson()
+    const userId = 1; // später aus Login-Service holen
+    this.loadToursFromBackend(userId);
   }
 
-  loadMockTours() {
+  /*
+  loadMockToursFromJson() {
     this.http.get<TourDto[]>('assets/mocks/tours.json').subscribe({
       next: (data) => {
         const tours = data.map(dto => this.mapDtoToTour(dto))
@@ -68,9 +76,26 @@ export class AppStateService {
         console.log("Error while loading Mock-Tours", e)
       }
     })
+  }*/
+
+  loadToursFromBackend(userId: number) {
+    this.backendFacade.loadToursFromUser(userId).subscribe({
+      next: (tours) => {
+        this._tours.set(tours);
+
+        if (tours.length > 0) {
+          this._selectedTourId.set(tours[0].id); //selecting the first tour in the array
+        }
+      },
+      error: (err) => {
+        console.error('Error loading tours', err);
+      }
+    });
   }
 
 
+
+/* now happening in mapper and backendFacade!
   private mapDtoToTour(dto: TourDto): Tour {
     const logs: Log[] = dto.logs.map(log => ({
       ...log, createdAt: new Date(log.createdAt)
@@ -90,6 +115,7 @@ export class AppStateService {
     )
 
   }
+    */
   /////////////////////////////////
   // Intent Methods (State ändern)
   /////////////////////////////////
