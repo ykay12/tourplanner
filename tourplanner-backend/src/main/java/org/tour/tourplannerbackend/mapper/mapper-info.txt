@@ -1,0 +1,4 @@
+Mapper wandeln zwischen DTOs und Entities um. Sie sind dafür verantwortlich,
+die Daten von einer Form in eine andere zu transformieren,
+damit sie in verschiedenen Schichten der Anwendung verwendet werden können.
+Sie sind zwischen dem Repository und dem Presentation Layer (DTOs)

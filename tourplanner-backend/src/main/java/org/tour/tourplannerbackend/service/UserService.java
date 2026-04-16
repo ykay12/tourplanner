@@ -1,0 +1,67 @@
+package org.tour.tourplannerbackend.service;
+
+import org.springframework.stereotype.Service;
+import org.tour.tourplannerbackend.exception.NotFoundException;
+import org.tour.tourplannerbackend.exception.ValidationException;
+import org.tour.tourplannerbackend.model.User;
+import org.tour.tourplannerbackend.repository.UserRepository;
+
+import java.util.List;
+
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public User createUser(User user) {
+        validateUser(user);
+        return userRepository.save(user);
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    public User getUser(Long id) {
+        if (id == null) {
+            throw new ValidationException("User id must not be null");
+        }
+        User user = userRepository.findById(id);
+        if (user == null) {
+            throw new NotFoundException("User not found: " + id);
+        }
+        return user;
+    }
+
+    public User updateUser(User user) {
+        validateUser(user);
+        if (user.getId() == null) {
+            throw new ValidationException("User id must not be null for update");
+        }
+        return userRepository.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        if (id == null) {
+            throw new ValidationException("User id must not be null");
+        }
+        userRepository.deleteById(id);
+    }
+
+    private void validateUser(User user) {
+        if (user == null) {
+            throw new ValidationException("User must not be null");
+        }
+        if (user.getUsername() == null || user.getUsername().isBlank()) {
+            throw new ValidationException("Username must not be blank");
+        }
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            throw new ValidationException("Password must not be blank");
+        }
+    }
+}
+
