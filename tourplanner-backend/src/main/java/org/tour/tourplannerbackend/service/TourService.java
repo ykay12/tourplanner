@@ -25,7 +25,6 @@ public class TourService {
         List<Tour> userTours = this.tourRepo.findAllFromUser(userId);
 
 
-
         //What do I need to check?
             //if the User has any Tours
         if (userTours.isEmpty()){

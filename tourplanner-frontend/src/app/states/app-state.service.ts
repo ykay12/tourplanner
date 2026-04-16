@@ -57,7 +57,7 @@ export class AppStateService {
 
   constructor() {
     //this.loadMockToursFromJson()
-    const userId = 1; // später aus Login-Service holen
+    const userId = 1; // ToDo: später eigenes Signal, das beim Login befüllt wird
     this.loadToursFromBackend(userId);
   }
 
@@ -80,7 +80,7 @@ export class AppStateService {
 
   loadToursFromBackend(userId: number) {
     this.backendFacade.loadToursFromUser(userId).subscribe({
-      next: (tours) => {
+      next: (tours) => { //wenn backend antwortet, dann: 
         this._tours.set(tours);
 
         if (tours.length > 0) {

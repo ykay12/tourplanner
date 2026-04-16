@@ -1,10 +1,11 @@
 import { Tour } from "../models/tour.model";
 import { Log } from "../models/log.model";
 import { TourRoute } from "../models/tourRoute.model";
+import { TourDto } from "../dto/TourDto";
 
 export class TourMapper {
 
-  static fromDto(dto: any): Tour {
+  static fromDto(dto: TourDto): Tour {
 
     const routes: TourRoute[] = dto.routes.map((r: any) => ({
       id: r.id,
@@ -31,9 +32,9 @@ export class TourMapper {
       dto.id,
       dto.name,
       dto.description,
-      dto.estimatedTime,
+      dto.estimated_time,
       dto.popularity,
-      dto.childfriendly,
+      dto.isChildfriendly,
       dto.tourType,
       routes,
       logs

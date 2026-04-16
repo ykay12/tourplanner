@@ -9,7 +9,7 @@ export type TourDto = {
     estimated_time: number;
     popularity: number;
     isChildfriendly: boolean;
-    tourType: string;
+    tourType: TourType;
     routes: TourRoute[];
     logs: Array<Log & { createdAt: string }>;
 }

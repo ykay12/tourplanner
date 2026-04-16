@@ -11,22 +11,24 @@ External APIs schould never be accessed directly from the template,
 therefore we create a facade service to encapsulate the logic.
 
 Our own backend is also an external API from the viewpoint of our front-end
-
-
 */
 
 @Injectable({
   providedIn: 'root',
 })
 export class BackendFacadeService {
-  //what for?
-  private http = inject(HttpClient);
+  
+  private http = inject(HttpClient); //this is needed to make a http-request
+  private baseUrl = 'http://localhost:8080'; //standard-port Spring-Boot
 
-  private baseUrl = 'http://localhost:8080';
 
+  /*returns observable, because the http-request takes time
+  so whenever it actually returns something then
+  I want to change something outside the function*/
   loadToursFromUser(userId: number): Observable<Tour[]> {
     return this.http
       .get<any[]>(`${this.baseUrl}/users/${userId}/tours`)
       .pipe(map((dtoList) => TourMapper.fromDtoList(dtoList)));
   }
+
 }
