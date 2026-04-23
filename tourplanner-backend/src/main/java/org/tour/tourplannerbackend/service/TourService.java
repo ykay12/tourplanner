@@ -17,7 +17,9 @@ public class TourService {
         this.tourRepo = tourRepository;
     }
 
+    /*
     public List<Tour> getAllToursFromUser(Long userId){
+
         if(userId == null){
             //throw Error
         }
@@ -37,5 +39,19 @@ public class TourService {
 
         return userTours;
     }
+    */
 
+
+    public Tour saveTour(Tour newTour) {
+        // 1.) Checks ob newTour vollständig
+
+        // 2.) Repo-Funktion aufrufen
+        Tour savedTour = tourRepo.save(newTour);
+
+        // 3.) Checks ob Return passt -> Hibernate repo.save() returniert die gespeicherte Entity
+
+        // 4.) gespeicherte Tour returnieren
+        return savedTour;
+
+    }
 }

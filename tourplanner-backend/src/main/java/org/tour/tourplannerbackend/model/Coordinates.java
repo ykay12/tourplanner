@@ -8,7 +8,7 @@ public class Coordinates {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column
     private double latitude;
     @Column

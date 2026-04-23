@@ -1,6 +1,7 @@
 package org.tour.tourplannerbackend.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import org.tour.tourplannerbackend.model.enums.TransportMode;
 
@@ -16,19 +17,25 @@ public class TourRoute {
     private String from;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "from_coordinates_id")
     private Coordinates fromCoordinates; // kann null sein
 
     @Column
     private String to;
 
-    @OneToOne(cascade = CascadeType.ALL) //Coordinates sind eine eigene Entity (kein Basis-Datentyp) deswegen muss ich hier @OneToOne verwenden, statt einfach @Column
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "to_coordinates_id") //Coordinates sind eine eigene Entity (kein Basis-Datentyp) deswegen muss ich hier @OneToOne verwenden, statt einfach @Column
     private Coordinates toCoordinates; // kann null sein
 
     @Column
     private double distance;
 
-    @Column
+    @Enumerated(EnumType.STRING)
     private TransportMode transportMode;
+
+    @JsonBackReference("tour-routes")
+    @ManyToOne
+    private Tour tour;
 
     // Konstruktoren
     public TourRoute() {
@@ -102,5 +109,13 @@ public class TourRoute {
 
     public void setTransportMode(TransportMode transportMode) {
         this.transportMode = transportMode;
+    }
+
+    public Tour getTour() {
+        return tour;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
     }
 }

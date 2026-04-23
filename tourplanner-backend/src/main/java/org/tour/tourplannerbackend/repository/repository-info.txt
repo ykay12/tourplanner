@@ -17,3 +17,7 @@ Wie starten wir überhaupt?
 2.) dann an der Stelle in der Ordnerstruktur wo das docker-compose.yml liegt den Befehl
       docker compose up -d
     durchführen
+
+Wenn Code Änderungen und Docker läuft:
+docker compose down
+docker compose up --build

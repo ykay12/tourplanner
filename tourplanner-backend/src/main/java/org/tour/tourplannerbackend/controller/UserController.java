@@ -14,14 +14,13 @@ import java.util.UUID;
 *  im Unterricht meinte er, dass das Falsch ist,
 *   weil der Controller nicht direkt mit den Repos kommunizieren soll,
 *   sondern über Services
-*   (wir brauchen außerdem Null-Checks -> Errorhandling usw)
+*   (wir brauchen außerdem Null-Checks (in den Services) -> Errorhandling usw)
 * */
 @RestController
 public class UserController {
     private final UserRepository userRepository;
     private final TourService tourService;
 
-    //ToDo: Should be solved with dependency Injection!
     public UserController(UserRepository userRepository,
                           TourService tourService) {
         this.userRepository = userRepository;
@@ -61,12 +60,15 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    //->
+    /*
+    //This should be moved to the Tour Controller
     @CrossOrigin
     @GetMapping("/users/{userId}/tours")
     public List<Tour> getTours(@PathVariable Long userId) {
         return this.tourService.getAllToursFromUser(userId);
     }
+    */
+
 
     /*
     * @PathVariable

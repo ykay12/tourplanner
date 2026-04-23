@@ -6,6 +6,7 @@ import org.tour.tourplannerbackend.model.Tour;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class LogRepository {
@@ -17,38 +18,57 @@ public class LogRepository {
     }
 
     public List<Log> findByTourId(Long tourId) {
-        Tour tour = tourRepository.findById(tourId);
-        if (tour == null || tour.getLogs() == null) {
-            return new ArrayList<>();
-        }
-        return new ArrayList<>(tour.getLogs());
+        return tourRepository.findById(tourId)
+                .map(tour -> {
+                    if (tour.getLogs() == null) {
+                        return new ArrayList<Log>();
+                    }
+                    return new ArrayList<>(tour.getLogs());
+                })
+                .orElseGet(ArrayList::new);
     }
 
+
     public Log save(Long tourId, Log log) {
-        Tour tour = tourRepository.findById(tourId);
-        if (tour == null) {
-            return null;
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new RuntimeException("Tour not found"));
+
+        if (tour.getLogs() == null) {
+            tour.setLogs(new ArrayList<>());
         }
 
         List<Log> logs = tour.getLogs();
-        if (logs == null) {
-            logs = new ArrayList<>();
-            tour.setLogs(logs);
-        }
 
-        logs.removeIf(existing -> existing.getId().equals(log.getId()));
+        // alten Log entfernen (falls Update)
+        logs.removeIf(existing ->
+                existing.getId() != null && existing.getId().equals(log.getId())
+        );
+
+        // Beziehung setzen (WICHTIG bei JPA!)
+        log.setTour(tour);
+
         logs.add(log);
+
         tourRepository.save(tour);
+
         return log;
     }
 
+
     public void deleteById(Long tourId, Long logId) {
-        Tour tour = tourRepository.findById(tourId);
-        if (tour == null || tour.getLogs() == null) {
+        Tour tour = tourRepository.findById(tourId)
+                .orElseThrow(() -> new RuntimeException("Tour not found"));
+
+        if (tour.getLogs() == null) {
             return;
         }
-        tour.getLogs().removeIf(log -> log.getId().equals(logId));
+
+        tour.getLogs().removeIf(log ->
+                log.getId() != null && log.getId().equals(logId)
+        );
+
         tourRepository.save(tour);
     }
+
 }
 

@@ -1,5 +1,6 @@
 package org.tour.tourplannerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -24,6 +25,10 @@ public class Log {
     private int totalTime; // Sekunden
     @Column
     private int rating;
+
+    @JsonBackReference("tour-logs")
+    @ManyToOne
+    private Tour tour;
 
     // Konstruktoren
     public Log() {
@@ -97,6 +102,14 @@ public class Log {
 
     public void setRating(int rating) {
         this.rating = rating;
+    }
+
+    public void setTour(Tour tour) {
+        this.tour = tour;
+    }
+
+    public Tour getTour() {
+        return tour;
     }
 }
 

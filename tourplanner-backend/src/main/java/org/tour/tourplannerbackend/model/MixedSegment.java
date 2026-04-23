@@ -3,6 +3,7 @@ package org.tour.tourplannerbackend.model;
 import jakarta.persistence.*;
 import org.tour.tourplannerbackend.model.enums.TransportMode;
 
+/*
 @Entity
 @Table(name = "mixed_segment")
 public class MixedSegment {
@@ -38,3 +39,5 @@ public class MixedSegment {
         this.transportMode = transportMode;
     }
 }
+*/
+

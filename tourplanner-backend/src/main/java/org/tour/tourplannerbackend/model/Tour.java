@@ -1,5 +1,6 @@
 package org.tour.tourplannerbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.tour.tourplannerbackend.model.enums.TourType;
 
@@ -33,10 +34,12 @@ public class Tour {
     @Enumerated(EnumType.STRING)
     private TourType tourType;
 
-    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
+    @JsonManagedReference("tour-routes")
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TourRoute> routes;
 
-    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
+    @JsonManagedReference("tour-logs")
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Log> logs;
 
     // Konstruktoren
