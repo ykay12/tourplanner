@@ -8,6 +8,7 @@ import { TransportMode } from '../../../types/transportModes';
 import { AppStateService } from '../../../states/app-state.service';
 //for faking coordinates while we don't have a real geocoding service:
 import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates';
+import { BackendFacadeService } from '../../../services/backend/backendFacade.service';
 
 
 @Component({
@@ -33,7 +34,35 @@ export class CreatetourComponent {
   transportMode = signal<TransportMode>('Bike')
   isMixedTour = computed(() => this.tourType() === "Mixed")
 
-  constructor(private router: Router, private appState: AppStateService) { }
+  constructor(private router: Router, 
+              private appState: AppStateService,
+              private backend: BackendFacadeService) { }
+
+
+  onSubmit(): void {
+    if (!this.validate()) {
+      return
+    }
+
+    const tour = this.buildTour()
+    
+    //nicht mehr nur in den state speichern, sondern ans Backend schicken! und dann das was wir zurück bekommen in den state
+    this.backend.saveTour(tour).subscribe({
+      next: (responseTour) => {
+        this.appState.addTour(responseTour);
+
+        console.log("Created new Tour:", responseTour);
+
+        this.appState.selectTour(responseTour.id);
+
+        this.router.navigate(['/dashboard/tour-detail']);
+      },
+      error: (err) => {
+        console.error("Error creating tour:", err);
+        this.errorMsg.set("Failed to create tour / save tour to db");
+      }
+    });  
+  }
 
   onTourName(event: Event): void {
     const value = (event.target as HTMLInputElement).value
@@ -193,17 +222,5 @@ export class CreatetourComponent {
     )
   }
 
-  onSubmit(): void {
-    if (!this.validate()) {
-      return
-    }
-
-    const tour = this.buildTour()
-    this.appState.addTour(tour)
-    console.log("Created new Tour: ", tour)
-
-    // Diese Tour als latest-selected und Verlinkung zu dieser Tour
-    this.appState.selectTour(tour.id) 
-    this.router.navigate(['/dashboard/tour-detail'])
-  }
+  
 }

@@ -31,4 +31,13 @@ export class BackendFacadeService {
       .pipe(map((dtoList) => TourMapper.fromDtoList(dtoList)));
   }
 
+  
+  //Send a newly created tour to the backend to be saved in the database
+  saveTour(newTour: Tour): Observable<Tour> {
+    
+    return this.http.post<any>(`${this.baseUrl}/tours`, newTour).pipe(
+      map((responseDto) => TourMapper.fromDto(responseDto))
+    );
+
+  }
 }

@@ -58,7 +58,7 @@ export class AppStateService {
   constructor() {
     //this.loadMockToursFromJson()
     const userId = 1; // ToDo: später eigenes Signal, das beim Login befüllt wird
-    this.loadToursFromBackend(userId);
+    //this.loadToursFromBackend(userId);
   }
 
   /*
