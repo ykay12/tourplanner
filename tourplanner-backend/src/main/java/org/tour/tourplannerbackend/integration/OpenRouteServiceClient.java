@@ -1,3 +1,4 @@
+/*
 package org.tour.tourplannerbackend.integration;
 
 import org.springframework.stereotype.Component;
@@ -20,4 +21,7 @@ public class OpenRouteServiceClient {
         return appProperties.getOrsApiKey();
     }
 }
+
+*/
+
 

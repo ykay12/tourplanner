@@ -1,19 +1,33 @@
 package org.tour.tourplannerbackend.model;
 
 
+import jakarta.persistence.*;
 import org.tour.tourplannerbackend.model.enums.TransportMode;
 
+@Entity
+@Table(name = "tour_route")
 public class TourRoute {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String from;
+
+    @OneToOne(cascade = CascadeType.ALL)
     private Coordinates fromCoordinates; // kann null sein
 
+    @Column
     private String to;
+
+    @OneToOne(cascade = CascadeType.ALL) //Coordinates sind eine eigene Entity (kein Basis-Datentyp) deswegen muss ich hier @OneToOne verwenden, statt einfach @Column
     private Coordinates toCoordinates; // kann null sein
 
+    @Column
     private double distance;
+
+    @Column
     private TransportMode transportMode;
 
     // Konstruktoren

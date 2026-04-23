@@ -1,0 +1,19 @@
+Class 16.04.
+-> Wir müssen in unseren Repos kein SQL mehr schreiben, weil es eine Möglichkeit über Spring gibt, das zu machen?
+-> Wir verwenden Hibernate
+
+23.04.
+im application.properties haben wir folgende Zeile:
+    spring.jpa.hibernate.ddl-auto=update
+Diese ermöglicht es uns, dass durch das Einfügen von Daten die Datenbank verändert wird.
+Wichtig! Das macht nur während der Entwicklung Sinn! -> Für die Finale Abgabe müssen wir es auf das:
+    spring.jpa.hibernate.ddl-auto=none
+ändern! (Siehe Foliensatz: "akarta Persistence API (JPA) with Spring Data JPA" Folie: 9)
+
+Wie können wir uns die Datenbank anschauen?
+
+Wie starten wir überhaupt?
+1.) Docker-Desktop starten
+2.) dann an der Stelle in der Ordnerstruktur wo das docker-compose.yml liegt den Befehl
+      docker compose up -d
+    durchführen

@@ -1,11 +1,19 @@
 package org.tour.tourplannerbackend.model;
 
+import jakarta.persistence.*;
+
 import java.util.UUID;
 
 //At the moment: POJO -> Should be Bean?
+@Entity
+@Table(name = "user")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String username;
+    @Transient //so that we don't persist the clear-text-pw -> depends on if it is hashed here / otherwise just @Column
     private String password;
 
     //Constructor

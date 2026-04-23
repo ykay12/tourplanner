@@ -1,15 +1,28 @@
 package org.tour.tourplannerbackend.model;
 
+import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "log")
 public class Log {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column
     private LocalDateTime createdAt; // entspricht Date in TS
+    @Column
     private String comment;
+    @Column
     private int difficulty;
+    @Column
     private double totalDistance;
+    @Column
     private int totalTime; // Sekunden
+    @Column
     private int rating;
 
     // Konstruktoren

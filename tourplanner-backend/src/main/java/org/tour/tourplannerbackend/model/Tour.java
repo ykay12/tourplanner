@@ -1,19 +1,42 @@
 package org.tour.tourplannerbackend.model;
 
+import jakarta.persistence.*;
 import org.tour.tourplannerbackend.model.enums.TourType;
 
 import java.util.List;
 
+/*
+* Um Hibernate zu verwenden, damit die Klasse direkt in die DB eingefügt werden kann,
+* Annotiere ich unsere allgemeine model-Klasse zu einer @Entity
+*
+* */
+
+@Entity
+@Table(name = "tour")
 public class Tour {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // wollen wir number oder UUID?
+
+    @Column
     private String name;
+    @Column
     private String description;
+    @Column
     private int estimatedTime;
+    @Column
     private int popularity;
+    @Column
     private boolean isChildfriendly;
+
+    @Enumerated(EnumType.STRING)
     private TourType tourType;
+
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<TourRoute> routes;
+
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
     private List<Log> logs;
 
     // Konstruktoren

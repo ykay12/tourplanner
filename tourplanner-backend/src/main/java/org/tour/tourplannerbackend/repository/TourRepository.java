@@ -12,10 +12,11 @@ import java.util.List;
 @Repository
 public class TourRepository {
 
-    private final List<Tour> tours = new ArrayList<>();
+    //private final List<Tour> tours = new ArrayList<>();
 
     public TourRepository() {
 
+/*
         //At the Moment FAKE! -> ToDo: instead of List we want to connect to actual DB!
         // ===== TOUR 1 =====
         List<TourRoute> routes1 = List.of(
@@ -87,7 +88,7 @@ public class TourRepository {
 
         tours.add(new Tour(
                 2L,
-                "Mountain Hike",
+                "Blatiantain Hike",
                 "Challenging hike with great views.",
                 7200,
                 3,
@@ -140,16 +141,16 @@ public class TourRepository {
                 new ArrayList<>()
         ));
     }
-
+*/
     /*---------------------------------
              BASIC CRUD
      ----------------------------------*/
-
+/*
     public List<Tour> findAll() {
         return tours;
     }
 
-    //-> At the moment I am just returning all Tours, When DB access I need to filter for User-ID
+    //-> At the moment I am just returning all Tours, ToDo: When DB access I need to filter for User-ID
     public List<Tour> findAllFromUser(Long userId) { return tours; }
 
 
@@ -168,5 +169,7 @@ public class TourRepository {
 
     public void deleteById(Long tourId) {
         tours.removeIf(t -> t.getId().equals(tourId));
+    }
+*/
     }
 }

@@ -1,8 +1,17 @@
 package org.tour.tourplannerbackend.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "coordinates")
 public class Coordinates {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column
     private double latitude;
+    @Column
     private double longitude;
 
     public Coordinates() {
