@@ -14,12 +14,12 @@ export class TourMapper {
       distance: r.distance,
       transportMode: r.transportMode,
       fromCoordinates: {
-        lat: r.fromCoordinates?.latitude,
-        lng: r.fromCoordinates?.longitude
+        lat: r.fromCoordinates?.lat,
+        lng: r.fromCoordinates?.lng
       },
       toCoordinates: {
-        lat: r.toCoordinates?.latitude,
-        lng: r.toCoordinates?.longitude
+        lat: r.toCoordinates?.lat,
+        lng: r.toCoordinates?.lng
       }
     }));
 
