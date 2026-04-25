@@ -32,7 +32,7 @@ export class BackendFacadeService {
   }
 
   
-  //Send a newly created tour to the backend to be saved in the database
+  //Sends a newly created tour to the backend to be saved in the database
   saveTour(newTour: Tour): Observable<Tour> {
     
     return this.http.post<any>(`${this.baseUrl}/tours`, newTour).pipe(

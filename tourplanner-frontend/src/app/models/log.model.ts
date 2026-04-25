@@ -1,6 +1,5 @@
 export interface Log{
-    id: number //Wir haben uns noch nicht geeinigt wie wir die ID anlegen wollen number/string/UUID?
-    
+    id: number | null  //muss auf Null setzbar sein, damit im BackendMapper erkannt wird, wenn es sich um einen neuen Logeintrag handelt der angelegt werden muss und nicht um einen bestehenden der geupdatet werden soll
     createdAt: Date, /*Enthält in Typescript auch time*/
     comment: string,
     difficulty: number,

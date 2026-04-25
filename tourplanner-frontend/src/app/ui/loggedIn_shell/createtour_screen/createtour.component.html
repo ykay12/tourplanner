@@ -37,7 +37,7 @@
         }
       </div>
 
-      @if (tourType() === "Mixed") {
+      @if (tourType() === "MIXED") {
       <div class="mb-3">
         <label for="from" class="form-label">From</label>
         <input type="text" class="form-control modern-input" id="from" [value]="from()" (input)="onFromInput($event)" />

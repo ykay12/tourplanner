@@ -3,7 +3,7 @@ import { TourRoute } from './tourRoute.model';
 import { TourType } from '../types/tourTypes';
 
 export class Tour {
-  id: number; //Wir haben uns noch nicht geeinigt wie wir die ID anlegen wollen number/string/UUID?
+  id: number | null; //Wir haben uns noch nicht geeinigt wie wir die ID anlegen wollen number/string/UUID?
   name: string;
   description: string;
   estimated_time: number; /*man erhält die Zeit wohl von der API in sekunden*/
@@ -15,7 +15,7 @@ export class Tour {
   //Every Tour needs at least one Route because it contains the distance as well as the start and end point - jkgzdfrszwrer
 
   constructor(
-    id: number,
+    id: number | null,
     name: string,
     description: string,
     estimated_time: number,

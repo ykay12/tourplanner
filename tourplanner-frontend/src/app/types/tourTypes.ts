@@ -1,1 +1,1 @@
-export type TourType = 'Bike' | 'Hike' | 'Vacation' | 'Mixed' | 'Running';
+export type TourType = 'BIKE' | 'HIKE' | 'VACATION' | 'MIXED' | 'RUNNING';

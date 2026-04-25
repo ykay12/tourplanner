@@ -23,8 +23,8 @@ export class EditTourComponent {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly appState = inject(AppStateService);
 
-  tourTypes: TourType[] = ['Bike', 'Hike', 'Vacation', 'Mixed', 'Running'];
-  transportModes: TransportMode[] = ['Bike', 'Walk', 'Run'];
+  tourTypes: TourType[] = ['BIKE', 'HIKE', 'VACATION', 'MIXED', 'RUNNING'];
+  transportModes: TransportMode[] = ['BIKE', 'WALK', 'RUN'];
 
   segments = signal<MixedSegment[]>([]);
 
@@ -33,11 +33,11 @@ export class EditTourComponent {
   tourDescription = signal('');
   from = signal('');
   to = signal('');
-  tourType = signal<TourType>('Bike');
-  transportMode = signal<TransportMode>('Bike');
+  tourType = signal<TourType>('BIKE');
+  transportMode = signal<TransportMode>('BIKE');
   errorMsg = signal('');
 
-  isMixedTour = computed(() => this.tourType() === 'Mixed');
+  isMixedTour = computed(() => this.tourType() === 'MIXED');
 
 
   constructor() {
@@ -73,7 +73,7 @@ export class EditTourComponent {
       this.to.set(routes[routes.length - 1].to);
     }
 
-    if (tour.tourType === 'Mixed') {
+    if (tour.tourType === 'MIXED') {
       const middleRoutes = routes.slice(0, -1);
 
       this.segments.set(
@@ -83,7 +83,7 @@ export class EditTourComponent {
         }))
       );
     } else {
-      this.transportMode.set(routes[0]?.transportMode ?? 'Bike');
+      this.transportMode.set(routes[0]?.transportMode ?? 'BIKE');
       this.segments.set([]);
     }
   }
@@ -102,16 +102,16 @@ export class EditTourComponent {
   setTourType(type: TourType): void {
     this.tourType.set(type);
 
-    if (type !== 'Mixed') {
+    if (type !== 'MIXED') {
       this.segments.set([]);
     }
 
-    if (this.tourType() === "Hike" || this.tourType() === "Vacation") {
-      this.transportMode.set('Walk')
-    } else if (this.tourType() === "Running") {
-      this.transportMode.set('Run')
-    } else if (this.tourType() === "Bike") {
-      this.transportMode.set('Bike')
+    if (this.tourType() === "HIKE" || this.tourType() === "VACATION") {
+      this.transportMode.set('WALK')
+    } else if (this.tourType() === "RUNNING") {
+      this.transportMode.set('RUN')
+    } else if (this.tourType() === "BIKE") {
+      this.transportMode.set('BIKE')
     }
   }
 
@@ -153,7 +153,7 @@ export class EditTourComponent {
   addSegment(): void {
     this.segments.update(segments => [
       ...segments,
-      { to: '', transportMode: 'Bike' }
+      { to: '', transportMode: 'BIKE' }
     ]);
   }
 
@@ -236,7 +236,7 @@ export class EditTourComponent {
       transportMode:
         filledSegments.length > 0
           ? filledSegments[filledSegments.length - 1].transportMode
-          : 'Bike'
+          : 'BIKE'
     });
 
     return routes;

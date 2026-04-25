@@ -1,1 +1,1 @@
-export type TransportMode = "Bike" | "Walk" | "Run"
+export type TransportMode = "BIKE" | "WALK" | "RUN"

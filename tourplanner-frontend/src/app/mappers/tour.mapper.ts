@@ -7,7 +7,7 @@ export class TourMapper {
 
   static fromDto(dto: TourDto): Tour {
 
-    const routes: TourRoute[] = dto.routes.map((r: any) => ({
+    const routes: TourRoute[] = (dto.routes ?? []).map((r: any) => ({
       id: r.id,
       from: r.from,
       to: r.to,

@@ -27,7 +27,7 @@
       <ul class="tours-list-reset">
         @for (tour of tours; track tour.id) {
         <li class="tour-list-item">
-          <app-tour-preview [tour]="tour" (click)="goToTour(tour.id)"></app-tour-preview>
+          <app-tour-preview [tour]="tour" (click)="goToTour(tour.id!)"></app-tour-preview>
         </li>
         }
       </ul>
