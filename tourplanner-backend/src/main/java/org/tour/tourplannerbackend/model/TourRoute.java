@@ -16,14 +16,14 @@ public class TourRoute {
     @Column(name = "from_location") //from ist ein reserviertes keyword
     private String from;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "from_coordinates_id")
     private Coordinates fromCoordinates; // kann null sein
 
     @Column(name = "to_location") //to ist ein reserviertes keyword
     private String to;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "to_coordinates_id") //Coordinates sind eine eigene Entity (kein Basis-Datentyp) deswegen muss ich hier @OneToOne verwenden, statt einfach @Column
     private Coordinates toCoordinates; // kann null sein
 
