@@ -1,6 +1,7 @@
 package org.tour.tourplannerbackend.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import org.tour.tourplannerbackend.model.enums.TourType;
 
@@ -10,6 +11,8 @@ import java.util.List;
 * Um Hibernate zu verwenden, damit die Klasse direkt in die DB eingefügt werden kann,
 * Annotiere ich unsere allgemeine model-Klasse zu einer @Entity
 *
+*
+* ToDo: Validations-Annotationen ergänzen (siehe Foliensatz vom 23.04.)
 * */
 
 @Entity
@@ -24,12 +27,13 @@ public class Tour {
     private String name;
     @Column
     private String description;
+    @JsonProperty("estimated_time")
     @Column
-    private int estimatedTime;
+    private Integer estimatedTime;
     @Column
-    private int popularity;
+    private Integer popularity;
     @Column
-    private boolean isChildfriendly;
+    private Boolean isChildfriendly;
 
     @Enumerated(EnumType.STRING)
     private TourType tourType;
@@ -46,9 +50,15 @@ public class Tour {
     public Tour() {
     }
 
-    public Tour(Long id, String name, String description, int estimatedTime,
-                int popularity, boolean isChildfriendly,
-                TourType tourType, List<TourRoute> routes, List<Log> logs) {
+    public Tour(Long id,
+                String name,
+                String description,
+                Integer estimatedTime,
+                Integer popularity,
+                Boolean isChildfriendly,
+                TourType tourType,
+                List<TourRoute> routes,
+                List<Log> logs) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -86,27 +96,27 @@ public class Tour {
         this.description = description;
     }
 
-    public int getEstimatedTime() {
+    public Integer getEstimatedTime() {
         return estimatedTime;
     }
 
-    public void setEstimatedTime(int estimatedTime) {
+    public void setEstimatedTime(Integer estimatedTime) {
         this.estimatedTime = estimatedTime;
     }
 
-    public int getPopularity() {
+    public Integer getPopularity() {
         return popularity;
     }
 
-    public void setPopularity(int popularity) {
+    public void setPopularity(Integer popularity) {
         this.popularity = popularity;
     }
 
-    public boolean isChildfriendly() {
+    public Boolean isChildfriendly() {
         return isChildfriendly;
     }
 
-    public void setChildfriendly(boolean childfriendly) {
+    public void setChildfriendly(Boolean childfriendly) {
         isChildfriendly = childfriendly;
     }
 

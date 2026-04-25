@@ -18,13 +18,13 @@ public class Log {
     @Column
     private String comment;
     @Column
-    private int difficulty;
+    private Integer difficulty;
     @Column
-    private double totalDistance;
+    private Double totalDistance;
     @Column
-    private int totalTime; // Sekunden
+    private Integer totalTime; // Sekunden
     @Column
-    private int rating;
+    private Integer rating;
 
     @JsonBackReference("tour-logs")
     @ManyToOne
@@ -34,9 +34,13 @@ public class Log {
     public Log() {
     }
 
-    public Log(Long id, LocalDateTime createdAt, String comment,
-               int difficulty, double totalDistance,
-               int totalTime, int rating) {
+    public Log(Long id,
+               LocalDateTime createdAt,
+               String comment,
+               Integer difficulty,
+               Double totalDistance,
+               Integer totalTime,
+               Integer rating) {
         this.id = id;
         this.createdAt = createdAt;
         this.comment = comment;
@@ -72,35 +76,35 @@ public class Log {
         this.comment = comment;
     }
 
-    public int getDifficulty() {
+    public Integer getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(int difficulty) {
+    public void setDifficulty(Integer difficulty) {
         this.difficulty = difficulty;
     }
 
-    public double getTotalDistance() {
+    public Double getTotalDistance() {
         return totalDistance;
     }
 
-    public void setTotalDistance(double totalDistance) {
+    public void setTotalDistance(Double totalDistance) {
         this.totalDistance = totalDistance;
     }
 
-    public int getTotalTime() {
+    public Integer getTotalTime() {
         return totalTime;
     }
 
-    public void setTotalTime(int totalTime) {
+    public void setTotalTime(Integer totalTime) {
         this.totalTime = totalTime;
     }
 
-    public int getRating() {
+    public Integer getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(Integer rating) {
         this.rating = rating;
     }
 

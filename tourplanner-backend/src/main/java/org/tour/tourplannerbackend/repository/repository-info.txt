@@ -21,3 +21,19 @@ Wie starten wir überhaupt?
 Wenn Code Änderungen und Docker läuft:
 docker compose down
 docker compose up --build
+
+
+Class 23.04.
+Repository Design Pattern
+Repository ist das einzige das "Datenbank-Sprache" -> spricht.
+    Dadurch wird die DB einfacher austauschbar.
+
+Noch schöner: Repository + UnitOfWork
+-> Mehrere Repositorys führen gemeinsam eine Transaktion durch.
+-> z.B.: Ich speichere die Tour + Ihre Logs (eigentlich zwei Repositorys damit verbunden)
+
+
+Wir sollen jedenfalls ein Repo pro Aggregation machen.
+
+
+

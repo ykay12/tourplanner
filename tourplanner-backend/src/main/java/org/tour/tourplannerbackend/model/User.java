@@ -6,7 +6,7 @@ import java.util.UUID;
 
 //At the moment: POJO -> Should be Bean?
 @Entity
-@Table(name = "user")
+@Table(name = "users") //darf nicht "user" heißen -> reserviertes keyword! Wie oft will ich disen Fehler noch machen?
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

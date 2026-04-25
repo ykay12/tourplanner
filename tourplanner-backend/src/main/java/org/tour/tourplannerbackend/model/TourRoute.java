@@ -13,14 +13,14 @@ public class TourRoute {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(name = "from_location") //from ist ein reserviertes keyword
     private String from;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "from_coordinates_id")
     private Coordinates fromCoordinates; // kann null sein
 
-    @Column
+    @Column(name = "to_location") //to ist ein reserviertes keyword
     private String to;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -28,12 +28,13 @@ public class TourRoute {
     private Coordinates toCoordinates; // kann null sein
 
     @Column
-    private double distance;
+    private Double distance;
 
     @Enumerated(EnumType.STRING)
     private TransportMode transportMode;
 
     @JsonBackReference("tour-routes")
+    @JoinColumn(name = "tour_id")
     @ManyToOne
     private Tour tour;
 
@@ -41,9 +42,13 @@ public class TourRoute {
     public TourRoute() {
     }
 
-    public TourRoute(Long id, String from, Coordinates fromCoordinates,
-                     String to, Coordinates toCoordinates,
-                     double distance, TransportMode transportMode) {
+    public TourRoute(Long id,
+                     String from,
+                     Coordinates fromCoordinates,
+                     String to,
+                     Coordinates toCoordinates,
+                     Double distance,
+                     TransportMode transportMode) {
         this.id = id;
         this.from = from;
         this.fromCoordinates = fromCoordinates;
@@ -95,11 +100,11 @@ public class TourRoute {
         this.toCoordinates = toCoordinates;
     }
 
-    public double getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(double distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 

@@ -8,34 +8,42 @@ public class Coordinates {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column
-    private double latitude;
+    private Double lat;
     @Column
-    private double longitude;
+    private Double lng;
 
     public Coordinates() {
     }
 
-    public Coordinates(double latitude, double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public Long  getId() {
+        return id;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public Coordinates(Double latitude, Double longitude) {
+        this.lat = latitude;
+        this.lng = longitude;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public Double getLat() {
+        return lat;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setLat(Double latitude) {
+        this.lat = latitude;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double longitude) {
+        this.lng = longitude;
     }
 }
 

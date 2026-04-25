@@ -12,7 +12,6 @@ import java.util.List;
 //
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long> { //Long ist der Datentyp des Primary Key der Entity-Klasse Tour
-
     /*---------------------------------
              BASIC CRUD -> Werden von Hibernate selbst generiert!
              Also die folgenden Funktionen:

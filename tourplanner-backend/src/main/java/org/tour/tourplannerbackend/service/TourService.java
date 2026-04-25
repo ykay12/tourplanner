@@ -14,6 +14,8 @@ public class TourService {
     private final TourRepository tourRepo;
 
     public TourService(TourRepository tourRepository) {
+        //vorübergehend um Fehler zu finden:
+
         this.tourRepo = tourRepository;
     }
 
@@ -46,6 +48,20 @@ public class TourService {
         // 1.) Checks ob newTour vollständig
 
         // 2.) Repo-Funktion aufrufen
+        if (newTour.getRoutes() != null) {
+            newTour.getRoutes().forEach(route -> {
+                route.setId(null);              // wir müssen die Null setzen, weil die ja automatisch generiert werden sollen!
+                route.setTour(newTour);
+            });
+        }
+
+        if (newTour.getLogs() != null) {
+            newTour.getLogs().forEach(log -> {
+                log.setId(null); //Wir müssen die Null setzen, weil die ja automatisch generiert werden sollen
+                log.setTour(newTour);
+            });
+        }
+
         Tour savedTour = tourRepo.save(newTour);
 
         // 3.) Checks ob Return passt -> Hibernate repo.save() returniert die gespeicherte Entity

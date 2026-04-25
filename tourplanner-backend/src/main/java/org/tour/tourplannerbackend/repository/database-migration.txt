@@ -1,0 +1,19 @@
+Weil unsere DB sich im Laufe der Zeit ändert,
+müssen wir in der Produktion von einer zur anderen "migrieren", wenn sich etwas ändert.
+
+Flyway -> Versionierung für Datenbank
+"Git für die Datenbank"
+
+Es weiß wie die DB früher ausgeschaut hat und wie sie jetzt ausschauen soll.
+
+
+Was brauchen wir?
+flyway dependency im pom.xml
+eine flyway.conf (Vieles wird aber eigentlich schon in den Spring-Boot Files angegeben -> dieses File ist eher wenn man FlyWay ohne Spring-Boot verwenden möchte)
+Flyway configurations im application.properties
+
+!Migration ist für unser Projekt nicht verpflichtend!
+
+Sollten wir migration verwenden dürfen wir im application.properties natürlich nicht
+    spring.jpa.hibernate.ddl-auto=update
+stehen haben, weil das update und die migration sich sonst gegenseitig im Weg sind.

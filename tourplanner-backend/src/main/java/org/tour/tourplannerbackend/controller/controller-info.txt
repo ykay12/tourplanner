@@ -5,3 +5,6 @@ wir verwenden @RestController Annotation in Spring Boot
 
 Controller soll keine Logik enthalten,
 sondern nur von HTTP-Sprache in Business-Sprache übersetzen
+
+class 23.04.:
+"Validierung sollten wir im Controller anstoßen" -> nicht im Service (?)
