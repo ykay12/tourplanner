@@ -1,7 +1,9 @@
 package org.tour.tourplannerbackend.controller;
 
 import org.springframework.web.bind.annotation.*;
+import org.tour.tourplannerbackend.dto.AuthDto;
 import org.tour.tourplannerbackend.model.User;
+import org.tour.tourplannerbackend.service.AuthService;
 import org.tour.tourplannerbackend.service.UserService;
 
 @RestController
@@ -9,9 +11,11 @@ import org.tour.tourplannerbackend.service.UserService;
 public class AuthController {
 
     private final UserService userService;
+    private final AuthService authService;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
     @CrossOrigin
@@ -22,9 +26,8 @@ public class AuthController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public String login() {
-        // Struktur-Platzhalter; echte Auth folgt später mit Security/JWT.
-        return "LOGIN_PLACEHOLDER";
+    public String login(@RequestBody AuthDto authDto) {
+        return authService.login(authDto);
     }
 }
 
