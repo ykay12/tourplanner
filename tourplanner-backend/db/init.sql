@@ -1,64 +1,4 @@
 -- =========================================
--- USERS
--- =========================================
-CREATE TABLE IF NOT EXISTS users (
-                                     id BIGSERIAL PRIMARY KEY,
-                                     username VARCHAR(100) NOT NULL UNIQUE,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL
-    );
-
--- =========================================
--- TOURS
--- =========================================
-CREATE TABLE IF NOT EXISTS tours (
-                                     id BIGSERIAL PRIMARY KEY,
-                                     user_id BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    tour_type VARCHAR(100),
-    estimated_time INTEGER,
-    popularity INTEGER,
-    is_childfriendly BOOLEAN
-    );
-
--- =========================================
--- ROUTES
--- =========================================
-CREATE TABLE IF NOT EXISTS routes (
-                                      id BIGSERIAL PRIMARY KEY,
-                                      tour_id BIGINT NOT NULL REFERENCES tours(id) ON DELETE CASCADE,
-    route_order INTEGER NOT NULL,
-
-    from_location VARCHAR(255) NOT NULL,
-    from_lat DOUBLE PRECISION,
-    from_lng DOUBLE PRECISION,
-
-    to_location VARCHAR(255) NOT NULL,
-    to_lat DOUBLE PRECISION,
-    to_lng DOUBLE PRECISION,
-
-    transport_mode VARCHAR(100),
-    distance DOUBLE PRECISION
-    );
-
--- =========================================
--- LOGS
--- =========================================
-CREATE TABLE IF NOT EXISTS logs (
-                                    id BIGSERIAL PRIMARY KEY,
-                                    tour_id BIGINT NOT NULL REFERENCES tours(id) ON DELETE CASCADE,
-
-    comment TEXT,
-    created_at TIMESTAMP,
-
-    difficulty INTEGER,
-    total_distance DOUBLE PRECISION,
-    total_time INTEGER,
-    rating INTEGER
-    );
-
--- =========================================
 -- MOCK USERS
 -- =========================================
 INSERT INTO users (id, username, email, password) VALUES
@@ -75,7 +15,7 @@ INSERT INTO tours (
 ) VALUES
       (1, 1, 'Vienna City Ride', 'A relaxed bike tour through Vienna.', 'Bike', 3600, 4, true),
       (2, 1, 'Mountain Hike', 'Challenging hike with great views.', 'Hike', 7200, 3, false),
-      (3, 2, 'MixedTour', 'a mixed tour.', 'Mixed', 7200, 5, false)
+      (3, 2, 'MixedTour', 'A mixed tour.', 'Mixed', 7200, 5, false)
     ON CONFLICT (id) DO NOTHING;
 
 -- =========================================
