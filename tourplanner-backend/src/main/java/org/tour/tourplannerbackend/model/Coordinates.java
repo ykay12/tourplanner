@@ -1,8 +1,14 @@
 package org.tour.tourplannerbackend.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "coordinates")
 public class Coordinates {
 
@@ -13,37 +19,5 @@ public class Coordinates {
     private Double lat;
     @Column
     private Double lng;
-
-    public Coordinates() {
-    }
-
-    public Long  getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Coordinates(Double latitude, Double longitude) {
-        this.lat = latitude;
-        this.lng = longitude;
-    }
-
-    public Double getLat() {
-        return lat;
-    }
-
-    public void setLat(Double latitude) {
-        this.lat = latitude;
-    }
-
-    public Double getLng() {
-        return lng;
-    }
-
-    public void setLng(Double longitude) {
-        this.lng = longitude;
-    }
 }
 

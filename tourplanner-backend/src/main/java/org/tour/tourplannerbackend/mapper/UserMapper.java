@@ -6,7 +6,9 @@ import org.tour.tourplannerbackend.model.User;
 public final class UserMapper {
 
     private UserMapper() {
+        throw new UnsupportedOperationException("Utility class");
     }
+
 
     public static UserDto toDto(User user) {
         if (user == null) {

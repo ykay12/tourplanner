@@ -9,6 +9,7 @@ import org.tour.tourplannerbackend.model.User;
 import org.tour.tourplannerbackend.service.TourService;
 
 @RestController
+@CrossOrigin // Erlaubt Requests vom Angular Dev Server:
 public class TourController {
     private final TourService tourService;
 
@@ -17,7 +18,6 @@ public class TourController {
     }
 
     //GET + /tours  -> create a new tour
-    @CrossOrigin
     @PostMapping("/tours")
     public Tour createTour(@RequestBody Tour newTour) {
         newTour.setId(null);

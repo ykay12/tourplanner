@@ -36,7 +36,7 @@ export class BackendFacadeService {
   saveTour(newTour: Tour): Observable<Tour> {
     
     return this.http.post<any>(`${this.baseUrl}/tours`, newTour).pipe(
-      map((responseDto) => TourMapper.fromDto(responseDto))
+      map((responseDto) => TourMapper.fromDto(responseDto)) // wandelt Backend-DTO in dein Frontend-Model Tour um
     );
 
   }

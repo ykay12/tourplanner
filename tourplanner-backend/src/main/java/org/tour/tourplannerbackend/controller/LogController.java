@@ -7,6 +7,7 @@ import org.tour.tourplannerbackend.service.LogService;
 import java.util.List;
 
 @RestController
+@CrossOrigin // Erlaubt Requests vom Angular Dev Server:
 @RequestMapping("/tours/{tourId}/logs")
 public class LogController {
 

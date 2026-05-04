@@ -1,6 +1,7 @@
 package org.tour.tourplannerbackend.service;
 
 import org.springframework.stereotype.Service;
+import org.tour.tourplannerbackend.dto.AuthDto;
 import org.tour.tourplannerbackend.exception.NotFoundException;
 import org.tour.tourplannerbackend.exception.ValidationException;
 import org.tour.tourplannerbackend.model.User;
@@ -27,28 +28,34 @@ public class UserService {
     }
 
     public User getUser(Long id) {
-        if (id == null) {
-            throw new ValidationException("User id must not be null");
-        }
-        User user = userRepository.findById(id);
-        if (user == null) {
-            throw new NotFoundException("User not found: " + id);
-        }
-        return user;
+        validateId(id);
+
+        return userRepository.findById(id)
+                .orElseThrow(() ->
+                        new NotFoundException("User not found: " + id));
     }
 
     public User updateUser(User user) {
         validateUser(user);
+
         if (user.getId() == null) {
             throw new ValidationException("User id must not be null for update");
         }
+
+        if (!userRepository.existsById(user.getId())) {
+            throw new NotFoundException("User not found: " + user.getId());
+        }
+
         return userRepository.save(user);
     }
 
     public void deleteUser(Long id) {
-        if (id == null) {
-            throw new ValidationException("User id must not be null");
+        validateId(id);
+
+        if (!userRepository.existsById(id)) {
+            throw new NotFoundException("User not found: " + id);
         }
+
         userRepository.deleteById(id);
     }
 
@@ -61,6 +68,12 @@ public class UserService {
         }
         if (user.getPassword() == null || user.getPassword().isBlank()) {
             throw new ValidationException("Password must not be blank");
+        }
+    }
+
+    private void validateId(Long id) {
+        if (id == null) {
+            throw new ValidationException("User id must not be null");
         }
     }
 }
