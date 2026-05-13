@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http//localhost:4200") // Erlaubt Requests vom Angular Dev Server:
+@CrossOrigin(origins = "http://localhost:4200") // Erlaubt Requests vom Angular Dev Server:
 
 public class UserController {
 
