@@ -19,6 +19,8 @@ public class User {
     private Long id;
     @Column(unique = true, nullable = false)
     private String username;
+    @Column(unique = false, nullable = false)
+    private String email;
     @Column(nullable = false) //so that we don't persist the clear-text-pw -> depends on if it is hashed here / otherwise just @Column
     private String password;
 

@@ -1,7 +1,7 @@
 package org.tour.tourplannerbackend.service;
 
 import org.springframework.stereotype.Service;
-import org.tour.tourplannerbackend.dto.AuthDto;
+import org.tour.tourplannerbackend.dto.LoginDto;
 import org.tour.tourplannerbackend.exception.UnauthorizedException;
 import org.tour.tourplannerbackend.exception.ValidationException;
 import org.tour.tourplannerbackend.model.User;
@@ -15,17 +15,17 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
-    public String login(AuthDto authDto) {
-        if (authDto == null || authDto.getUsername() == null || authDto.getPassword() == null) {
+    public String login(LoginDto loginDto) {
+        if (loginDto == null || loginDto.getUsername() == null || loginDto.getPassword() == null) {
             throw new ValidationException("Username or password required");
         }
 
-        User user = userRepository.findByUsername(authDto.getUsername())
+        User user = userRepository.findByUsername(loginDto.getUsername())
                 .orElseThrow(() ->
                         new UnauthorizedException("Invalid username or password")
                 );
 
-        if (!user.getPassword().equals(authDto.getPassword())) {
+        if (!user.getPassword().equals(loginDto.getPassword())) {
             throw new UnauthorizedException("Invalid username or password");
         }
         return generateToken(user.getUsername());

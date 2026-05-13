@@ -9,16 +9,10 @@
       +
     </button>
 
-    <img 
-        class="minimize-icon"
-        [src]="'assets/icons/minimize.png'"
-        [alt]="'collapse logs'"
-        
-      >
+    <img class="minimize-icon" [src]="'assets/icons/minimize.png'" [alt]="'collapse logs'">
   </div>
   <!-- Logs Display -->
-  <div class="logs-card-scrollable"
-  [class.collapsed]="collapsed()">
+  <div class="logs-card-scrollable" [class.collapsed]="collapsed()">
     @if (tour; as t) {
     @if (t.logs.length > 0) {
     @for (log of t.logs; track $index) {
@@ -35,7 +29,9 @@
 
         <div class="log-actions">
           <button class="btn-edit" type="button" (click)="editLog(log)" title="Edit log">✎</button>
-          <button class="btn-delete" type="button" (click)="deleteLog(log.id)" title="Delete log">✕</button>
+          <button class="btn-delete" type="button" (click)="log.id !== null && deleteLog(log.id)" title="Delete log">
+            ✕
+          </button>
         </div>
       </div>
     </div>

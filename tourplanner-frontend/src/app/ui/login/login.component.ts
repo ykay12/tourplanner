@@ -13,34 +13,35 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class LoginComponent {
 
-   username = signal('')
-   password = signal('')
-   errorMsg = signal('')
+  username = signal('')
+  password = signal('')
+  errorMsg = signal('')
 
-   constructor(
+  constructor(
     private authService: AuthService,
     private router: Router
-   ){}
+  ) { }
 
-  onUsernameInput(event: Event): void{
-      const value = (event.target as HTMLInputElement).value
-      this.username.set(value)
+  onUsernameInput(event: Event): void {
+    const value = (event.target as HTMLInputElement).value
+    this.username.set(value)
   }
 
-  onPasswordInput(event: Event): void{
+  onPasswordInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value
     this.password.set(value)
   }
 
 
-onLogin(): void {
-  const success: boolean = this.authService.login(this.username(), this.password());
-
-  if (success) {
-    this.errorMsg.set('');
-    this.router.navigate(['/dashboard']);
-  } else {
-    this.errorMsg.set('Whoops, something went wrong. Please try again.');
+  onLogin(): void {
+    this.authService.login(this.username(), this.password()).subscribe({
+      next: () => {
+        this.errorMsg.set('');
+        this.router.navigate(['/dashboard']);
+      },
+      error: () => {
+        this.errorMsg.set('Whoops, something went wrong. Please try again.');
+      }
+    });
   }
-}
 }

@@ -1,7 +1,6 @@
 package org.tour.tourplannerbackend.service;
 
 import org.springframework.stereotype.Service;
-import org.tour.tourplannerbackend.dto.AuthDto;
 import org.tour.tourplannerbackend.exception.NotFoundException;
 import org.tour.tourplannerbackend.exception.ValidationException;
 import org.tour.tourplannerbackend.model.User;

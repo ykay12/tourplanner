@@ -1,8 +1,8 @@
 package org.tour.tourplannerbackend.controller;
 
-import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties;
 import org.springframework.web.bind.annotation.*;
-import org.tour.tourplannerbackend.dto.AuthDto;
+import org.tour.tourplannerbackend.dto.LoginDto;
+import org.tour.tourplannerbackend.dto.RegisterDto;
 import org.tour.tourplannerbackend.model.User;
 import org.tour.tourplannerbackend.service.AuthService;
 import org.tour.tourplannerbackend.service.UserService;
@@ -22,18 +22,19 @@ public class AuthController {
 
     @CrossOrigin
     @PostMapping("/register")
-    public User register(@RequestBody AuthDto authUser) {
+    public User register(@RequestBody RegisterDto registerDto) {
         User user = new User();
-        user.setUsername(authUser.getUsername());
-        user.setPassword(authUser.getPassword());
+        user.setUsername(registerDto.getUsername());
+        user.setEmail(registerDto.getEmail());
+        user.setPassword(registerDto.getPassword());
 
         return userService.createUser(user);
     }
 
     @CrossOrigin
     @PostMapping("/login")
-    public String login(@RequestBody AuthDto authDto) {
-        return authService.login(authDto);
+    public String login(@RequestBody LoginDto loginDto) {
+        return authService.login(loginDto);
     }
 }
 

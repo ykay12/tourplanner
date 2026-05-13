@@ -1,29 +1,51 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { AppStateService } from '../../states/app-state.service';
-
+import { HttpClient } from '@angular/common/http';
+import { Observable, pipe, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private http = inject(HttpClient); //this is needed to make a http-request
+  private baseUrl = 'http://localhost:8080'; //standard-port Spring-Boot
+
   constructor(private appState: AppStateService) {
   }
 
 
 
-  login(username: string, password: string): boolean {
-    const success = username === "test" && password === "123"
+  login(username: string, password: string): Observable<string> {
+    return this.http.post(`${this.baseUrl}/auth/login`, {
+      username, password
+    }, {
+      responseType: 'text'
+    }).pipe(
+      tap((token) => {
+        localStorage.setItem('token', token);
+        this.appState.logUserIn();
+      })
+    );
+  }
 
-    if (success) {
-      this.appState.logUserIn()
-      return true
-    }
-    return false
+  register(username: string, email: string, password: string) {
+    return this.http.post(`${this.baseUrl}/auth/register`, {
+      username, email, password
+    })
   }
 
 
   logout() {
-    this.appState.logUserOut()
+    localStorage.removeItem('token');
+    this.appState.logUserOut();
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  isLoggedIn(): boolean {
+    return this.getToken() !== null;
   }
 }
