@@ -39,7 +39,7 @@ public class Tour {
     @Column
     private Integer popularity;
     @Column
-    private Boolean isChildfriendly;
+    private Boolean childFriendly;
 
     @Enumerated(EnumType.STRING)
     private TourType tourType;

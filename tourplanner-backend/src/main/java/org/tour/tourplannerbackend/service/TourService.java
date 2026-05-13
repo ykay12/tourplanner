@@ -1,6 +1,7 @@
 package org.tour.tourplannerbackend.service;
 
 import org.springframework.stereotype.Service;
+import org.tour.tourplannerbackend.exception.NotFoundException;
 import org.tour.tourplannerbackend.model.Tour;
 import org.tour.tourplannerbackend.repository.TourRepository;
 
@@ -15,8 +16,35 @@ public class TourService {
 
     public TourService(TourRepository tourRepository) {
         //vorübergehend um Fehler zu finden:
-
         this.tourRepo = tourRepository;
+    }
+
+    // aktuell gibt es keinen extra check um nur die touren von dem jeweiligen user zu holen
+    public List<Tour> getAllTours(){
+        return tourRepo.findAll();
+    }
+
+    public Tour getTour(Long id){
+        return tourRepo.findById(id)
+                .orElseThrow(() ->
+                        new NotFoundException("Tour not found: " + id));
+    }
+
+    public void deleteTour(Long id){
+        tourRepo.deleteById(id);
+    }
+
+    public Tour updateTour(Long id, Tour updatedTour) {
+        Tour existingTour = getTour(id);
+
+        existingTour.setName(updatedTour.getName());
+        existingTour.setDescription(updatedTour.getDescription());
+        existingTour.setEstimatedTime(updatedTour.getEstimatedTime());
+        existingTour.setPopularity(updatedTour.getPopularity());
+        existingTour.setChildFriendly(updatedTour.getChildFriendly());
+        existingTour.setTourType(updatedTour.getTourType());
+
+        return tourRepo.save(existingTour);
     }
 
     /*
@@ -62,12 +90,10 @@ public class TourService {
             });
         }
 
-        Tour savedTour = tourRepo.save(newTour);
-
         // 3.) Checks ob Return passt -> Hibernate repo.save() returniert die gespeicherte Entity
 
         // 4.) gespeicherte Tour returnieren
-        return savedTour;
+        return tourRepo.save(newTour);
 
     }
 }
