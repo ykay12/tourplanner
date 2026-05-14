@@ -1,14 +1,11 @@
 //app-state.service.ts
 
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { Tour} from '../models/tour.model';
-import { TourType } from '../types/tourTypes';
+import { Tour } from '../models/tour.model';
 import { Log } from '../models/log.model';
-import { TourRoute } from '../models/tourRoute.model';
-import { HttpClient } from '@angular/common/http';
-import { TourDto } from '../dto/TourDto';
-import { dot } from 'node:test/reporters';
+
 import { BackendFacadeService } from '../services/backend/backendFacade.service';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root' //Bedeutet: Dieser Service wird auf der Root-Ebene bereitgestellt und ist damit in der gesamten Anwendung verfügbar. Es wird eine einzige Instanz dieses Services erstellt, die von allen Komponenten und anderen Services, die ihn injizieren, geteilt wird.
@@ -17,7 +14,7 @@ export class AppStateService {
 
   // brauchen wir um aus einem json lesen zu können (weil es behandelt wird als würde es im backend liegen)
   //private http = inject(HttpClient)
-  
+
   //brauchen wir um Anfragen an unser Backend zu stellen
   private backendFacade = inject(BackendFacadeService);
 
@@ -36,6 +33,7 @@ export class AppStateService {
   private readonly _tours = signal<Tour[]>([]);
   private readonly _selectedTourId = signal<number | null>(null);
   private readonly _loggedIn = signal<boolean>(false);
+  private readonly _loggedInUserId = signal<number | null>(null);
 
   //////////////////////////////////////////////////////////////  
   // Readonly State (für Components -> die dürfen nur auslesen)
@@ -43,6 +41,7 @@ export class AppStateService {
   readonly tours = this._tours.asReadonly();
   readonly selectedTourId = this._selectedTourId.asReadonly();
   readonly loggedIn = this._loggedIn.asReadonly();
+  readonly loggedInUserId = this._loggedInUserId.asReadonly();
 
   //////////////////
   // Derived States
@@ -95,27 +94,27 @@ export class AppStateService {
 
 
 
-/* now happening in mapper and backendFacade!
-  private mapDtoToTour(dto: TourDto): Tour {
-    const logs: Log[] = dto.logs.map(log => ({
-      ...log, createdAt: new Date(log.createdAt)
-    }))
-
-
-    return new Tour(
-      dto.id,
-      dto.name,
-      dto.description,
-      dto.estimated_time,
-      dto.popularity,
-      dto.isChildfriendly,
-      dto.tourType as TourType,
-      dto.routes,
-      logs
-    )
-
-  }
-    */
+  /* now happening in mapper and backendFacade!
+    private mapDtoToTour(dto: TourDto): Tour {
+      const logs: Log[] = dto.logs.map(log => ({
+        ...log, createdAt: new Date(log.createdAt)
+      }))
+  
+  
+      return new Tour(
+        dto.id,
+        dto.name,
+        dto.description,
+        dto.estimated_time,
+        dto.popularity,
+        dto.isChildfriendly,
+        dto.tourType as TourType,
+        dto.routes,
+        logs
+      )
+  
+    }
+      */
   /////////////////////////////////
   // Intent Methods (State ändern)
   /////////////////////////////////
@@ -128,7 +127,6 @@ export class AppStateService {
   }
 
   addTour(tour: Tour) {
-    tour.id = this.tourIdCounter++
     this._tours.update(arr => [...arr, tour]);
   }
 
@@ -139,6 +137,15 @@ export class AppStateService {
       this._selectedTourId.set(null);
     }
   }
+
+  deleteTourFromBackend(id: number) {
+    return this.backendFacade.deleteTour(id).pipe(
+      tap(() => {
+        this.removeTour(id);
+      })
+    );
+  }
+
   updateTour(updatedTour: Tour) {
     this._tours.update(tours =>
       tours.map(t => t.id === updatedTour.id ? updatedTour : t)
@@ -148,12 +155,28 @@ export class AppStateService {
       this._selectedTourId.set(updatedTour.id);
     }
   }
-  logUserIn() {
-    this._loggedIn.set(true)
+
+
+  updateTourInBackend(tour: Tour) {
+    return this.backendFacade.editTour(tour).pipe(
+      tap((updatedTour) => {
+        this.updateTour(updatedTour);
+      })
+    );
   }
-  
+
+  logUserIn(userId: number) {
+    this._loggedIn.set(true)
+    this._loggedInUserId.set(userId)
+
+    this.loadToursFromBackend(userId)
+  }
+
   logUserOut() {
-    this._loggedIn.set(false)
+    this._loggedIn.set(false);
+    this._loggedInUserId.set(null);
+    this._tours.set([]);
+    this._selectedTourId.set(null);
   }
 
   addLogToTour(log: Log) {
@@ -161,19 +184,19 @@ export class AppStateService {
     if (selectedTour) {
       // Generate a simple ID for the log (using timestamp + random number)
       log.id = Date.now() + Math.floor(Math.random() * 1000);
-      
+
       const updatedTour = new Tour(
         selectedTour.id,
         selectedTour.name,
         selectedTour.description,
         selectedTour.estimated_time,
         selectedTour.popularity,
-        selectedTour.isChildfriendly,
+        selectedTour.childFriendly,
         selectedTour.tourType,
         selectedTour.routes,
         [...selectedTour.logs, log]
       );
-      
+
       this.updateTour(updatedTour);
     }
   }

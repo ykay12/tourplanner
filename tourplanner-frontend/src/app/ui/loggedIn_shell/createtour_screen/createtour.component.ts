@@ -34,9 +34,9 @@ export class CreatetourComponent {
   transportMode = signal<TransportMode>('BIKE')
   isMixedTour = computed(() => this.tourType() === "MIXED")
 
-  constructor(private router: Router, 
-              private appState: AppStateService,
-              private backend: BackendFacadeService) { }
+  constructor(private router: Router,
+    private appState: AppStateService,
+    private backend: BackendFacadeService) { }
 
 
   onSubmit(): void {
@@ -48,28 +48,36 @@ export class CreatetourComponent {
 
     //Für Debugging: Tour in Konsole loggen, bevor wir sie ans Backend schicken:
     console.log("Built Tour object to submit:", tour);
-    
+
     //nicht mehr nur in den state speichern, sondern ans Backend schicken! und dann das was wir zurück bekommen in den state
-    this.backend.saveTour(tour).subscribe({
+
+    const userId = this.appState.loggedInUserId();
+
+    if (userId === null) {
+      this.errorMsg.set("Please log in to create a tour!")
+      return;
+    }
+
+    this.backend.saveTour(tour, userId).subscribe({
       next: (responseTour) => {
         this.appState.addTour(responseTour);
 
         console.log("Created new Tour:", responseTour);
 
-        if(responseTour.id != null) {
+        if (responseTour.id != null) {
           this.appState.selectTour(responseTour.id);
         }
         else {
           console.warn("Received tour with null ID from backend:", responseTour);
         }
-        
+
         this.router.navigate(['/dashboard/tour-detail']);
       },
       error: (err) => {
         console.error("Error creating tour:", err);
         this.errorMsg.set("Failed to create tour /save tour to db)");
       }
-    });  
+    });
   }
 
   onTourName(event: Event): void {
@@ -231,5 +239,5 @@ export class CreatetourComponent {
     )
   }
 
-  
+
 }

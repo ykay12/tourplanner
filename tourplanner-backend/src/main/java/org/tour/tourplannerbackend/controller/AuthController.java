@@ -2,6 +2,7 @@ package org.tour.tourplannerbackend.controller;
 
 import org.springframework.web.bind.annotation.*;
 import org.tour.tourplannerbackend.dto.LoginDto;
+import org.tour.tourplannerbackend.dto.LoginResponseDto;
 import org.tour.tourplannerbackend.dto.RegisterDto;
 import org.tour.tourplannerbackend.model.User;
 import org.tour.tourplannerbackend.service.AuthService;
@@ -33,7 +34,7 @@ public class AuthController {
 
     @CrossOrigin
     @PostMapping("/login")
-    public String login(@RequestBody LoginDto loginDto) {
+    public LoginResponseDto login(@RequestBody LoginDto loginDto) {
         return authService.login(loginDto);
     }
 }

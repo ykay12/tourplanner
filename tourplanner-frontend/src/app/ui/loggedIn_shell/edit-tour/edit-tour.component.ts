@@ -249,7 +249,7 @@ export class EditTourComponent {
       this.tourDescription(),
       oldTour.estimated_time,
       oldTour.popularity,
-      oldTour.isChildfriendly,
+      oldTour.childFriendly,
       this.tourType(),
       this.buildRoutes(),
       oldTour.logs
@@ -266,9 +266,17 @@ export class EditTourComponent {
     }
 
     const updatedTour = this.buildUpdatedTour(currentTour);
-    this.appState.updateTour(updatedTour);
 
-    this.router.navigate(['/dashboard/tour-detail']);
+    // wir subscriben hier weil wir erst navigieren wollen wenn das backend erfolgreich gespeichert hat
+    this.appState.updateTourInBackend(updatedTour).subscribe({
+      next: () => {
+        this.router.navigate(['/dashboard/tour-detail']);
+      },
+      error: (err) => {
+        console.error('Error updating tour:', err);
+        this.errorMsg.set('Failed to update tour.');
+      }
+    });
   }
 
   onCancel(): void {

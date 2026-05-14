@@ -17,9 +17,11 @@ import java.util.UUID;
 public class UserController {
 
     private final UserService userService;
+    private final TourService tourService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, TourService tourService ) {
         this.userService = userService;
+        this.tourService = tourService;
     }
     /*
      * @CrossOrigin: Rules on how to access our Data
@@ -45,6 +47,11 @@ public class UserController {
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
+    }
+
+    @GetMapping("/{userId}/tours")
+    public List<Tour> getToursFromUser(@PathVariable Long userId) {
+        return tourService.getToursFromUser(userId);
     }
 
     /*

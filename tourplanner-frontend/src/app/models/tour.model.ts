@@ -8,7 +8,7 @@ export class Tour {
   description: string;
   estimated_time: number; /*man erhält die Zeit wohl von der API in sekunden*/
   popularity: number;
-  isChildfriendly: boolean;
+  childFriendly: boolean;
   tourType: TourType;
   routes: TourRoute[]; //Array in Typescript funktionieren wie wir es von List<> gewöhnt sind
   logs: Log[]; //Array in Typescript funktionieren wie wir es von List<> gewöhnt sind
@@ -30,7 +30,7 @@ export class Tour {
     this.description = description;
     this.estimated_time = estimated_time;
     this.popularity = popularity;
-    this.isChildfriendly = isChildfriendly;
+    this.childFriendly = isChildfriendly;
     this.tourType = tourType;
     this.routes = routes;
     this.logs = logs;

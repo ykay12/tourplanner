@@ -50,25 +50,25 @@ export class TourPreviewComponent implements AfterViewInit, OnDestroy {
 
 
   private extractCoords(): Coordinates[] {
-  const routes = this.tour.routes ?? [];
+    const routes = this.tour.routes ?? [];
 
-  const coords: Coordinates[] = [];
+    const coords: Coordinates[] = [];
 
-  for (const route of routes) {
-    if (route.fromCoordinates) {
-      coords.push(route.fromCoordinates);
+    for (const route of routes) {
+      if (route.fromCoordinates) {
+        coords.push(route.fromCoordinates);
+      }
     }
-  }
-  // Endpunkt hinzufügen
-  const last = routes[routes.length - 1]?.toCoordinates;
-  if (last) {
-    coords.push(last);
+    // Endpunkt hinzufügen
+    const last = routes[routes.length - 1]?.toCoordinates;
+    if (last) {
+      coords.push(last);
+    }
+
+    return coords;
   }
 
-  return coords;
-}
 
-  
   //Funktionen für Generelle Infos
   getFrom(): string {
     //entspricht dem from aus dem 1. TourRoute

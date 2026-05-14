@@ -3,7 +3,9 @@ package org.tour.tourplannerbackend.service;
 import org.springframework.stereotype.Service;
 import org.tour.tourplannerbackend.exception.NotFoundException;
 import org.tour.tourplannerbackend.model.Tour;
+import org.tour.tourplannerbackend.model.User;
 import org.tour.tourplannerbackend.repository.TourRepository;
+import org.tour.tourplannerbackend.repository.UserRepository;
 
 
 import java.util.List;
@@ -13,10 +15,15 @@ public class TourService {
 
     //ToDo: Should be solved with dependency Injection!
     private final TourRepository tourRepo;
+    private final UserRepository userRepo;
 
-    public TourService(TourRepository tourRepository) {
-        //vorübergehend um Fehler zu finden:
+    public TourService(TourRepository tourRepository, UserRepository userRepository) {
         this.tourRepo = tourRepository;
+        this.userRepo = userRepository;
+    }
+
+    public List<Tour> getToursFromUser(Long userId) {
+        return tourRepo.findByUserId(userId);
     }
 
     // aktuell gibt es keinen extra check um nur die touren von dem jeweiligen user zu holen
@@ -73,8 +80,17 @@ public class TourService {
 
 
     public Tour saveTour(Tour newTour) {
-        // 1.) Checks ob newTour vollständig
+        // 1.) Prüfen ob User vorhanden ist
+        if (newTour.getUser() == null || newTour.getUser().getId() == null) {
+            throw new NotFoundException("User is required for creating a tour");
+        }
 
+        // 2.) User aus DB holen
+        User user = userRepo.findById(newTour.getUser().getId())
+                .orElseThrow(() ->
+                        new NotFoundException("User not found: " + newTour.getUser().getId()));
+
+        newTour.setUser(user);
         // 2.) Repo-Funktion aufrufen
         if (newTour.getRoutes() != null) {
             newTour.getRoutes().forEach(route -> {

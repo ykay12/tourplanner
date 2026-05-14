@@ -2,6 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { AppStateService } from '../../states/app-state.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, pipe, tap } from 'rxjs';
+import { LoginResponse } from '../../types/loginResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +17,13 @@ export class AuthService {
 
 
 
-  login(username: string, password: string): Observable<string> {
-    return this.http.post(`${this.baseUrl}/auth/login`, {
+  login(username: string, password: string): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.baseUrl}/auth/login`, {
       username, password
-    }, {
-      responseType: 'text'
     }).pipe(
-      tap((token) => {
-        localStorage.setItem('token', token);
-        this.appState.logUserIn();
+      tap((response) => {
+        localStorage.setItem('token', response.token);
+        this.appState.logUserIn(response.userId);
       })
     );
   }
@@ -48,4 +47,5 @@ export class AuthService {
   isLoggedIn(): boolean {
     return this.getToken() !== null;
   }
+
 }

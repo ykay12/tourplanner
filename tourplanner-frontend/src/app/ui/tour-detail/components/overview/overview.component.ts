@@ -24,16 +24,21 @@ export class OverviewComponent {
     this.showDeleteModal.set(false)
   }
 
-  onDeleteTour(): void {
-    const tourId = this.state.selectedTourId()
+onDeleteTour(): void {
+  const tourId = this.state.selectedTourId();
 
-    if (tourId === null) return
+  if (tourId === null) return;
 
-    this.state.removeTour(tourId)
-    this.closeDeleteModal();
-    this.router.navigate(['/dashboard']);
-
-  }
+  this.state.deleteTourFromBackend(tourId).subscribe({
+    next: () => {
+      this.closeDeleteModal();
+      this.router.navigate(['/dashboard']);
+    },
+    error: (err) => {
+      console.error('Error deleting tour:', err);
+    }
+  });
+}
 
   onEditTour(): void {
     const id = this.state.selectedTourId()

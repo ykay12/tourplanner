@@ -9,6 +9,7 @@ import org.tour.tourplannerbackend.model.enums.TransportMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 //
 @Repository
 public interface TourRepository extends JpaRepository<Tour, Long> { //Long ist der Datentyp des Primary Key der Entity-Klasse Tour
@@ -22,6 +23,6 @@ public interface TourRepository extends JpaRepository<Tour, Long> { //Long ist d
              Existieren jetzt einfach?!? :O
      ----------------------------------*/
 
-
+    List<Tour> findByUserId(Long userId);
 
 }

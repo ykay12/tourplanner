@@ -8,7 +8,7 @@ export type TourDto = {
     description: string;
     estimated_time: number;
     popularity: number;
-    isChildfriendly: boolean;
+    childFriendly: boolean;
     tourType: TourType;
     routes: TourRoute[];
     logs: Array<Log & { createdAt: string }>;

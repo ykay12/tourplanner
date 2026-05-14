@@ -17,7 +17,7 @@ Our own backend is also an external API from the viewpoint of our front-end
   providedIn: 'root',
 })
 export class BackendFacadeService {
-  
+
   private http = inject(HttpClient); //this is needed to make a http-request
   private baseUrl = 'http://localhost:8080'; //standard-port Spring-Boot
 
@@ -31,13 +31,31 @@ export class BackendFacadeService {
       .pipe(map((dtoList) => TourMapper.fromDtoList(dtoList)));
   }
 
-  
-  //Sends a newly created tour to the backend to be saved in the database
-  saveTour(newTour: Tour): Observable<Tour> {
-    
-    return this.http.post<any>(`${this.baseUrl}/tours`, newTour).pipe(
-      map((responseDto) => TourMapper.fromDto(responseDto)) // wandelt Backend-DTO in dein Frontend-Model Tour um
-    );
 
+  //Sends a newly created tour to the backend to be saved in the database
+  saveTour(newTour: Tour, userId: Number): Observable<Tour> {
+
+    const tourDto = {
+      ...newTour, user: {
+        id: userId
+      }
+    }
+
+    return this.http.post<any>(`${this.baseUrl}/tours`, tourDto).pipe(map((responseDto) => TourMapper.fromDto(responseDto)))
+
+  }
+
+  editTour(updatedTour: Tour): Observable<Tour> {
+
+    if (updatedTour === null) {
+      throw new Error("Cannot edit tour wihtout id")
+    }
+
+    return this.http.put<any>(`${this.baseUrl}/tours/${updatedTour.id}`, updatedTour)
+      .pipe(map((responseDto) => TourMapper.fromDto(responseDto)))
+  }
+
+  deleteTour(tourId: Number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/tours/${tourId}`)
   }
 }
