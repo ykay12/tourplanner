@@ -54,13 +54,13 @@ public class LogService {
             if (!existingLog.getTour().getId().equals(tourId)) {
                 throw new ValidationException("Log does not belong to tour: " + tourId);
             }
+
+            log.setCreatedAt(existingLog.getCreatedAt());
+        } else {
+            log.setCreatedAt(LocalDateTime.now());
         }
 
         log.setTour(tour);
-
-        if (log.getId() == null) {
-            log.setCreatedAt(LocalDateTime.now());
-        }
 
         return logRepository.save(log);
     }
