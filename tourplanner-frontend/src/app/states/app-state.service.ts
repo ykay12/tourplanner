@@ -179,11 +179,11 @@ export class AppStateService {
     this._selectedTourId.set(null);
   }
 
-  addLogToTour(log: Log) {
-    const selectedTour = this.selectedTour();
-    if (selectedTour) {
-      // Generate a simple ID for the log (using timestamp + random number)
-      log.id = Date.now() + Math.floor(Math.random() * 1000);
+ addLogToTourBackend(tourId: number, log: Log) {
+  return this.backendFacade.saveLog(tourId, log).pipe(
+    tap((savedLog) => {
+      const selectedTour = this.selectedTour();
+      if (!selectedTour) return;
 
       const updatedTour = new Tour(
         selectedTour.id,
@@ -194,12 +194,61 @@ export class AppStateService {
         selectedTour.childFriendly,
         selectedTour.tourType,
         selectedTour.routes,
-        [...selectedTour.logs, log]
+        [...selectedTour.logs, savedLog]
       );
 
       this.updateTour(updatedTour);
-    }
-  }
+    })
+  );
+}
+
+updateLogInBackend(tourId: number, log: Log) {
+  return this.backendFacade.editLog(tourId, log).pipe(
+    tap((updatedLog) => {
+      const selectedTour = this.selectedTour();
+      if (!selectedTour) return;
+
+      const updatedLogs = selectedTour.logs.map(l =>
+        l.id === updatedLog.id ? updatedLog : l
+      );
+
+      this.updateTour(new Tour(
+        selectedTour.id,
+        selectedTour.name,
+        selectedTour.description,
+        selectedTour.estimated_time,
+        selectedTour.popularity,
+        selectedTour.childFriendly,
+        selectedTour.tourType,
+        selectedTour.routes,
+        updatedLogs
+      ));
+    })
+  );
+}
+
+deleteLogFromBackend(tourId: number, logId: number) {
+  return this.backendFacade.deleteLog(tourId, logId).pipe(
+    tap(() => {
+      const selectedTour = this.selectedTour();
+      if (!selectedTour) return;
+
+      const updatedLogs = selectedTour.logs.filter(log => log.id !== logId);
+
+      this.updateTour(new Tour(
+        selectedTour.id,
+        selectedTour.name,
+        selectedTour.description,
+        selectedTour.estimated_time,
+        selectedTour.popularity,
+        selectedTour.childFriendly,
+        selectedTour.tourType,
+        selectedTour.routes,
+        updatedLogs
+      ));
+    })
+  );
+}
 
 }
 

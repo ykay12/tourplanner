@@ -11,7 +11,7 @@ import { Log } from '../../../../../models/log.model';
   styleUrl: './create-log.component.scss'
 })
 export class CreateLogComponent {
-  
+
   // Form fields
   comment = signal('');
   date = signal(new Date().toISOString().split('T')[0]); // Today's date in YYYY-MM-DD format
@@ -21,7 +21,7 @@ export class CreateLogComponent {
   rating = signal(5);
   errorMsg = signal('');
 
-  constructor(private appState: AppStateService) {}
+  constructor(private appState: AppStateService) { }
 
   onCommentChange(event: Event): void {
     const value = (event.target as HTMLTextAreaElement).value;
@@ -82,21 +82,32 @@ export class CreateLogComponent {
 
     // Create log object
     const newLog: Log = {
-      id: 0, // Will be set by the state service
+      id: null,
       comment: this.comment(),
       createdAt: new Date(this.date()),
       difficulty: this.difficulty(),
-      total_distance: this.distance(),
-      total_time: this.duration(),
+      totalDistance: this.distance(),
+      totalTime: this.duration(),
       rating: this.rating()
     };
 
-    // Add log to state
-    this.appState.addLogToTour(newLog);
+    const selectedTour = this.appState.selectedTour();
 
-    // Reset form
-    this.resetForm();
-    this.errorMsg.set('');
+    if (!selectedTour || selectedTour.id === null) {
+      this.errorMsg.set('No tour selected');
+      return;
+    }
+
+    this.appState.addLogToTourBackend(selectedTour.id, newLog).subscribe({
+      next: () => {
+        this.resetForm();
+        this.errorMsg.set('');
+      },
+      error: (err) => {
+        console.error('Error creating log:', err);
+        this.errorMsg.set('Could not save log');
+      }
+    });
   }
 
   resetForm(): void {

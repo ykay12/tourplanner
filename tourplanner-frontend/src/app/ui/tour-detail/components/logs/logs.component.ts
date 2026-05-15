@@ -46,54 +46,49 @@ export class LogsComponent {
   }
 
   onSubmit() {
-    if (this.logForm.valid) {
-      const formValue = this.logForm.value;
-      const selectedTour = this.state.selectedTour();
+    if (!this.logForm.valid) return;
 
-      if (this.editingLogId() && selectedTour) {
-        // Edit mode: update existing log
-        const updatedLogs = selectedTour.logs.map(log =>
-          log.id === this.editingLogId()
-            ? {
-              ...log,
-              comment: formValue.comment,
-              difficulty: parseFloat(formValue.difficulty),
-              total_distance: parseFloat(formValue.total_distance),
-              total_time: parseFloat(formValue.total_time),
-              rating: parseFloat(formValue.rating)
-            }
-            : log
-        );
+    const formValue = this.logForm.value;
+    const selectedTour = this.state.selectedTour();
 
-        const updatedTour = new Tour(
-          selectedTour.id,
-          selectedTour.name,
-          selectedTour.description,
-          selectedTour.estimated_time,
-          selectedTour.popularity,
-          selectedTour.childFriendly,
-          selectedTour.tourType,
-          selectedTour.routes,
-          updatedLogs
-        );
-        this.state.updateTour(updatedTour);
-      } else {
-        // Create mode: add new log
-        const newLog: Log = {
-          id: 0, // Will be set by the service
-          comment: formValue.comment,
-          createdAt: new Date(),
-          difficulty: parseFloat(formValue.difficulty),
-          total_distance: parseFloat(formValue.total_distance),
-          total_time: parseFloat(formValue.total_time),
-          rating: parseFloat(formValue.rating)
-        };
+    if (!selectedTour || selectedTour.id === null) return;
 
-        this.state.addLogToTour(newLog);
-      }
+    if (this.editingLogId()) {
+      const existingLog = selectedTour.logs.find(log => log.id === this.editingLogId());
 
-      this.closeForm();
+      if (!existingLog) return;
+
+      const updatedLog: Log = {
+        ...existingLog,
+        comment: formValue.comment,
+        difficulty: parseFloat(formValue.difficulty),
+        totalDistance: parseFloat(formValue.total_distance),
+        totalTime: parseFloat(formValue.total_time),
+        rating: parseFloat(formValue.rating)
+      };
+
+      this.state.updateLogInBackend(selectedTour.id, updatedLog).subscribe({
+        next: () => this.closeForm(),
+        error: err => console.error('Error updating log:', err)
+      });
+
+      return;
     }
+
+    const newLog: Log = {
+      id: null,
+      comment: formValue.comment,
+      createdAt: new Date(),
+      difficulty: parseFloat(formValue.difficulty),
+      totalDistance: parseFloat(formValue.total_distance),
+      totalTime: parseFloat(formValue.total_time),
+      rating: parseFloat(formValue.rating)
+    };
+
+    this.state.addLogToTourBackend(selectedTour.id, newLog).subscribe({
+      next: () => this.closeForm(),
+      error: err => console.error('Error creating log:', err)
+    });
   }
 
   editLog(log: Log) {
@@ -101,8 +96,8 @@ export class LogsComponent {
     this.logForm.patchValue({
       comment: log.comment,
       difficulty: log.difficulty.toString(),
-      total_distance: log.total_distance.toString(),
-      total_time: log.total_time.toString(),
+      total_distance: log.totalDistance.toString(),
+      total_time: log.totalTime.toString(),
       rating: log.rating.toString()
     });
     this.showForm.set(true);
@@ -110,21 +105,12 @@ export class LogsComponent {
 
   deleteLog(logId: number) {
     const selectedTour = this.state.selectedTour();
-    if (selectedTour) {
-      const updatedLogs = selectedTour.logs.filter(log => log.id !== logId);
-      const updatedTour = new Tour(
-        selectedTour.id,
-        selectedTour.name,
-        selectedTour.description,
-        selectedTour.estimated_time,
-        selectedTour.popularity,
-        selectedTour.childFriendly,
-        selectedTour.tourType,
-        selectedTour.routes,
-        updatedLogs
-      );
-      this.state.updateTour(updatedTour);
-    }
+
+    if (!selectedTour || selectedTour.id === null) return;
+
+    this.state.deleteLogFromBackend(selectedTour.id, logId).subscribe({
+      error: err => console.error('Error deleting log:', err)
+    });
   }
 
   //collapsing on mobile:

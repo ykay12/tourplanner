@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Tour } from '../../models/tour.model';
 import { TourMapper } from '../../mappers/tour.mapper';
 import { Observable, map } from 'rxjs';
+import { Log } from '../../models/log.model';
 
 
 
@@ -47,8 +48,8 @@ export class BackendFacadeService {
 
   editTour(updatedTour: Tour): Observable<Tour> {
 
-    if (updatedTour === null) {
-      throw new Error("Cannot edit tour wihtout id")
+    if (updatedTour.id === null) {
+      throw new Error("Cannot edit tour without id");
     }
 
     return this.http.put<any>(`${this.baseUrl}/tours/${updatedTour.id}`, updatedTour)
@@ -57,5 +58,25 @@ export class BackendFacadeService {
 
   deleteTour(tourId: Number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/tours/${tourId}`)
+  }
+
+  loadLogsForTour(tourId: number): Observable<Log[]> {
+    return this.http.get<Log[]>(`${this.baseUrl}/tours/${tourId}/logs`);
+  }
+
+  saveLog(tourId: number, log: Log): Observable<Log> {
+    return this.http.post<Log>(`${this.baseUrl}/tours/${tourId}/logs`, log);
+  }
+
+  editLog(tourId: number, log: Log): Observable<Log> {
+    if (log.id === null) {
+      throw new Error('Cannot edit log without id');
+    }
+
+    return this.http.put<Log>(`${this.baseUrl}/tours/${tourId}/logs/${log.id}`, log);
+  }
+
+  deleteLog(tourId: number, logId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/tours/${tourId}/logs/${logId}`);
   }
 }
