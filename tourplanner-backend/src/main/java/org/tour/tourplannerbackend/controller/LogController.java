@@ -1,5 +1,7 @@
 package org.tour.tourplannerbackend.controller;
 
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 import org.tour.tourplannerbackend.model.Log;
 import org.tour.tourplannerbackend.service.LogService;
@@ -17,29 +19,33 @@ public class LogController {
         this.logService = logService;
     }
 
-    @CrossOrigin
     @GetMapping
-    public List<Log> getLogs(@PathVariable Long tourId) {
-        return logService.getLogsForTour(tourId);
+    public List<Log> getLogs(@PathVariable Long tourId, HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
+        return logService.getLogsForTour(username, tourId);
     }
-
-    @CrossOrigin
     @PostMapping
-    public Log createLog(@PathVariable Long tourId, @RequestBody Log log) {
-        return logService.createOrUpdateLog(tourId, log);
+    public Log createLog(@PathVariable Long tourId, @RequestBody Log log, HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
+        return logService.createOrUpdateLog(username, tourId, log);
     }
 
-    @CrossOrigin
     @PutMapping("/{logId}")
-    public Log updateLog(@PathVariable Long tourId, @PathVariable Long logId, @RequestBody Log log) {
+    public Log updateLog(
+            @PathVariable Long tourId,
+            @PathVariable Long logId,
+            @RequestBody Log log,
+            HttpServletRequest request
+    ) {
+        String username = (String) request.getAttribute("username");
         log.setId(logId);
-        return logService.createOrUpdateLog(tourId, log);
+        return logService.createOrUpdateLog(username, tourId, log);
     }
 
-    @CrossOrigin
     @DeleteMapping("/{logId}")
-    public void deleteLog(@PathVariable Long tourId, @PathVariable Long logId) {
-        logService.deleteLog(tourId, logId);
+    public void deleteLog(@PathVariable Long tourId, @PathVariable Long logId,  HttpServletRequest request) {
+        String username = request.getAttribute("username").toString();
+        logService.deleteLog(username, tourId, logId);
     }
 }
 
