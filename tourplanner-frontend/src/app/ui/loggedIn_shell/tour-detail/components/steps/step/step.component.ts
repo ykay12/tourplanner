@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { TourRoute } from '../../../../../models/tourRoute.model'
+import { TourRoute } from '../../../../../../models/tourRoute.model'
 
 @Component({
   selector: 'app-step',

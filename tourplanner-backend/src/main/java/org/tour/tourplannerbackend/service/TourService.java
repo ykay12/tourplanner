@@ -90,14 +90,17 @@ public class TourService {
                         new NotFoundException("User not found: " + newTour.getUser().getId()));
 
         newTour.setUser(user);
-        // 2.) Repo-Funktion aufrufen
+
+        // 3.) Routes setzen
         if (newTour.getRoutes() != null) {
             newTour.getRoutes().forEach(route -> {
                 route.setId(null);              // wir müssen die Null setzen, weil die ja automatisch generiert werden sollen!
+                // 4.) Todo: Koordinaten für Routes von OpenRouteService holen
                 route.setTour(newTour);
             });
         }
 
+        // 5.) Logs setzen
         if (newTour.getLogs() != null) {
             newTour.getLogs().forEach(log -> {
                 log.setId(null); //Wir müssen die Null setzen, weil die ja automatisch generiert werden sollen
@@ -105,9 +108,11 @@ public class TourService {
             });
         }
 
-        // 3.) Checks ob Return passt -> Hibernate repo.save() returniert die gespeicherte Entity
 
-        // 4.) gespeicherte Tour returnieren
+
+        // 6.) Checks ob Return passt -> Hibernate repo.save() returniert die gespeicherte Entity
+
+        // 7.) gespeicherte Tour returnieren
         return tourRepo.save(newTour);
 
     }

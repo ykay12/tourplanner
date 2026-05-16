@@ -6,12 +6,12 @@ import {
   inject,
 } from '@angular/core';
 
-import { AppStateService } from '../../../../states/app-state.service';
-import { LeafletFacadeService } from '../../../../services/leaflet/leafletFacade.service';
+import { AppStateService } from '../../../../../states/app-state.service';
+import { LeafletFacadeService } from '../../../../../services/leaflet/leafletFacade.service';
 
-import { Tour } from '../../../../models/tour.model';
-import { TourRoute } from '../../../../models/tourRoute.model';
-import { Coordinates } from '../../../../models/coordinates.model';
+import { Tour } from '../../../../../models/tour.model';
+import { TourRoute } from '../../../../../models/tourRoute.model';
+import { Coordinates } from '../../../../../models/coordinates.model';
 
 @Component({
   selector: 'app-map',

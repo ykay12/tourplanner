@@ -3,7 +3,7 @@
 import { Routes } from '@angular/router';
 
 
-import { TourDetailComponent } from './ui/tour-detail/tour-detail.component'
+import { TourDetailComponent } from './ui/loggedIn_shell/tour-detail/tour-detail.component'
 import { CreatetourComponent } from './ui/loggedIn_shell/createtour_screen/createtour.component';
 import { LoginComponent } from './ui/login/login.component';
 import { RegistrationComponent } from './ui/registration/registration.component';

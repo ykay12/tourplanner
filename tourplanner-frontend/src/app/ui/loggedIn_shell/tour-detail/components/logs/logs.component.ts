@@ -2,9 +2,9 @@ import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { signal } from '@angular/core';
-import { AppStateService } from '../../../../states/app-state.service';
-import { Log } from '../../../../models/log.model';
-import { Tour } from '../../../../models/tour.model';
+import { AppStateService } from '../../../../../states/app-state.service';
+import { Log } from '../../../../../models/log.model';
+import { Tour } from '../../../../../models/tour.model';
 
 @Component({
   selector: 'app-logs',

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { AppStateService } from '../../states/app-state.service';
+import { AppStateService } from '../../../states/app-state.service';
 import { StepsComponent } from './components/steps/steps.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { MapComponent } from './components/map/map.component';
