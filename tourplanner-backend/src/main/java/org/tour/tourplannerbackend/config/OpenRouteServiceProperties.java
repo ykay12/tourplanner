@@ -2,11 +2,13 @@ package org.tour.tourplannerbackend.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.net.URI;
+
 @ConfigurationProperties(prefix = "openrouteservice")
 public class OpenRouteServiceProperties {
 
     private String key;
-    private String baseUrl;
+    private URI baseUrl;
 
     //Getter und Setter
     public String getKey() {
@@ -17,11 +19,11 @@ public class OpenRouteServiceProperties {
         this.key = key;
     }
 
-    public String getBaseUrl() {
+    public URI getBaseUrl() {
         return baseUrl;
     }
 
-    public void setBaseUrl(String baseUrl) {
+    public void setBaseUrl(URI baseUrl) {
         this.baseUrl = baseUrl;
     }
 }
