@@ -1,10 +1,4 @@
-/*
 package org.tour.tourplannerbackend.integration;
-
-import org.springframework.stereotype.Component;
-import org.tour.tourplannerbackend.config.AppProperties;
-
- */
 
 /*  ** OPEN ROUTE SERVICE **
 
@@ -27,26 +21,45 @@ import org.tour.tourplannerbackend.config.AppProperties;
     "By default, Pelias returns up to 10 results.  If you want a different number, set the size parameter to the desired number. "
 
  */
-/*
+
+
+import org.springframework.stereotype.Component;
+import org.tour.tourplannerbackend.config.OpenRouteServiceProperties;
+import org.tour.tourplannerbackend.model.Coordinates;
+
+import java.net.URI;
 
 @Component
-public class OpenRouteServiceClient {
+public class OpenRouteServiceFacade {
 
-    private final AppProperties appProperties;
+    private final OpenRouteServiceProperties apiProperties;
 
-    public OpenRouteServiceClient(AppProperties appProperties) {
-        this.appProperties = appProperties;
+    public OpenRouteServiceFacade(OpenRouteServiceProperties apiProperties) {
+        this.apiProperties = apiProperties;
     }
 
-    public String getBaseUrl() {
-        return appProperties.getOrsBaseUrl();
+    //what are these for?
+    public URI getBaseUrl() {
+        return apiProperties.getBaseUrl();
     }
 
     public String getApiKey() {
-        return appProperties.getOrsApiKey();
+        return apiProperties.getKey();
+    }
+
+    //Functions to get Coordinates
+    // -> Since Open Route Service can do both I am implementing both for now?
+    public Coordinates getCoordinatesViaNameOfLocation() {
+        Coordinates coords = new Coordinates();
+
+
+    }
+
+    public Coordinates getCoordinatesViaStreetAddress() {
+
     }
 }
 
-*/
+
 
 
