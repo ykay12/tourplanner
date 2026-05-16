@@ -6,8 +6,7 @@ import { TourType } from '../../../types/tourTypes';
 import { MixedSegment, TourRoute } from '../../../models/tourRoute.model';
 import { TransportMode } from '../../../types/transportModes';
 import { AppStateService } from '../../../states/app-state.service';
-//for faking coordinates while we don't have a real geocoding service:
-import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates';
+//import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates'; //for faking coordinates while we don't have a real geocoding service:
 import { BackendFacadeService } from '../../../services/backend/backendFacade.service';
 
 
@@ -179,9 +178,9 @@ export class CreatetourComponent {
         {
           id: null, //muss auf null gesetzt werden, damit der backendMapper weiß dass er eine neue Route anlegen muss und keine bestehende updaten soll
           from: this.from(),
-          fromCoordinates: getFakeCoordinates(this.from()),
+          fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
           to: this.to(),
-          toCoordinates: getFakeCoordinates(this.to()),
+          toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
           distance: 0,
           transportMode: this.transportMode()
         }
@@ -199,9 +198,9 @@ export class CreatetourComponent {
       routes.push({
         id: null, //muss auf null gesetzt werden, damit der backendMapper weiß dass er eine neue Route anlegen muss und keine bestehende updaten soll
         from: currentFrom,
-        fromCoordinates: getFakeCoordinates(currentFrom),
+        fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
         to: segment.to,
-        toCoordinates: getFakeCoordinates(segment.to),
+        toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
         distance: 0,
         transportMode: segment.transportMode
       });
@@ -212,9 +211,9 @@ export class CreatetourComponent {
     routes.push({
       id: null, //muss auf null gesetzt werden, damit der backendMapper weiß dass er eine neue Route anlegen muss und keine bestehende updaten soll
       from: currentFrom,
-      fromCoordinates: getFakeCoordinates(currentFrom),
+      fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
       to: this.to(),
-      toCoordinates: getFakeCoordinates(this.to()),
+      toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
       distance: 0,
       transportMode: filledSegments.length > 0
         ? filledSegments[filledSegments.length - 1].transportMode

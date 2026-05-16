@@ -2,6 +2,7 @@ package org.tour.tourplannerbackend.service;
 
 import org.springframework.stereotype.Service;
 import org.tour.tourplannerbackend.exception.NotFoundException;
+import org.tour.tourplannerbackend.integration.OpenRouteServiceFacade;
 import org.tour.tourplannerbackend.model.Tour;
 import org.tour.tourplannerbackend.model.User;
 import org.tour.tourplannerbackend.repository.TourRepository;
@@ -15,10 +16,14 @@ public class TourService {
 
     private final TourRepository tourRepo;
     private final UserRepository userRepo;
+    private final OpenRouteServiceFacade openRouteServiceFacade;
 
-    public TourService(TourRepository tourRepository, UserRepository userRepository) {
+    public TourService(TourRepository tourRepository,
+                       UserRepository userRepository,
+                       OpenRouteServiceFacade openRouteServiceFacade) {
         this.tourRepo = tourRepository;
         this.userRepo = userRepository;
+        this.openRouteServiceFacade = openRouteServiceFacade;
     }
 
     public List<Tour> getToursFromUser(Long userId) {
@@ -95,7 +100,10 @@ public class TourService {
         if (newTour.getRoutes() != null) {
             newTour.getRoutes().forEach(route -> {
                 route.setId(null);              // wir müssen die Null setzen, weil die ja automatisch generiert werden sollen!
-                // 4.) Todo: Koordinaten für Routes von OpenRouteService holen
+                // 4.) Koordinaten für Routes von OpenRouteService holen
+                route.setFromCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getFrom()));
+                route.setToCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getTo()));
+
                 route.setTour(newTour);
             });
         }
