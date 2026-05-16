@@ -23,22 +23,26 @@ public class TourController {
         return tourService.getAllTours();
     }
 
+    // GET /tours/{id} -> get specific tour
     @GetMapping("/{id}")
     public Tour getTour(@PathVariable Long id) {
         return tourService.getTour(id);
     }
 
+    // POST /tours -> create a new tour
     @PostMapping()
     public Tour createTour(@RequestBody Tour newTour) {
-        newTour.setId(null);
+        newTour.setId(null); //Weil in DB gesetzt wird?
         return tourService.saveTour(newTour);
     }
 
+    // PUT /tours/{id} -> update an existing tour
     @PutMapping("/{id}")
     public Tour updateTour(@PathVariable Long id, @RequestBody Tour updatedTour) {
         return tourService.updateTour(id, updatedTour);
     }
 
+    // DELETE /tours/{id} -> delete a specific tour
     @DeleteMapping("/{id}")
     public void deleteTour(@PathVariable Long id) {
         tourService.deleteTour(id);
