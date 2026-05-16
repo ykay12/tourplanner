@@ -18,7 +18,7 @@ Wie starten wir überhaupt?
       docker compose up -d
     durchführen
 
-Wenn Code Änderungen und Docker läuft:
+Wenn DB Änderungen und Docker läuft:
 docker compose down
 docker compose up --build
 
