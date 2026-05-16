@@ -1,0 +1,17 @@
+um Open Route Service zu nutzen brauchen wir einen API key!
+
+diese sollten wir nicht im Git Repo haben, weil wir sie ja nicht teilen sollen!
+
+Daher (nach folgender Anleitung): https://medium.com/@oadaramola/a-pitfall-i-almost-fell-into-d1d3461b2fb8
+
+1.) ein .env File im Root-Ordner dieses Projektes anlegen. (Root-Ordner ist wo z.B. auch .pom liegt)
+
+2.) darin
+    OPEN_ROUTE_SERVICE_API_KEY=/*Dein API key*/
+    anlegen
+
+Im Gitignore sind die .env files bereits excluded -> Also das .env wird nicht mehr mitgepushed
+
+im application.properties wird dann unser jeweiliger API key aus dem .env file ausgelesen
+
+in OpenRouteServiceClient.java wird dann der API key aus den application.properties ausgelesen

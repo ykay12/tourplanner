@@ -13,7 +13,6 @@ import java.util.List;
 @Service
 public class TourService {
 
-    //ToDo: Should be solved with dependency Injection!
     private final TourRepository tourRepo;
     private final UserRepository userRepo;
 
