@@ -86,7 +86,15 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     this.mapFacade.setCenterToFitCoordinates(this.containerId, coords);
 
     //polylines zwischen den markern zeichnen
-    this.mapFacade.drawRoute(this.containerId, coords);
-
+    //this.mapFacade.drawRoute(this.containerId, coords); //das war die direkte linie
+    for (const route of routes) {
+      if (route.routeCoordinates) {
+        this.mapFacade.drawRoute(
+          this.containerId,
+          route.routeCoordinates
+        );
+      }
+    }
   }
 }
+
