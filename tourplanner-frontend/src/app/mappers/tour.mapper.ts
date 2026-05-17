@@ -13,6 +13,7 @@ export class TourMapper {
       to: r.to,
       distance: r.distance,
       transportMode: r.transportMode,
+      creationType: r.creationType,
       fromCoordinates: {
         lat: r.fromCoordinates?.lat,
         lng: r.fromCoordinates?.lng

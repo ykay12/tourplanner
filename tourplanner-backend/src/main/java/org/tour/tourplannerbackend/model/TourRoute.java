@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.tour.tourplannerbackend.model.enums.TourCreationType;
 import org.tour.tourplannerbackend.model.enums.TransportMode;
 
 @Entity
@@ -38,6 +39,9 @@ public class TourRoute {
 
     @Enumerated(EnumType.STRING)
     private TransportMode transportMode;
+
+    @Enumerated(EnumType.STRING)
+    private TourCreationType creationType;
 
     @JsonBackReference("tour-routes")
     @JoinColumn(name = "tour_id")

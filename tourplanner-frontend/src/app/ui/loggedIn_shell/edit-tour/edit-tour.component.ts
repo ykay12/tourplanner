@@ -200,7 +200,8 @@ export class EditTourComponent {
           to: this.to(),
           toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
           distance: 0,
-          transportMode: this.transportMode()
+          transportMode: this.transportMode(),
+          creationType: 'USER_CREATED'
         }
       ];
     }
@@ -220,7 +221,8 @@ export class EditTourComponent {
         to: segment.to,
         toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
         distance: 0,
-        transportMode: segment.transportMode
+        transportMode: segment.transportMode,
+        creationType: 'USER_CREATED'
       });
 
       currentFrom = segment.to;
@@ -236,7 +238,8 @@ export class EditTourComponent {
       transportMode:
         filledSegments.length > 0
           ? filledSegments[filledSegments.length - 1].transportMode
-          : 'BIKE'
+          : 'BIKE',
+      creationType: 'USER_CREATED'
     });
 
     return routes;

@@ -29,8 +29,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import org.tour.tourplannerbackend.config.OpenRouteServiceProperties;
 import org.tour.tourplannerbackend.dto.OpenRouteServiceGeocodeResponseDto;
 import org.tour.tourplannerbackend.model.Coordinates;
+import org.tour.tourplannerbackend.model.enums.OpenRouteServiceProfile;
 
-import java.net.URI;
 
 @Component
 public class OpenRouteServiceFacade {
@@ -87,6 +87,9 @@ public class OpenRouteServiceFacade {
     public Coordinates getCoordinatesViaStreetAddress() {
         return new Coordinates();
     }
+
+    //ToDo: Function to call "/v2/directions/{profile}" endpoint -> Retourniert "Waypoints"
+
 }
 
 

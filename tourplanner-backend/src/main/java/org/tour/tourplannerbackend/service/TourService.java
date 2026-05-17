@@ -17,16 +17,13 @@ public class TourService {
 
     private final TourRepository tourRepo;
     private final UserRepository userRepo;
-    private final RouteRepository routeRepo;
     private final OpenRouteServiceFacade openRouteServiceFacade;
 
     public TourService(TourRepository tourRepository,
                        UserRepository userRepository,
-                       RouteRepository routeRepository,
                        OpenRouteServiceFacade openRouteServiceFacade) {
         this.tourRepo = tourRepository;
         this.userRepo = userRepository;
-        this.routeRepo = routeRepository;
         this.openRouteServiceFacade = openRouteServiceFacade;
     }
 
@@ -131,8 +128,6 @@ public class TourService {
                 log.setTour(newTour);
             });
         }
-
-
 
         // 6.) Checks ob Return passt -> Hibernate repo.save() returniert die gespeicherte Entity
 
