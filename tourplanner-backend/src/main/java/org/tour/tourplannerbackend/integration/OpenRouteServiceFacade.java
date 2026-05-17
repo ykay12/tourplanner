@@ -56,6 +56,7 @@ public class OpenRouteServiceFacade {
                 .path("/geocode/search")
                 .queryParam("api_key", apiProperties.getKey())
                 .queryParam("text", locationName)
+                .queryParam("boundary.country", "AT")
                 .toUriString();
 
         //3.) Anfrage schicken + automatisches parsen in DTO
