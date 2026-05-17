@@ -1,4 +1,10 @@
-import { Component, Input, AfterViewInit, OnDestroy, inject } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  OnDestroy,
+  inject,
+} from '@angular/core';
 import { Tour } from '../../../../models/tour.model';
 import { LeafletFacadeService } from '../../../../services/leaflet/leafletFacade.service';
 import { Coordinates } from '../../../../models/coordinates.model';
@@ -8,7 +14,7 @@ import { Coordinates } from '../../../../models/coordinates.model';
   standalone: true,
   imports: [],
   templateUrl: './tour-preview.component.html',
-  styleUrl: './tour-preview.component.scss'
+  styleUrl: './tour-preview.component.scss',
 })
 export class TourPreviewComponent implements AfterViewInit, OnDestroy {
   @Input() tour!: Tour;
@@ -24,30 +30,44 @@ export class TourPreviewComponent implements AfterViewInit, OnDestroy {
   async ngAfterViewInit() {
     if (!this.tour) return;
 
-    await this.mapFacade.initMap(this.mapId); // wo kommt das her? brauche ich nicht getId()?
-
-    const coords = this.extractCoords();
-    if (!coords.length) return;
+    await this.mapFacade.initMap(this.mapId);
 
     this.mapFacade.clearMarkers(this.mapId);
 
-    // Marker + Route
-    const start = coords[0];
-    this.mapFacade.setMarker(this.mapId, start);
+    const routes = this.tour.routes ?? [];
+    if (!routes.length) return;
 
-    for (const c of coords) {
-      this.mapFacade.setMarker(this.mapId, c);
+    const boundsCoords: Coordinates[] = [];
+
+    // Startpunkt setzten
+    const firstRoute = routes[0];
+    if (firstRoute.fromCoordinates) {
+      this.mapFacade.setMarker(this.mapId, firstRoute.fromCoordinates);
+      boundsCoords.push(firstRoute.fromCoordinates);
     }
 
-    this.mapFacade.drawRoute(this.mapId, coords);
-    this.mapFacade.setCenterToFitCoordinates(this.mapId, coords);
+    //Routen + Endpunkte setzen / zeichnen
+    for (const route of routes) {
+      // Endmarker pro Segment
+      if (route.toCoordinates) {
+        this.mapFacade.setMarker(this.mapId, route.toCoordinates);
+        boundsCoords.push(route.toCoordinates);
+      }
+
+      // detaillierte Route (nicht nur direct line)
+      if (route.routeCoordinates?.length) {
+        this.mapFacade.drawRoute(this.mapId, route.routeCoordinates);
+      }
+    }
+
+    // Zoom auf komplette Tour
+    this.mapFacade.setCenterToFitCoordinates(this.mapId, boundsCoords);
   }
 
   //Lifecycle-Hook für das Zerstören der Karte -> wichtig weil containerID immer gleich ist, und dann wäre schon befüllt
   ngOnDestroy(): void {
     this.mapFacade.destroyMap(this.mapId);
   }
-
 
   private extractCoords(): Coordinates[] {
     const routes = this.tour.routes ?? [];
@@ -68,7 +88,6 @@ export class TourPreviewComponent implements AfterViewInit, OnDestroy {
     return coords;
   }
 
-
   //Funktionen für Generelle Infos
   getFrom(): string {
     //entspricht dem from aus dem 1. TourRoute
@@ -81,18 +100,22 @@ export class TourPreviewComponent implements AfterViewInit, OnDestroy {
     return routes?.[routes.length - 1]?.to ?? 'Unknown';
   }
 
-
   //Funktionen für Icon
   getTourTypeIcon(): string {
     //export type TourType = 'Bike' | 'Hike' | 'Vacation' | 'Mixed' | 'Running';
     switch (this.tour.tourType.toLowerCase()) {
-      case 'bike': return 'bike.png';
-      case 'hike': return 'hike.png';
-      case 'vacation': return 'vacation.png';
-      case 'mixed': return 'mixed.png';
-      case 'running': return 'run.png';
-      default: return 'default.png';
+      case 'bike':
+        return 'bike.png';
+      case 'hike':
+        return 'hike.png';
+      case 'vacation':
+        return 'vacation.png';
+      case 'mixed':
+        return 'mixed.png';
+      case 'running':
+        return 'run.png';
+      default:
+        return 'default.png';
     }
   }
-
 }
