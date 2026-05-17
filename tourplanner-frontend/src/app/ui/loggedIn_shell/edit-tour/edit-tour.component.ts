@@ -7,8 +7,8 @@ import { TourType } from '../../../types/tourTypes';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { elementAt } from 'rxjs';
-//for faking coordinates while we don't have a real geocoding service:
-import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates';
+
+//import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates'; //for faking coordinates while we don't have a real geocoding service:
 
 
 @Component({
@@ -196,9 +196,9 @@ export class EditTourComponent {
         {
           id: 0,
           from: this.from(),
-          fromCoordinates: getFakeCoordinates(this.from()), //fake koordinaten, solange wir keinen echten geocoding service haben
+          fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
           to: this.to(),
-          toCoordinates: getFakeCoordinates(this.to()), //fake koordinaten, solange wir keinen echten geocoding service haben
+          toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
           distance: 0,
           transportMode: this.transportMode()
         }
@@ -216,9 +216,9 @@ export class EditTourComponent {
       routes.push({
         id: i,
         from: currentFrom,
-        fromCoordinates: getFakeCoordinates(currentFrom), //fake koordinaten, solange wir keinen echten geocoding service haben
+        fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
         to: segment.to,
-        toCoordinates: getFakeCoordinates(segment.to), //fake koordinaten, solange wir keinen echten geocoding service haben
+        toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
         distance: 0,
         transportMode: segment.transportMode
       });
@@ -229,9 +229,9 @@ export class EditTourComponent {
     routes.push({
       id: filledSegments.length,
       from: currentFrom,
-      fromCoordinates: getFakeCoordinates(currentFrom), //fake koordinaten, solange wir keinen echten geocoding service haben
+      fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
       to: this.to(),
-      toCoordinates: getFakeCoordinates(this.to()), //fake koordinaten, solange wir keinen echten geocoding service haben
+      toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
       distance: 0,
       transportMode:
         filledSegments.length > 0

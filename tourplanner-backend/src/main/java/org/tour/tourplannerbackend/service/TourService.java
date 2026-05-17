@@ -5,6 +5,7 @@ import org.tour.tourplannerbackend.exception.NotFoundException;
 import org.tour.tourplannerbackend.integration.OpenRouteServiceFacade;
 import org.tour.tourplannerbackend.model.Tour;
 import org.tour.tourplannerbackend.model.User;
+import org.tour.tourplannerbackend.repository.RouteRepository;
 import org.tour.tourplannerbackend.repository.TourRepository;
 import org.tour.tourplannerbackend.repository.UserRepository;
 
@@ -16,13 +17,16 @@ public class TourService {
 
     private final TourRepository tourRepo;
     private final UserRepository userRepo;
+    private final RouteRepository routeRepo;
     private final OpenRouteServiceFacade openRouteServiceFacade;
 
     public TourService(TourRepository tourRepository,
                        UserRepository userRepository,
+                       RouteRepository routeRepository,
                        OpenRouteServiceFacade openRouteServiceFacade) {
         this.tourRepo = tourRepository;
         this.userRepo = userRepository;
+        this.routeRepo = routeRepository;
         this.openRouteServiceFacade = openRouteServiceFacade;
     }
 
@@ -30,7 +34,7 @@ public class TourService {
         return tourRepo.findByUserId(userId);
     }
 
-    // aktuell gibt es keinen extra check um nur die touren von dem jeweiligen user zu holen
+    // Todo: aktuell gibt es keinen extra check um nur die touren von dem jeweiligen user zu holen
     public List<Tour> getAllTours(){
         return tourRepo.findAll();
     }
@@ -55,32 +59,44 @@ public class TourService {
         existingTour.setChildFriendly(updatedTour.getChildFriendly());
         existingTour.setTourType(updatedTour.getTourType());
 
+        // Routes updaten
+        // Routes updaten - bisherige Routes von existingTour aus DB löschen
+        /* Weil wir in Tour -> orphanRemovalTrue haben, müssen wir die Routes nicht einzeln aus der DB löschen!
+        Weil:
+            Wenn ein Child (TourRoute) aus der Collection entfernt wird,
+            und keine andere Entity mehr darauf zeigt,
+            dann wird es automatisch aus der DB gelöscht.
+
+            Das ist also überflüssig:
+            if(existingTour.getRoutes() != null) {
+                existingTour.getRoutes().forEach( route -> {
+                    this.routeRepo.deleteById(route.getId());
+                });
+                // Nachdem aus DB gelöscht: auch von dem Objekt das ich momentan habe löschen
+                existingTour.getRoutes().clear();
+            }
+        Stattdessen genügt: */
+        if(existingTour.getRoutes() != null) {
+            existingTour.getRoutes().clear();
+        }
+
+        // Routes updaten - für neue Routes id == null und Coordinaten holen
+        if (updatedTour.getRoutes() != null) {
+            updatedTour.getRoutes().forEach(route -> {
+                route.setId(null);// wir müssen die Null setzen, weil die ja automatisch generiert werden sollen!
+                //Koordinaten für Routes von OpenRouteService holen
+                route.setFromCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getFrom()));
+                route.setToCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getTo()));
+
+                route.setTour(existingTour);
+            });
+            // Routes updaten - neue Routes an existingTour hängen
+            //existingTour.setRoutes(updatedTour.getRoutes()); //laut GPT ist untere Version besser, "Denn Hibernate trackt die originale Collection-Instanz."
+            existingTour.getRoutes().addAll(updatedTour.getRoutes());
+        }
+
         return tourRepo.save(existingTour);
     }
-
-    /*
-    public List<Tour> getAllToursFromUser(Long userId){
-
-        if(userId == null){
-            //throw Error
-        }
-
-        List<Tour> userTours = this.tourRepo.findAllFromUser(userId);
-
-
-        //What do I need to check?
-            //if the User has any Tours
-        if (userTours.isEmpty()){
-            return null; //ToDo: return Error
-        }
-            //Every Tour needs at least one TourRoute
-
-        // what else?
-
-
-        return userTours;
-    }
-    */
 
 
     public Tour saveTour(Tour newTour) {
