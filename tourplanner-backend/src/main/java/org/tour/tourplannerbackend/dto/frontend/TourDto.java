@@ -1,4 +1,4 @@
-package org.tour.tourplannerbackend.dto;
+package org.tour.tourplannerbackend.dto.frontend;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

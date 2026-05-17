@@ -1,6 +1,6 @@
 package org.tour.tourplannerbackend.mapper;
 
-import org.tour.tourplannerbackend.dto.UserDto;
+import org.tour.tourplannerbackend.dto.frontend.UserDto;
 import org.tour.tourplannerbackend.model.User;
 
 public final class UserMapper {

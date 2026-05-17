@@ -1,0 +1,5 @@
+Why these Dtos?
+
+So that the response of OpenRouteService
+for the endpoint: GET /v2/directions/{profile}
+can be automatically mapped

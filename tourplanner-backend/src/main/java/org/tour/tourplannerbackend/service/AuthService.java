@@ -1,8 +1,8 @@
 package org.tour.tourplannerbackend.service;
 
 import org.springframework.stereotype.Service;
-import org.tour.tourplannerbackend.dto.LoginDto;
-import org.tour.tourplannerbackend.dto.LoginResponseDto;
+import org.tour.tourplannerbackend.dto.frontend.LoginDto;
+import org.tour.tourplannerbackend.dto.frontend.LoginResponseDto;
 import org.tour.tourplannerbackend.exception.UnauthorizedException;
 import org.tour.tourplannerbackend.exception.ValidationException;
 import org.tour.tourplannerbackend.model.User;

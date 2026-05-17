@@ -6,8 +6,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.tour.tourplannerbackend.model.enums.TourCreationType;
 import org.tour.tourplannerbackend.model.enums.TransportMode;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -37,16 +38,18 @@ public class TourRoute {
     @Column
     private Double distance;
 
-    @Enumerated(EnumType.STRING)
-    private TransportMode transportMode;
+    @Column
+    private Double duration;
 
     @Enumerated(EnumType.STRING)
-    private TourCreationType creationType;
+    private TransportMode transportMode;
 
     @JsonBackReference("tour-routes")
     @JoinColumn(name = "tour_id")
     @ManyToOne
     private Tour tour;
 
-
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "tour_route_id")
+    private List<Coordinates> routeCoordinates; //This is to display correct and not only direct lines with leaflet in the frontend
 }

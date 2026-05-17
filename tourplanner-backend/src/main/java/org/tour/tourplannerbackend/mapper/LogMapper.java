@@ -1,6 +1,6 @@
 package org.tour.tourplannerbackend.mapper;
 
-import org.tour.tourplannerbackend.dto.LogDto;
+import org.tour.tourplannerbackend.dto.frontend.LogDto;
 import org.tour.tourplannerbackend.model.Log;
 
 public final class LogMapper {

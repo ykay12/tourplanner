@@ -1,9 +1,11 @@
 package org.tour.tourplannerbackend.service;
 
 import org.springframework.stereotype.Service;
+import org.tour.tourplannerbackend.dto.openrouteservice.directions.RouteDetailsDto;
 import org.tour.tourplannerbackend.exception.NotFoundException;
 import org.tour.tourplannerbackend.integration.OpenRouteServiceFacade;
 import org.tour.tourplannerbackend.model.Tour;
+import org.tour.tourplannerbackend.model.TourRoute;
 import org.tour.tourplannerbackend.model.User;
 import org.tour.tourplannerbackend.repository.RouteRepository;
 import org.tour.tourplannerbackend.repository.TourRepository;
@@ -77,6 +79,8 @@ public class TourService {
             existingTour.getRoutes().clear();
         }
 
+
+
         // Routes updaten - für neue Routes id == null und Coordinaten holen
         if (updatedTour.getRoutes() != null) {
             updatedTour.getRoutes().forEach(route -> {
@@ -86,6 +90,17 @@ public class TourService {
                 route.setToCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getTo()));
 
                 route.setTour(existingTour);
+
+                // Distance, Duration und Coordinates von neuer Route holen
+                RouteDetailsDto routeDetails = this.openRouteServiceFacade.getRouteDetails(
+                        route.getFromCoordinates(),
+                        route.getToCoordinates(),
+                        route.getTransportMode()
+                );
+                route.setRouteCoordinates(null); //zur sicherheit
+                route.setRouteCoordinates(routeDetails.getRouteCoordinates());
+                route.setDistance(routeDetails.getDistance());
+                route.setDuration(routeDetails.getDuration());
             });
             // Routes updaten - neue Routes an existingTour hängen
             //existingTour.setRoutes(updatedTour.getRoutes()); //laut GPT ist untere Version besser, "Denn Hibernate trackt die originale Collection-Instanz."
@@ -113,11 +128,23 @@ public class TourService {
         if (newTour.getRoutes() != null) {
             newTour.getRoutes().forEach(route -> {
                 route.setId(null);              // wir müssen die Null setzen, weil die ja automatisch generiert werden sollen!
+
                 // 4.) Koordinaten für Routes von OpenRouteService holen
                 route.setFromCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getFrom()));
                 route.setToCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getTo()));
 
                 route.setTour(newTour);
+
+                // Distance, Duration und Coordinates von neuer Route holen
+                RouteDetailsDto routeDetails = this.openRouteServiceFacade.getRouteDetails(
+                        route.getFromCoordinates(),
+                        route.getToCoordinates(),
+                        route.getTransportMode()
+                );
+                route.setRouteCoordinates(null); //zur sicherheit
+                route.setRouteCoordinates(routeDetails.getRouteCoordinates());
+                route.setDistance(routeDetails.getDistance());
+                route.setDuration(routeDetails.getDuration());
             });
         }
 

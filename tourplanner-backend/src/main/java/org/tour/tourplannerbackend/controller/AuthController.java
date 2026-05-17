@@ -1,9 +1,9 @@
 package org.tour.tourplannerbackend.controller;
 
 import org.springframework.web.bind.annotation.*;
-import org.tour.tourplannerbackend.dto.LoginDto;
-import org.tour.tourplannerbackend.dto.LoginResponseDto;
-import org.tour.tourplannerbackend.dto.RegisterDto;
+import org.tour.tourplannerbackend.dto.frontend.LoginDto;
+import org.tour.tourplannerbackend.dto.frontend.LoginResponseDto;
+import org.tour.tourplannerbackend.dto.frontend.RegisterDto;
 import org.tour.tourplannerbackend.model.User;
 import org.tour.tourplannerbackend.service.AuthService;
 import org.tour.tourplannerbackend.service.UserService;

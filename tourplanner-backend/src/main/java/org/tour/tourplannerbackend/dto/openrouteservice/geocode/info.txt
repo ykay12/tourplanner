@@ -1,0 +1,23 @@
+Why these Dtos?
+
+So that the response of OpenRouteService
+for the endpoint: GET /geocode/search?api_key=APIKEY&text=TEXT
+can be automatically mapped
+
+Response is build like this:
+"features":
+    [
+        {
+            "type":"Feature",
+            "geometry":
+                {
+                    "type":"Point",
+                    "coordinates":[16.370993, 48.212154]
+                }
+             .
+             .
+             .
+          }
+    ]
+
+See also: https://openrouteservice.org/dev/#/api-docs/geocode/search/get

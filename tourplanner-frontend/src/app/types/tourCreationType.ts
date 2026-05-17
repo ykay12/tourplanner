@@ -1,1 +1,0 @@
-export type TourCreationType = 'USER_CREATED' | 'API_CREATED';

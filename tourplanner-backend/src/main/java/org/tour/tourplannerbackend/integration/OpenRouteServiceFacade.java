@@ -27,9 +27,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.tour.tourplannerbackend.config.OpenRouteServiceProperties;
-import org.tour.tourplannerbackend.dto.OpenRouteServiceGeocodeResponseDto;
+import org.tour.tourplannerbackend.dto.openrouteservice.directions.OpenRouteServiceDirectionsResponseDto;
+import org.tour.tourplannerbackend.dto.openrouteservice.directions.RouteDetailsDto;
+import org.tour.tourplannerbackend.dto.openrouteservice.geocode.OpenRouteServiceGeocodeResponseDto;
 import org.tour.tourplannerbackend.model.Coordinates;
-import org.tour.tourplannerbackend.model.enums.OpenRouteServiceProfile;
+import org.tour.tourplannerbackend.model.TourRoute;
+import org.tour.tourplannerbackend.model.enums.TransportMode;
+
+import java.util.List;
 
 
 @Component
@@ -76,7 +81,6 @@ public class OpenRouteServiceFacade {
         //5.) Coordinaten Object bauen und zurückgeben
         Coordinates coords = new Coordinates();
 
-        //TODO: check if lat and lng are correct!!
         coords.setLng(response.getFeatures().get(0).getGeometry().getCoordinates().get(0));
         coords.setLat(response.getFeatures().get(0).getGeometry().getCoordinates().get(1));
 
@@ -88,7 +92,83 @@ public class OpenRouteServiceFacade {
         return new Coordinates();
     }
 
-    //ToDo: Function to call "/v2/directions/{profile}" endpoint -> Retourniert "Waypoints"
+    /*Function to call "/v2/directions/{profile}" endpoint and return TourDetailsDto that has Details like
+    routeCoordinates (for Leaflet-Map in frontend) and distance*/
+    public RouteDetailsDto getRouteDetails(Coordinates startPoint, Coordinates endPoint, TransportMode transportMode) {
+        // 1.) Profile aus TransportMode ermitteln
+        String profile = switch (transportMode) {
+            case BIKE -> "cycling-regular";
+            case WALK -> "foot-hiking";
+            case RUN -> "foot-walking";
+            default -> "foot-walking";
+        };
+
+        // 2.) make Strings from Coordinates | API Expects string like: "8.681495,49.41461"
+        String start = startPoint.getLng() + "," + startPoint.getLat();
+        String end = endPoint.getLng() + "," + endPoint.getLat();
+
+        // 3.) Anfrage zusammenbauen
+        String url = UriComponentsBuilder
+                .fromUri(apiProperties.getBaseUrl())
+                .path("/v2/directions/" + profile)
+                .queryParam("api_key", apiProperties.getKey())
+                .queryParam("start", start)
+                .queryParam("end", end)
+                .toUriString();
+
+        // 4.) Anfrage schicken + automatisch parsen in DTO
+        OpenRouteServiceDirectionsResponseDto response =
+                restTemplate.getForObject(url, OpenRouteServiceDirectionsResponseDto.class);
+
+        // 5.) Response validieren
+        if (response == null
+                || response.getFeatures() == null
+                || response.getFeatures().isEmpty()) {
+
+            throw new RuntimeException("No route found");
+        }
+
+        // 6.) Erstes Feature holen
+        var feature = response.getFeatures().get(0);
+
+        // 7.) RouteCoordinates aus API-Response bauen
+        List<Coordinates> routeCoordinates =
+                feature.getGeometry()
+                        .getCoordinates()
+                        .stream()
+                        .map(point -> {
+
+                            Coordinates coordinate = new Coordinates();
+
+                            // OpenRouteService liefert [lng, lat]
+                            coordinate.setLng(point.get(0));
+                            coordinate.setLat(point.get(1));
+
+                            return coordinate;
+                        })
+                        .toList();
+
+        // 8.) RouteDetailsDto bauen
+        RouteDetailsDto routeDetails = new RouteDetailsDto();
+
+        routeDetails.setRouteCoordinates(routeCoordinates);
+
+        routeDetails.setDistance(
+                feature.getProperties()
+                        .getSummary()
+                        .getDistance()
+        );
+
+
+        // Todo: route.setDuration(...);
+
+        // 9.) Debugging
+        System.out.println(routeDetails);
+
+        // 10.) RouteDetails zurückgeben
+        return routeDetails;
+
+    }
 
 }
 

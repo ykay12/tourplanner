@@ -12,6 +12,7 @@ export class TourMapper {
       from: r.from,
       to: r.to,
       distance: r.distance,
+      duration: r.duration,
       transportMode: r.transportMode,
       creationType: r.creationType,
       fromCoordinates: {
@@ -21,7 +22,11 @@ export class TourMapper {
       toCoordinates: {
         lat: r.toCoordinates?.lat,
         lng: r.toCoordinates?.lng
-      }
+      },
+      routeCoordinates: r.routeCoordinates?.map((c: any) => ({
+        lat: c.lat,
+        lng: c.lng
+      }))
     }));
 
     const logs: Log[] = (dto.logs ?? []).map((l: any) => ({

@@ -1,5 +1,4 @@
-package org.tour.tourplannerbackend.dto;
-
+package org.tour.tourplannerbackend.dto.frontend;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginDto {
+public class LoginResponseDto {
+    private String token;
+    private Long userId;
     private String username;
-    private String password;
 }

@@ -1,4 +1,4 @@
-package org.tour.tourplannerbackend.dto;
+package org.tour.tourplannerbackend.dto.openrouteservice.geocode;
 
 import java.util.List;
 /* We need this class to parse the HTTP Response for https://api.openrouteservice.org/geocode/search?api_key=APIKEY&text=TEXT
@@ -19,7 +19,7 @@ import java.util.List;
 
 * */
 
-public class OpenRouteGeometryDto {
+public class OpenRouteGeocodeGeometryDto {
 
     private List<Double> coordinates;
 
