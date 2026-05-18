@@ -3,34 +3,34 @@
 <!-- Wir wollen das TourDetail nur darstellen, wenn eine Tour ausgewählt ist -->
 @if(state.selectedTour(); as tour){
 
-  <section class="tour-detail-page">
-    <div class="tour-detail-card">
+<section class="tour-detail-page">
+  <div class="tour-detail-card">
 
-      <div class="tour-detail-header">
-        <app-overview></app-overview>
-      </div>
-
-      <div class="tour-detail-grid">
-        <div class="tour-detail-block">
-          <app-map></app-map>
-        </div>
-
-        <div class="tour-detail-block">
-          <app-steps></app-steps>
-        </div>
-      </div>
-
-      <div class="tour-detail-logs">
-        <app-logs></app-logs>
-      </div>
-
+    <div class="tour-detail-header">
+      <app-overview></app-overview>
     </div>
-  </section>
+
+    <div class="tour-detail-grid">
+      <div class="tour-detail-block">
+        <app-map></app-map>
+      </div>
+
+      <div class="">
+        <app-steps></app-steps>
+      </div>
+    </div>
+
+    <div class="">
+      <app-logs></app-logs>
+    </div>
+
+  </div>
+</section>
 
 } @else {
 
-  <div class="tour-detail-empty">
-    <p>No tour selected. Please select a tour from the overview.</p>
-  </div>
+<div class="tour-detail-empty">
+  <p>No tour selected. Please select a tour from the overview.</p>
+</div>
 
 }

@@ -23,6 +23,11 @@ package org.tour.tourplannerbackend.integration;
  */
 
 
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,12 +36,12 @@ import org.tour.tourplannerbackend.dto.openrouteservice.directions.OpenRouteServ
 import org.tour.tourplannerbackend.dto.openrouteservice.directions.RouteDetailsDto;
 import org.tour.tourplannerbackend.dto.openrouteservice.geocode.OpenRouteServiceGeocodeResponseDto;
 import org.tour.tourplannerbackend.model.Coordinates;
-import org.tour.tourplannerbackend.model.TourRoute;
 import org.tour.tourplannerbackend.model.enums.TransportMode;
 
 import java.util.List;
 
 
+@Slf4j
 @Component
 public class OpenRouteServiceFacade {
 
@@ -59,14 +64,23 @@ public class OpenRouteServiceFacade {
         String url = UriComponentsBuilder
                 .fromUri(apiProperties.getBaseUrl())
                 .path("/geocode/search")
-                .queryParam("api_key", apiProperties.getKey())
                 .queryParam("text", locationName)
                 .queryParam("boundary.country", "AT")
                 .toUriString();
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", apiProperties.getKey());
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
+        ResponseEntity<OpenRouteServiceGeocodeResponseDto> responseEntity =
+                restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        entity,
+                        OpenRouteServiceGeocodeResponseDto.class
+                );
         //3.) Anfrage schicken + automatisches parsen in DTO
-        OpenRouteServiceGeocodeResponseDto response =
-                restTemplate.getForObject(url, OpenRouteServiceGeocodeResponseDto.class);
+        OpenRouteServiceGeocodeResponseDto response = responseEntity.getBody();
 
         //4.) response validation
         if (response == null
@@ -84,7 +98,9 @@ public class OpenRouteServiceFacade {
         coords.setLng(response.getFeatures().get(0).getGeometry().getCoordinates().get(0));
         coords.setLat(response.getFeatures().get(0).getGeometry().getCoordinates().get(1));
 
+
         return coords;
+
     }
 
     //Todo: should we also implement this? But we would have to change Frontend Input fields I think?
@@ -111,14 +127,25 @@ public class OpenRouteServiceFacade {
         String url = UriComponentsBuilder
                 .fromUri(apiProperties.getBaseUrl())
                 .path("/v2/directions/" + profile)
-                .queryParam("api_key", apiProperties.getKey())
                 .queryParam("start", start)
                 .queryParam("end", end)
                 .toUriString();
 
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", apiProperties.getKey());
+
+        HttpEntity<Void> entity = new HttpEntity<>(headers);
+
         // 4.) Anfrage schicken + automatisch parsen in DTO
-        OpenRouteServiceDirectionsResponseDto response =
-                restTemplate.getForObject(url, OpenRouteServiceDirectionsResponseDto.class);
+        ResponseEntity<OpenRouteServiceDirectionsResponseDto> responseEntity =
+                restTemplate.exchange(
+                        url,
+                        HttpMethod.GET,
+                        entity,
+                        OpenRouteServiceDirectionsResponseDto.class
+                );
+
+        OpenRouteServiceDirectionsResponseDto response = responseEntity.getBody();
 
         // 5.) Response validieren
         if (response == null
