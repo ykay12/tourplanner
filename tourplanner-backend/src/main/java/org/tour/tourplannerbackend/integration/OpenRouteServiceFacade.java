@@ -185,9 +185,10 @@ public class OpenRouteServiceFacade {
                         .getSummary()
                         .getDistance()
         );
-
-
         // Todo: route.setDuration(...);
+        routeDetails.setDuration(feature.getProperties().getSummary().getDuration());
+
+
 
         // 9.) Debugging
         System.out.println(routeDetails);

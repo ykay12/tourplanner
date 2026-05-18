@@ -53,10 +53,10 @@ public class TourService {
 
         existingTour.setName(updatedTour.getName());
         existingTour.setDescription(updatedTour.getDescription());
-        existingTour.setEstimatedTime(updatedTour.getEstimatedTime());
         existingTour.setPopularity(updatedTour.getPopularity());
         existingTour.setChildFriendly(updatedTour.getChildFriendly());
         existingTour.setTourType(updatedTour.getTourType());
+
 
         // Routes updaten
         // Routes updaten - bisherige Routes von existingTour aus DB löschen
@@ -79,11 +79,11 @@ public class TourService {
             existingTour.getRoutes().clear();
         }
 
-
+        int totalDuration = 0;
 
         // Routes updaten - für neue Routes id == null und Coordinaten holen
         if (updatedTour.getRoutes() != null) {
-            updatedTour.getRoutes().forEach(route -> {
+            for (TourRoute route : updatedTour.getRoutes()) {
                 route.setId(null);// wir müssen die Null setzen, weil die ja automatisch generiert werden sollen!
                 //Koordinaten für Routes von OpenRouteService holen
                 route.setFromCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getFrom()));
@@ -101,12 +101,13 @@ public class TourService {
                 route.setRouteCoordinates(routeDetails.getRouteCoordinates());
                 route.setDistance(routeDetails.getDistance());
                 route.setDuration(routeDetails.getDuration());
-            });
+                totalDuration += routeDetails.getDuration().intValue();
+            }
             // Routes updaten - neue Routes an existingTour hängen
             //existingTour.setRoutes(updatedTour.getRoutes()); //laut GPT ist untere Version besser, "Denn Hibernate trackt die originale Collection-Instanz."
             existingTour.getRoutes().addAll(updatedTour.getRoutes());
         }
-
+        existingTour.setEstimatedTime(totalDuration);
         return tourRepo.save(existingTour);
     }
 
@@ -123,10 +124,11 @@ public class TourService {
                         new NotFoundException("User not found: " + newTour.getUser().getId()));
 
         newTour.setUser(user);
+        int totalDuration = 0;
 
         // 3.) Routes setzen
         if (newTour.getRoutes() != null) {
-            newTour.getRoutes().forEach(route -> {
+            for (TourRoute route : newTour.getRoutes()) {
                 route.setId(null);              // wir müssen die Null setzen, weil die ja automatisch generiert werden sollen!
 
                 // 4.) Koordinaten für Routes von OpenRouteService holen
@@ -145,7 +147,9 @@ public class TourService {
                 route.setRouteCoordinates(routeDetails.getRouteCoordinates());
                 route.setDistance(routeDetails.getDistance());
                 route.setDuration(routeDetails.getDuration());
-            });
+                totalDuration += routeDetails.getDuration().intValue();
+
+            }
         }
 
         // 5.) Logs setzen
@@ -159,6 +163,8 @@ public class TourService {
         // 6.) Checks ob Return passt -> Hibernate repo.save() returniert die gespeicherte Entity
 
         // 7.) gespeicherte Tour returnieren
+        newTour.setEstimatedTime(totalDuration);
+
         return tourRepo.save(newTour);
 
     }
