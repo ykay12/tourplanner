@@ -4,7 +4,7 @@
     "name": "Vienna City Ride",
     "description": "A relaxed bike tour through Vienna.",
     "tourType": "Bike",
-    "estimated_time": 3600,
+    "estimatedTime": 3600,
     "popularity": 4,
     "isChildfriendly": true,
     "routes": [
@@ -56,7 +56,7 @@
     "name": "Mountain Hike",
     "description": "Challenging hike with great views.",
     "tourType": "Hike",
-    "estimated_time": 7200,
+    "estimatedTime": 7200,
     "popularity": 3,
     "isChildfriendly": false,
     "routes": [
@@ -98,7 +98,7 @@
     "name": "MixedTour",
     "description": "a mixed tour.",
     "tourType": "Mixed",
-    "estimated_time": 7200,
+    "estimatedTime": 7200,
     "popularity": 5,
     "isChildfriendly": false,
     "routes": [

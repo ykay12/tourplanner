@@ -13,10 +13,9 @@
   <div class="tour-card-row">
 
     <!-- MAP -->
-  <div class="tour-card-map" 
-    [id]="mapId"
-    (click)="$event.stopPropagation()"> <!--So that a klick on the tour does not link to the detail screen or set selected_tour-->
-  </div>
+    <div class="tour-card-map" [id]="mapId" (click)="$event.stopPropagation()">
+      <!--So that a klick on the tour does not link to the detail screen or set selected_tour-->
+    </div>
 
     <!-- FROM -->
     <div class="tour-card-field">
@@ -39,15 +38,12 @@
     <!-- Estimated Time -->
     <div class="tour-card-field">
       <span class="label">Time:</span>
-      <span>{{ tour.estimated_time }}</span>
-    </div>  
+      <span>{{ tour.estimatedTime }}</span>
+    </div>
 
     <!-- ICON (ganz rechts) -->
     <div class="tour-card-icon">
-      <img
-        [src]="'assets/icons/' + getTourTypeIcon()"
-        [alt]="tour.tourType"
-      />
+      <img [src]="'assets/icons/' + getTourTypeIcon()" [alt]="tour.tourType" />
     </div>
 
   </div>

@@ -33,7 +33,6 @@ public class Tour {
     private String name;
     @Column
     private String description;
-    @JsonProperty("estimated_time")
     @Column
     private Integer estimatedTime;
     @Column

@@ -250,7 +250,7 @@ export class EditTourComponent {
       oldTour.id,
       this.tourName(),
       this.tourDescription(),
-      oldTour.estimated_time,
+      oldTour.estimatedTime,
       oldTour.popularity,
       oldTour.childFriendly,
       this.tourType(),

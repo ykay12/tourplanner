@@ -38,7 +38,7 @@ export class TourMapper {
       dto.id,
       dto.name,
       dto.description,
-      dto.estimated_time,
+      dto.estimatedTime,
       dto.popularity,
       dto.childFriendly,
       dto.tourType,

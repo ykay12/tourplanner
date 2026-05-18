@@ -105,7 +105,7 @@ export class AppStateService {
         dto.id,
         dto.name,
         dto.description,
-        dto.estimated_time,
+        dto.estimatedTime,
         dto.popularity,
         dto.isChildfriendly,
         dto.tourType as TourType,
@@ -179,76 +179,76 @@ export class AppStateService {
     this._selectedTourId.set(null);
   }
 
- addLogToTourBackend(tourId: number, log: Log) {
-  return this.backendFacade.saveLog(tourId, log).pipe(
-    tap((savedLog) => {
-      const selectedTour = this.selectedTour();
-      if (!selectedTour) return;
+  addLogToTourBackend(tourId: number, log: Log) {
+    return this.backendFacade.saveLog(tourId, log).pipe(
+      tap((savedLog) => {
+        const selectedTour = this.selectedTour();
+        if (!selectedTour) return;
 
-      const updatedTour = new Tour(
-        selectedTour.id,
-        selectedTour.name,
-        selectedTour.description,
-        selectedTour.estimated_time,
-        selectedTour.popularity,
-        selectedTour.childFriendly,
-        selectedTour.tourType,
-        selectedTour.routes,
-        [...selectedTour.logs, savedLog]
-      );
+        const updatedTour = new Tour(
+          selectedTour.id,
+          selectedTour.name,
+          selectedTour.description,
+          selectedTour.estimatedTime,
+          selectedTour.popularity,
+          selectedTour.childFriendly,
+          selectedTour.tourType,
+          selectedTour.routes,
+          [...selectedTour.logs, savedLog]
+        );
 
-      this.updateTour(updatedTour);
-    })
-  );
-}
+        this.updateTour(updatedTour);
+      })
+    );
+  }
 
-updateLogInBackend(tourId: number, log: Log) {
-  return this.backendFacade.editLog(tourId, log).pipe(
-    tap((updatedLog) => {
-      const selectedTour = this.selectedTour();
-      if (!selectedTour) return;
+  updateLogInBackend(tourId: number, log: Log) {
+    return this.backendFacade.editLog(tourId, log).pipe(
+      tap((updatedLog) => {
+        const selectedTour = this.selectedTour();
+        if (!selectedTour) return;
 
-      const updatedLogs = selectedTour.logs.map(l =>
-        l.id === updatedLog.id ? updatedLog : l
-      );
+        const updatedLogs = selectedTour.logs.map(l =>
+          l.id === updatedLog.id ? updatedLog : l
+        );
 
-      this.updateTour(new Tour(
-        selectedTour.id,
-        selectedTour.name,
-        selectedTour.description,
-        selectedTour.estimated_time,
-        selectedTour.popularity,
-        selectedTour.childFriendly,
-        selectedTour.tourType,
-        selectedTour.routes,
-        updatedLogs
-      ));
-    })
-  );
-}
+        this.updateTour(new Tour(
+          selectedTour.id,
+          selectedTour.name,
+          selectedTour.description,
+          selectedTour.estimatedTime,
+          selectedTour.popularity,
+          selectedTour.childFriendly,
+          selectedTour.tourType,
+          selectedTour.routes,
+          updatedLogs
+        ));
+      })
+    );
+  }
 
-deleteLogFromBackend(tourId: number, logId: number) {
-  return this.backendFacade.deleteLog(tourId, logId).pipe(
-    tap(() => {
-      const selectedTour = this.selectedTour();
-      if (!selectedTour) return;
+  deleteLogFromBackend(tourId: number, logId: number) {
+    return this.backendFacade.deleteLog(tourId, logId).pipe(
+      tap(() => {
+        const selectedTour = this.selectedTour();
+        if (!selectedTour) return;
 
-      const updatedLogs = selectedTour.logs.filter(log => log.id !== logId);
+        const updatedLogs = selectedTour.logs.filter(log => log.id !== logId);
 
-      this.updateTour(new Tour(
-        selectedTour.id,
-        selectedTour.name,
-        selectedTour.description,
-        selectedTour.estimated_time,
-        selectedTour.popularity,
-        selectedTour.childFriendly,
-        selectedTour.tourType,
-        selectedTour.routes,
-        updatedLogs
-      ));
-    })
-  );
-}
+        this.updateTour(new Tour(
+          selectedTour.id,
+          selectedTour.name,
+          selectedTour.description,
+          selectedTour.estimatedTime,
+          selectedTour.popularity,
+          selectedTour.childFriendly,
+          selectedTour.tourType,
+          selectedTour.routes,
+          updatedLogs
+        ));
+      })
+    );
+  }
 
 }
 

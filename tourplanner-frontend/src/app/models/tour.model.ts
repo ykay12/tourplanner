@@ -6,7 +6,7 @@ export class Tour {
   id: number | null; //Wir haben uns noch nicht geeinigt wie wir die ID anlegen wollen number/string/UUID?
   name: string;
   description: string;
-  estimated_time: number; /*man erhält die Zeit wohl von der API in sekunden*/
+  estimatedTime: number; /*man erhält die Zeit wohl von der API in sekunden*/
   popularity: number;
   childFriendly: boolean;
   tourType: TourType;
@@ -18,7 +18,7 @@ export class Tour {
     id: number | null,
     name: string,
     description: string,
-    estimated_time: number,
+    estimatedTime: number,
     popularity: number,
     isChildfriendly: boolean,
     tourType: TourType,
@@ -28,7 +28,7 @@ export class Tour {
     this.id = id;
     this.name = name;
     this.description = description;
-    this.estimated_time = estimated_time;
+    this.estimatedTime = estimatedTime;
     this.popularity = popularity;
     this.childFriendly = isChildfriendly;
     this.tourType = tourType;

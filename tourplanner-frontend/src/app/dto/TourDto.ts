@@ -6,7 +6,7 @@ export type TourDto = {
     id: number;
     name: string;
     description: string;
-    estimated_time: number;
+    estimatedTime: number;
     popularity: number;
     childFriendly: boolean;
     tourType: TourType;
