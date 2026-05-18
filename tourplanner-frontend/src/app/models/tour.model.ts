@@ -47,6 +47,11 @@ export class Tour {
     return this.routes.reduce((sum, r) => sum + r.distance, 0);
   }
 
+  getTotalDistanceKm(): string {
+    const km = this.getTotalDistance() / 1000;
+    return `${km.toFixed(2)} km`;
+  }
+
   getEstimatedTime(): string {
     const hours = Math.floor(this.estimatedTime / 3600)
     const minutes = Math.floor((this.estimatedTime % 3600) / 60)
