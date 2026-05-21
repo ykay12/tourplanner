@@ -241,5 +241,9 @@ export class CreatetourComponent {
     )
   }
 
+  importTour(): void {
+  
+  }
+
 
 }

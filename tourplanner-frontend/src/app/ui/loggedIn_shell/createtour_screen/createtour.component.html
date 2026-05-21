@@ -2,10 +2,20 @@
   <section class="tour-form-card">
     <div class="tour-form-header">
       <p class="form-kicker">TourPlanner</p>
-      <h2>Create a new tour</h2>
+
+      <div class ="d-flex justify-content-between gap-3">
+        <h2>Create a new tour</h2>
+
+        <button class="modern-btn import-btn" type="button" (click)="importTour()">
+          Import Tour
+          <img src="assets/icons/import-export.png" alt="Import" class="btn-icon">
+        </button>
+      </div>
+      
       <p class="form-subtitle">
         Add route details, choose a type, and build your next adventure.
       </p>
+
     </div>
 
     @if(errorMsg()){
