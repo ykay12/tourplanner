@@ -6,10 +6,19 @@
       <div class ="d-flex justify-content-between gap-3">
         <h2>Create a new tour</h2>
 
-        <button class="modern-btn import-btn" type="button" (click)="importTour()">
+        <button class="modern-btn import-btn" type="button" (click)="fileInput.click()">
           Import Tour
           <img src="assets/icons/import-export.png" alt="Import" class="btn-icon">
         </button>
+
+        <input
+          #fileInput
+          type="file"
+          accept=".json"
+          hidden
+          (change)="onFileSelected($event)"
+        >
+
       </div>
       
       <p class="form-subtitle">
@@ -98,6 +107,27 @@
         </div>
       </div>
       }
+
+      <!--
+      @if(logs().length > 0) {
+        <div class="mt-3">
+          <h5>Imported Logs</h5>
+          <ul class="list-group">
+            @for (log of logs(); track log) {
+              <li class="list-group-item">
+                <strong>{{ log.createdAt }}</strong> - {{ log.comment }}
+              </li>
+            }
+          </ul>
+        </div>
+        id: number | null  //muss auf Null setzbar sein, damit im BackendMapper erkannt wird, wenn es sich um einen neuen Logeintrag handelt der angelegt werden muss und nicht um einen bestehenden der geupdatet werden soll
+    createdAt: Date, /*Enthält in Typescript auch time*/
+    comment: string,
+    difficulty: number,
+    totalDistance: number,
+    totalTime: number /*man erhält die Zeit wohl in Sekunden von der API*/
+    rating: number
+      }-->
 
       <button type="submit" class="btn modern-btn mt-2">
         Create Tour

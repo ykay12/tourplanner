@@ -35,6 +35,31 @@ export class Tour {
     this.routes = routes;
     this.logs = logs;
   }
+
+  static fromJson(data: any): Tour {
+    //In this Function I am setting all IDs to null because the Tour will be saved to the database as a new Tour and otherwise I will have conficts! (ID == primary key in database)
+    return new Tour(
+      null, 
+
+      data.name,
+      data.description,
+      data.estimatedTime,
+      data.popularity,
+      data.childFriendly,
+      data.tourType,
+
+      data.routes.map((route: any) => ({
+        ...route,
+        id: null
+      })),
+
+      data.logs.map((log: any) => ({
+        ...log,
+        id: null
+      }))
+    );
+  }
+  
   getStart(): string | null {
     return this.routes.length ? this.routes[0].from : null;
   }

@@ -8,6 +8,8 @@ import { TransportMode } from '../../../types/transportModes';
 import { AppStateService } from '../../../states/app-state.service';
 //import { getFakeCoordinates } from '../../../mocking/fakeViennaCoordinates'; //for faking coordinates while we don't have a real geocoding service:
 import { BackendFacadeService } from '../../../services/backend/backendFacade.service';
+import { JsonImporterService } from '../../../services/import_export/json-importer.service';
+import { Log } from '../../../models/log.model';
 
 
 @Component({
@@ -21,7 +23,6 @@ import { BackendFacadeService } from '../../../services/backend/backendFacade.se
 
 export class CreatetourComponent {
   tourTypes: TourType[] = ['BIKE', 'HIKE', 'VACATION', 'MIXED', 'RUNNING'];
-  segments = signal<MixedSegment[]>([]);
   transportModes: TransportMode[] = ["BIKE", "WALK", "RUN"]
 
   tourName = signal('');
@@ -32,11 +33,15 @@ export class CreatetourComponent {
   errorMsg = signal('');
   transportMode = signal<TransportMode>('BIKE')
   isMixedTour = computed(() => this.tourType() === "MIXED")
+  segments = signal<MixedSegment[]>([]);
+  logs = signal<Log[]>([]); //for importing a Tour
 
-  constructor(private router: Router,
+  constructor(
+    private router: Router,
     private appState: AppStateService,
-    private backend: BackendFacadeService) { }
-
+    private backend: BackendFacadeService,
+    private jsonImporter: JsonImporterService
+  ) { }
 
   onSubmit(): void {
     if (!this.validate()) {
@@ -226,6 +231,11 @@ export class CreatetourComponent {
     return routes;
   }
 
+  private buildLogs(): Log[] {
+    //Todo: when these are changed in the form I actually need to update them!
+    return this.logs();
+  }
+
   /*Need to fill these*/
   private buildTour(): Tour {
     return new Tour(
@@ -237,12 +247,57 @@ export class CreatetourComponent {
       false,
       this.tourType(),
       this.buildRoutes(),
-      []
+      this.buildLogs(),
     )
   }
 
-  importTour(): void {
-  
+  async onFileSelected(event: Event): Promise<void> {
+
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+
+    console.log(file);
+
+   
+    try {
+
+    const importedTour =
+      await this.jsonImporter.importTourFromJsonFile(file);
+
+      console.log(importedTour);
+
+    this.tourName.set(importedTour.name);
+    this.tourDescription.set(importedTour.description);
+    this.from.set(importedTour.getStart() || '');
+    this.to.set(importedTour.getEnd() || '');
+    this.tourType.set(importedTour.tourType);
+    this.logs.set(importedTour.logs);
+    this.transportMode.set(importedTour.routes[0]?.transportMode || 'BIKE'); //setze den Transportmodus basierend auf der ersten Route, oder default auf 'BIKE' wenn keine Routen vorhanden sind
+    //isMixedTour muss nicht gesetzt werden -> wird aus dem tourType abgeleitet
+
+    if (this.isMixedTour()) { 
+      const segments: MixedSegment[] =
+        importedTour.routes
+          .slice(0, -1) //weil sonst das To auch als letztes Segement auftaucht
+          .map(route => ({
+            to: route.to,
+            transportMode: route.transportMode
+          }));
+
+      this.segments.set(segments);
+    }
+
+    } catch (error) {
+
+      console.error('Import failed:', error);
+
+    }
+
+    // so that the input field is cleared after selecting a file, allowing the user to select the same file again if needed
+    input.value = '';
   }
 
 
