@@ -296,3 +296,50 @@
 .import-btn:hover {
   box-shadow: 0 10px 20px rgba(18, 77, 145, 0.3);
 }
+
+//LOGS
+.logs-import-section {
+  margin-top: 1.5rem;
+}
+
+.logs-import-header {
+  margin-bottom: 0.8rem;
+}
+
+.logs-import-title {
+  display: inline-block;
+  color: #374151;
+  font-weight: 500;
+  font-size: large;
+  margin-bottom: 0.45rem;
+}
+
+.log-item-label {
+  display: inline-block;
+  color: #374151;
+  font-weight: 500;
+  font-size: medium;
+  margin-bottom: 0.45rem;
+}
+
+.logs-import-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+
+  max-height: 320px;
+  overflow-y: auto;
+
+  padding-right: 0.2rem;
+}
+
+.log-item {
+  width: min(100%, 900px);
+  background: linear-gradient(135deg, #ffffff, #f8faff);
+  border-radius: 24px;
+  padding: 2.25rem;
+  margin: 0.9rem;
+  box-shadow: 0 15px 15px rgba(15, 23, 42, 0.18);
+  border: 1px solid rgba(124, 108, 255, 0.12);
+}
+

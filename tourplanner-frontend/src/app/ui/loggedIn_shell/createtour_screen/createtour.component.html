@@ -108,26 +108,69 @@
       </div>
       }
 
-      <!--
+      <!--LOGS-->
       @if(logs().length > 0) {
-        <div class="mt-3">
-          <h5>Imported Logs</h5>
-          <ul class="list-group">
-            @for (log of logs(); track log) {
-              <li class="list-group-item">
-                <strong>{{ log.createdAt }}</strong> - {{ log.comment }}
-              </li>
-            }
-          </ul>
+
+<div class="logs-import-section">
+
+  <div class="logs-import-header">
+    <h5 class="logs-import-title">Imported Logs</h5>
+  </div>
+
+  <div class="logs-import-list">
+
+    @for (log of logs(); track $index) {
+
+    <div class="log-item">
+
+      <div class="log-item-header">
+
+        <div class="log-content">
+
+          
+          <p class="log-item-label">Comment</p>
+          <p>{{ log.comment }}</p>
+          
+
+          <p class="log-item-label">Created at</p>
+          <p>{{ log.createdAt | date:'medium' }}</p>
+      
+
+          <p class="log-item-label">Difficulty</p>
+          <p>{{ log.difficulty }}</p>
+
+          
+          <p class="log-item-label">Distance</p>
+          <p>{{ log.totalDistance }} km</p>
+
+          <p class="log-item-label">Duration</p>
+          <p>{{ log.totalTime }} s</p>
+
+          <p class="log-item-label">Rating</p>
+          <p>{{ log.rating }}/5</p>
+
         </div>
-        id: number | null  //muss auf Null setzbar sein, damit im BackendMapper erkannt wird, wenn es sich um einen neuen Logeintrag handelt der angelegt werden muss und nicht um einen bestehenden der geupdatet werden soll
-    createdAt: Date, /*Enthält in Typescript auch time*/
-    comment: string,
-    difficulty: number,
-    totalDistance: number,
-    totalTime: number /*man erhält die Zeit wohl in Sekunden von der API*/
-    rating: number
-      }-->
+
+      </div>
+
+    </div>
+
+    }
+
+  </div>
+
+</div>
+}
+        <!--
+          id: number | null  //muss auf Null setzbar sein, damit im BackendMapper erkannt wird, wenn es sich um einen neuen Logeintrag handelt der angelegt werden muss und nicht um einen bestehenden der geupdatet werden soll
+          createdAt: Date, /*Enthält in Typescript auch time*/
+          comment: string,
+          difficulty: number,
+          totalDistance: number,
+          totalTime: number /*man erhält die Zeit wohl in Sekunden von der API*/
+          rating: number
+        -->
+      
 
       <button type="submit" class="btn modern-btn mt-2">
         Create Tour

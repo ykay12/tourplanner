@@ -10,11 +10,12 @@ import { AppStateService } from '../../../states/app-state.service';
 import { BackendFacadeService } from '../../../services/backend/backendFacade.service';
 import { JsonImporterService } from '../../../services/import_export/json-importer.service';
 import { Log } from '../../../models/log.model';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-createtour',
-  imports: [FormsModule],
+  imports: [FormsModule, DatePipe],
   standalone: true,
   templateUrl: './createtour.component.html',
   styleUrl: './createtour.component.scss'
