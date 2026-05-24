@@ -3,7 +3,7 @@
     <div class="tour-form-header">
       <p class="form-kicker">TourPlanner</p>
 
-      <div class ="d-flex justify-content-between gap-3">
+      <div class="d-flex justify-content-between gap-3">
         <h2>Create a new tour</h2>
 
         <button class="modern-btn import-btn" type="button" (click)="fileInput.click()">
@@ -11,16 +11,10 @@
           <img src="assets/icons/import-export.png" alt="Import" class="btn-icon">
         </button>
 
-        <input
-          #fileInput
-          type="file"
-          accept=".json"
-          hidden
-          (change)="onFileSelected($event)"
-        >
+        <input #fileInput type="file" accept=".json" hidden (change)="onFileSelected($event)">
 
       </div>
-      
+
       <p class="form-subtitle">
         Add route details, choose a type, and build your next adventure.
       </p>
@@ -111,56 +105,55 @@
       <!--LOGS-->
       @if(logs().length > 0) {
 
-<div class="logs-import-section">
+      <div class="logs-import-section">
 
-  <div class="logs-import-header">
-    <h5 class="logs-import-title">Logs</h5>
-    <p class="form-subtitle">
-      imported information about others estimation of the tour.
-    </p>
-    <p class="form-subtitle">
-      If locations or mode of transportation are changed: please consider deleting the logs.
-    </p>
-  </div>
-
-  <div class="logs-import-list">
-
-    @for (log of logs(); track $index) {
-
-    <div class="log-item">
-
-      <div class="log-item-header">
-
-        <div class="log-content">
-
-          <p><strong class="log-item-label">Comment:</strong> {{ log.comment }}</p>
-          <p><strong class="log-item-label">Created at:</strong> {{ log.createdAt | date:'short' }}</p>
-          <p><strong class="log-item-label">Difficulty:</strong> {{ log.difficulty }}/5</p>
-          <p><strong class="log-item-label">Distance:</strong> {{ log.totalDistance }} km</p>
-          <p><strong class="log-item-label">Duration:</strong> {{ log.totalTime }} s</p>
-          <p><strong class="log-item-label">Rating:</strong> {{ log.rating }}/5</p>
-
+        <div class="logs-import-header">
+          <h5 class="logs-import-title">Logs</h5>
+          <p class="form-subtitle">
+            imported information about others estimation of the tour.
+          </p>
+          <p class="form-subtitle">
+            If locations or mode of transportation are changed: please consider deleting the logs.
+          </p>
         </div>
 
-        <div class="log-actions">
+        <div class="logs-import-list">
 
-          <button type="button" class="btn delete-log-btn" (click)="deleteLog($index)" title="Delete log entry">
-            X
-          </button>
+          @for (log of logs(); track $index) {
+
+          <div class="log-item">
+
+            <div class="log-item-header">
+
+              <div class="log-content">
+
+                <p><strong class="log-item-label">Comment:</strong> {{ log.comment }}</p>
+                <p><strong class="log-item-label">Created at:</strong> {{ log.createdAt | date:'short' }}</p>
+                <p><strong class="log-item-label">Difficulty:</strong> {{ log.difficulty }}/5</p>
+                <p><strong class="log-item-label">Distance:</strong> {{ log.totalDistance }} km</p>
+                <p><strong class="log-item-label">Duration:</strong> {{ log.totalTime }} s</p>
+                <p><strong class="log-item-label">Rating:</strong> {{ log.rating }}/5</p>
+
+              </div>
+
+              <div class="log-actions">
+
+                <button type="button" class="btn delete-log-btn" (click)="deleteLog($index)" title="Delete log entry">
+                  X
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+          }
 
         </div>
 
       </div>
-
-    </div>
-
-    }
-
-  </div>
-
-</div>
-}
-      
+      }
 
       <button type="submit" class="btn modern-btn mt-2">
         Create Tour

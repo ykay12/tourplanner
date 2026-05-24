@@ -254,6 +254,8 @@ export class CreatetourComponent {
 
   async onFileSelected(event: Event): Promise<void> {
 
+    this.errorMsg.set(''); //clear previous error message
+
     const input = event.target as HTMLInputElement;
 
     if (!input.files?.length) return;
@@ -270,7 +272,7 @@ export class CreatetourComponent {
 
       console.log(importedTour);
 
-    this.tourName.set(importedTour.name);
+    this.tourName.set(importedTour.name + " (imported)");
     this.tourDescription.set(importedTour.description);
     this.from.set(importedTour.getStart() || '');
     this.to.set(importedTour.getEnd() || '');
@@ -294,6 +296,8 @@ export class CreatetourComponent {
     } catch (error) {
 
       console.error('Import failed:', error);
+
+      this.errorMsg.set('Failed to import tour. Please select a valid tour JSON file.');
 
     }
 

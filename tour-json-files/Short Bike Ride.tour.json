@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "exportedAt": "2026-05-23T10:52:32.330Z",
+  "tour": {
+    "id": 4,
+    "name": "Short Bike Ride",
+    "description": "a very Short Bike Ride",
+    "estimatedTime": 94,
+    "popularity": 0,
+    "childFriendly": false,
+    "tourType": "BIKE",
+    "routes": [
+      {
+        "id": 20,
+        "from": "Bacherplatz",
+        "to": "Einsiedlerplatz",
+        "distance": 470.7,
+        "duration": 94.1,
+        "transportMode": "BIKE",
+        "fromCoordinates": {
+          "lat": 48.18753,
+          "lng": 16.355859
+        },
+        "toCoordinates": {
+          "lat": 48.18554,
+          "lng": 16.350279
+        },
+        "routeCoordinates": [
+          {
+            "lat": 48.187528,
+            "lng": 16.355861
+          },
+          {
+            "lat": 48.18746,
+            "lng": 16.355704
+          },
+          {
+            "lat": 48.187448,
+            "lng": 16.355677
+          },
+          {
+            "lat": 48.187137,
+            "lng": 16.354981
+          },
+          {
+            "lat": 48.187133,
+            "lng": 16.354972
+          },
+          {
+            "lat": 48.187064,
+            "lng": 16.354764
+          },
+          {
+            "lat": 48.186528,
+            "lng": 16.35318
+          },
+          {
+            "lat": 48.186211,
+            "lng": 16.352273
+          },
+          {
+            "lat": 48.185801,
+            "lng": 16.351059
+          },
+          {
+            "lat": 48.18573,
+            "lng": 16.350844
+          },
+          {
+            "lat": 48.185541,
+            "lng": 16.350282
+          },
+          {
+            "lat": 48.18554,
+            "lng": 16.350279
+          }
+        ]
+      }
+    ],
+    "logs": [
+      {
+        "id": 5,
+        "createdAt": "2026-05-23T10:52:30.950553186",
+        "comment": "perfect",
+        "difficulty": 1,
+        "totalDistance": 3,
+        "totalTime": 5000,
+        "rating": 5
+      }
+    ]
+  }
+}
