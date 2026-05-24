@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "exportedAt": "2026-05-23T11:30:05.011Z",
+  "exportedAt": "2026-05-24T10:27:38.229Z",
   "tour": {
-    "id": 12,
+    "id": 14,
     "name": "Many Logs",
     "description": "Many logs",
     "estimatedTime": 2880,
@@ -11,7 +11,7 @@
     "tourType": "RUNNING",
     "routes": [
       {
-        "id": 33,
+        "id": 35,
         "from": "Stephansplatz",
         "to": "Donauinsel",
         "distance": 4001.4,
@@ -675,17 +675,17 @@
     ],
     "logs": [
       {
-        "id": 10,
-        "createdAt": "2026-05-23T11:29:30.674951879",
+        "id": 16,
+        "createdAt": "2026-05-23T09:29:30.674Z",
         "comment": "First log",
         "difficulty": 1,
-        "totalDistance": 3,
-        "totalTime": 3,
+        "totalDistance": 1,
+        "totalTime": 1,
         "rating": 1
       },
       {
-        "id": 11,
-        "createdAt": "2026-05-23T11:29:40.853319213",
+        "id": 17,
+        "createdAt": "2026-05-23T09:29:40.853Z",
         "comment": "Second Log",
         "difficulty": 2,
         "totalDistance": 2,
@@ -693,21 +693,21 @@
         "rating": 2
       },
       {
-        "id": 12,
-        "createdAt": "2026-05-23T11:29:53.834690536",
+        "id": 18,
+        "createdAt": "2026-05-23T11:29:53.834691",
         "comment": "Third Log",
         "difficulty": 3,
         "totalDistance": 3,
-        "totalTime": 3,
+        "totalTime": 180,
         "rating": 3
       },
       {
-        "id": 13,
-        "createdAt": "2026-05-23T11:30:03.798435515",
+        "id": 19,
+        "createdAt": "2026-05-23T11:30:03.798436",
         "comment": "Fourth Log",
         "difficulty": 4,
         "totalDistance": 4,
-        "totalTime": 4,
+        "totalTime": 14460,
         "rating": 4
       }
     ]

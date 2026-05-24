@@ -309,5 +309,22 @@ export class CreatetourComponent {
     this.logs.update(logs => logs.filter((_, i) => i !== index));
   }
 
+  public formatTotalTime(seconds: number): string {
+
+    const hours = Math.floor(seconds / 3600);
+
+    const minutes = Math.floor((seconds % 3600) / 60);
+
+    if (hours > 0) {
+      return `${hours} h ${minutes} min`;
+    }
+
+    if(minutes > 0) {
+      return `${minutes} min`;
+    }
+
+    return `${seconds} seconds`
+}
+
 
 }

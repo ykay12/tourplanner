@@ -131,7 +131,7 @@
                 <p><strong class="log-item-label">Created at:</strong> {{ log.createdAt | date:'short' }}</p>
                 <p><strong class="log-item-label">Difficulty:</strong> {{ log.difficulty }}/5</p>
                 <p><strong class="log-item-label">Distance:</strong> {{ log.totalDistance }} km</p>
-                <p><strong class="log-item-label">Duration:</strong> {{ log.totalTime }} s</p>
+                <p><strong class="log-item-label">Duration:</strong> {{ formatTotalTime(log.totalTime) }}</p>
                 <p><strong class="log-item-label">Rating:</strong> {{ log.rating }}/5</p>
 
               </div>

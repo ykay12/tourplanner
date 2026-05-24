@@ -6,4 +6,5 @@ export interface Log {
     totalDistance: number,
     totalTime: number /*man erhält die Zeit wohl in Sekunden von der API*/
     rating: number
+
 }
