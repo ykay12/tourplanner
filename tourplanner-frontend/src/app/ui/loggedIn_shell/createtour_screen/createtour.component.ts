@@ -301,5 +301,9 @@ export class CreatetourComponent {
     input.value = '';
   }
 
+  public deleteLog(index: number): void {
+    this.logs.update(logs => logs.filter((_, i) => i !== index));
+  }
+
 
 }

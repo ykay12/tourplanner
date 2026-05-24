@@ -127,7 +127,10 @@
 
         <div class="log-content">
 
-          
+          <button type="button" class="btn delete-log-btn" (click)="deleteLog($index)">
+            X
+          </button>
+
           <p class="log-item-label">Comment</p>
           <p>{{ log.comment }}</p>
           
