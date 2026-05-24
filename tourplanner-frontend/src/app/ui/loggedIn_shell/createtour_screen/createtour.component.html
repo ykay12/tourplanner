@@ -114,7 +114,13 @@
 <div class="logs-import-section">
 
   <div class="logs-import-header">
-    <h5 class="logs-import-title">Imported Logs</h5>
+    <h5 class="logs-import-title">Logs</h5>
+    <p class="form-subtitle">
+      imported information about others estimation of the tour.
+    </p>
+    <p class="form-subtitle">
+      If locations or mode of transportation are changed: please consider deleting the logs.
+    </p>
   </div>
 
   <div class="logs-import-list">
@@ -127,30 +133,20 @@
 
         <div class="log-content">
 
-          <button type="button" class="btn delete-log-btn" (click)="deleteLog($index)">
+          <p><strong class="log-item-label">Comment:</strong> {{ log.comment }}</p>
+          <p><strong class="log-item-label">Created at:</strong> {{ log.createdAt | date:'short' }}</p>
+          <p><strong class="log-item-label">Difficulty:</strong> {{ log.difficulty }}/5</p>
+          <p><strong class="log-item-label">Distance:</strong> {{ log.totalDistance }} km</p>
+          <p><strong class="log-item-label">Duration:</strong> {{ log.totalTime }} s</p>
+          <p><strong class="log-item-label">Rating:</strong> {{ log.rating }}/5</p>
+
+        </div>
+
+        <div class="log-actions">
+
+          <button type="button" class="btn delete-log-btn" (click)="deleteLog($index)" title="Delete log entry">
             X
           </button>
-
-          <p class="log-item-label">Comment</p>
-          <p>{{ log.comment }}</p>
-          
-
-          <p class="log-item-label">Created at</p>
-          <p>{{ log.createdAt | date:'medium' }}</p>
-      
-
-          <p class="log-item-label">Difficulty</p>
-          <p>{{ log.difficulty }}</p>
-
-          
-          <p class="log-item-label">Distance</p>
-          <p>{{ log.totalDistance }} km</p>
-
-          <p class="log-item-label">Duration</p>
-          <p>{{ log.totalTime }} s</p>
-
-          <p class="log-item-label">Rating</p>
-          <p>{{ log.rating }}/5</p>
 
         </div>
 
@@ -164,15 +160,6 @@
 
 </div>
 }
-        <!--
-          id: number | null  //muss auf Null setzbar sein, damit im BackendMapper erkannt wird, wenn es sich um einen neuen Logeintrag handelt der angelegt werden muss und nicht um einen bestehenden der geupdatet werden soll
-          createdAt: Date, /*Enthält in Typescript auch time*/
-          comment: string,
-          difficulty: number,
-          totalDistance: number,
-          totalTime: number /*man erhält die Zeit wohl in Sekunden von der API*/
-          rating: number
-        -->
       
 
       <button type="submit" class="btn modern-btn mt-2">
