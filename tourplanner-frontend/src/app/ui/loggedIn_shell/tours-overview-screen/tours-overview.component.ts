@@ -4,6 +4,7 @@ import { Component, signal, computed } from '@angular/core';
 import { AppStateService } from '../../../states/app-state.service';
 import { Router } from '@angular/router';
 import { TourPreviewComponent } from './tour-preview/tour-preview.component';
+import { Tour } from '../../../models/tour.model';
 
 ////////////////
 // FILTER-LOGIK
@@ -104,6 +105,45 @@ function matchesKeyword(term: string, keywords: readonly string[]) {
 
   return keywords.some((k) => k.startsWith(term) || term.startsWith(k));
 }
+
+//rekursive Hilfsfunktion um zu schauen ob der SearchTerm in irgendeinem Feld der Tour vorkommt (auch in Logs und TourRoutes)
+function termInTour(tour: Tour, term: string): boolean {
+  const search = term.toLowerCase();
+
+  function contains(value: unknown): boolean {
+    if (value == null) return false;
+
+    // Strings
+    if (typeof value === 'string') {
+      return value.toLowerCase().includes(search);
+    }
+
+    // Zahlen, Booleans
+    if (typeof value === 'number' || typeof value === 'boolean') {
+      return String(value).toLowerCase().includes(search);
+    }
+
+    // Datum
+    if (value instanceof Date) {
+      return value.toISOString().toLowerCase().includes(search);
+    }
+
+    // Arrays
+    if (Array.isArray(value)) {
+      return value.some(contains);
+    }
+
+    // Objekte
+    if (typeof value === 'object') {
+      return Object.values(value).some(contains);
+    }
+
+    return false;
+  }
+
+  return contains(tour);
+}
+
 //Hilfsfunktion die eine Score berechnet, wie sehr eine Tour dem Searchterm entspricht
 function getTourScore(tour: any, term: string): number {
   let score = 0;
@@ -120,11 +160,15 @@ function getTourScore(tour: any, term: string): number {
   if (type.includes(term)) score += 40;
   if (term && type.startsWith(term)) score += 60;
 
-  // 3. Popularity Boost
+  // 3. Volltextsuche über alle Felder
+  if (termInTour(tour, term)) score += 200;
+
+  /* theoretisch könnten wir populäre Touren und kinderfreundliche Touren höher bewerten -> werden früher in der Liste angezeigt, aber das ist kein verlangtes Feature
+  // 4. Popularity Boost
   if ((tour.popularity ?? 0) >= 4) score += 20;
 
-  // 4. Child-friendly boost (wenn relevant)
+  // 5. Child-friendly boost (wenn relevant)
   if (tour.isChildfriendly) score += 10;
-
+  */
   return score;
 }
