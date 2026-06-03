@@ -107,7 +107,13 @@ public class TourService {
             //existingTour.setRoutes(updatedTour.getRoutes()); //laut GPT ist untere Version besser, "Denn Hibernate trackt die originale Collection-Instanz."
             existingTour.getRoutes().addAll(updatedTour.getRoutes());
         }
+
         existingTour.setEstimatedTime(totalDuration);
+
+        // Calculated Values (popularity und childfriendlyness) setzen
+        existingTour.calculatePopularityFromNumberOfLogs();
+        //Todo: ChildFriendlieness
+
         return tourRepo.save(existingTour);
     }
 
@@ -160,12 +166,13 @@ public class TourService {
             });
         }
 
-        // 6.) Checks ob Return passt -> Hibernate repo.save() returniert die gespeicherte Entity
+        // 6.) Calculated Values (popularity und childfriendlyness) setzen
+        newTour.calculatePopularityFromNumberOfLogs();
+        //Todo: ChildFriendlieness
 
         // 7.) gespeicherte Tour returnieren
         newTour.setEstimatedTime(totalDuration);
 
         return tourRepo.save(newTour);
-
     }
 }
