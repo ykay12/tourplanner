@@ -163,12 +163,14 @@ function getTourScore(tour: any, term: string): number {
   // 3. Volltextsuche über alle Felder
   if (termInTour(tour, term)) score += 200;
 
-  /* theoretisch könnten wir populäre Touren und kinderfreundliche Touren höher bewerten -> werden früher in der Liste angezeigt, aber das ist kein verlangtes Feature
-  // 4. Popularity Boost
-  if ((tour.popularity ?? 0) >= 4) score += 20;
+ 
+  // 5. Popularity Boost
+  if (matchesKeyword(term, FILTER_KEYWORDS.popular) && (tour.popularity ?? 0) >= 4) {
+    score += 500;
+  }
 
-  // 5. Child-friendly boost (wenn relevant)
+  // 6. Child-friendly boost (wenn relevant)
   if (tour.isChildfriendly) score += 10;
-  */
+  
   return score;
 }
