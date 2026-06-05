@@ -75,6 +75,14 @@ public class Tour {
         }
     }
 
+    public boolean logExists(Long logId){
+        for(Log existingLog : logs){
+            if(existingLog.getId().equals(logId)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
 

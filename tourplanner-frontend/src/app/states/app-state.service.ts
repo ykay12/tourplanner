@@ -156,6 +156,15 @@ export class AppStateService {
     }
   }
 
+  refreshTour(id: number){ // eine einzelne Tour aus dem Backend laden und in tours aktualisieren
+    return this.backendFacade.getTourById(id).pipe(
+      tap((freshTour) => {
+        this.updateTour(freshTour);
+      })
+    );
+
+  }
+
 
   updateTourInBackend(tour: Tour) {
     return this.backendFacade.editTour(tour).pipe(
@@ -181,23 +190,8 @@ export class AppStateService {
 
   addLogToTourBackend(tourId: number, log: Log) {
     return this.backendFacade.saveLog(tourId, log).pipe(
-      tap((savedLog) => {
-        const selectedTour = this.selectedTour();
-        if (!selectedTour) return;
-
-        const updatedTour = new Tour(
-          selectedTour.id,
-          selectedTour.name,
-          selectedTour.description,
-          selectedTour.estimatedTime,
-          selectedTour.popularity,
-          selectedTour.childFriendly,
-          selectedTour.tourType,
-          selectedTour.routes,
-          [...selectedTour.logs, savedLog]
-        );
-
-        this.updateTour(updatedTour);
+      tap(() => {
+        this.refreshTour(tourId).subscribe();
       })
     );
   }
@@ -230,22 +224,7 @@ export class AppStateService {
   deleteLogFromBackend(tourId: number, logId: number) {
     return this.backendFacade.deleteLog(tourId, logId).pipe(
       tap(() => {
-        const selectedTour = this.selectedTour();
-        if (!selectedTour) return;
-
-        const updatedLogs = selectedTour.logs.filter(log => log.id !== logId);
-
-        this.updateTour(new Tour(
-          selectedTour.id,
-          selectedTour.name,
-          selectedTour.description,
-          selectedTour.estimatedTime,
-          selectedTour.popularity,
-          selectedTour.childFriendly,
-          selectedTour.tourType,
-          selectedTour.routes,
-          updatedLogs
-        ));
+        this.refreshTour(tourId).subscribe();
       })
     );
   }

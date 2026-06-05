@@ -67,7 +67,7 @@ export class LogsComponent {
         rating: parseFloat(formValue.rating)
       };
 
-      this.state.updateLogInBackend(selectedTour.id, updatedLog).subscribe({
+      this.state.updateLogInBackend(selectedTour.id, updatedLog).subscribe({ //Funktion im AppStateService die ein Observable zurückgibt
         next: () => this.closeForm(),
         error: err => console.error('Error updating log:', err)
       });

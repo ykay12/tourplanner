@@ -53,7 +53,7 @@ public class LogController {
     }
 
     @PutMapping("/{logId}")
-    public Log updateLog(
+    public Log updateLog( //Frontend: backendFacadeService.editLog
             @PathVariable Long tourId,
             @PathVariable Long logId,
             @RequestBody Log log,

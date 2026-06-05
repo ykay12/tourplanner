@@ -56,13 +56,20 @@ public class LogService {
             }
 
             log.setCreatedAt(existingLog.getCreatedAt());
+
         } else {
             log.setCreatedAt(LocalDateTime.now());
         }
 
         log.setTour(tour);
 
-        return logRepository.save(log);
+        Log savedLog = logRepository.save(log);
+
+        //when the number of Logs change -> Popularity in Tour needs to be adapted!
+        tour.calculatePopularityFromNumberOfLogs();
+        tourRepository.save(tour); //Todo: or is it Update? -> I mean does it automatically update when id exists or does it throw an error?
+
+        return savedLog;
     }
 
     public void deleteLog(String username, Long tourId, Long logId) {
@@ -79,6 +86,12 @@ public class LogService {
         validateTourOwner(log.getTour(), username);
 
         logRepository.deleteById(logId);
+
+        //when the number of Logs change -> Popularity in Tour needs to be adapted!
+        Tour tourWithDeletedLog = tourRepository.findById(tourId)
+                .orElseThrow(() -> new NotFoundException("Tour not found: " + tourId));
+        tourWithDeletedLog.calculatePopularityFromNumberOfLogs();
+        tourRepository.save(tourWithDeletedLog);
     }
 
     private void validateId(Long id, String field) {
