@@ -184,3 +184,176 @@
 2026-06-05 09:49:14.726 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
 2026-06-05 09:49:14.729 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
 2026-06-05 09:49:14.730 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:58:59.648 [http-nio-8080-exec-8] INFO  org.tour.tourplannerbackend.controller.AuthController - Login request received for username=a
+2026-06-05 09:59:00.130 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.password,u1_0.username from users u1_0 where u1_0.username=?
+2026-06-05 09:59:00.211 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 09:59:00.505 [http-nio-8080-exec-8] INFO  org.tour.tourplannerbackend.controller.AuthController - Login successful. userId=1, username=a
+2026-06-05 09:59:00.690 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.username=? fetch first ? rows only
+2026-06-05 09:59:00.694 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 09:59:00.700 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:INTEGER) <- [1]
+2026-06-05 09:59:00.728 [http-nio-8080-exec-7] INFO  org.tour.tourplannerbackend.controller.UserController - Request received to fetch tours for userId=1
+2026-06-05 09:59:00.738 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select t1_0.id,t1_0.child_friendly,t1_0.description,t1_0.estimated_time,t1_0.name,t1_0.popularity,t1_0.tour_type,t1_0.user_id from tours t1_0 where t1_0.user_id=?
+2026-06-05 09:59:00.741 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:00.808 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.password,u1_0.username from users u1_0 where u1_0.id=?
+2026-06-05 09:59:00.810 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:01.067 [http-nio-8080-exec-7] INFO  org.tour.tourplannerbackend.controller.UserController - Fetched 3 tours for userId=1
+2026-06-05 09:59:01.171 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 09:59:01.183 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [3]
+2026-06-05 09:59:01.309 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 09:59:01.310 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [3]
+2026-06-05 09:59:01.389 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:01.390 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [3]
+2026-06-05 09:59:01.398 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 09:59:01.399 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:01.403 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 09:59:01.406 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:01.413 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:01.414 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:01.435 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 09:59:01.436 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:01.439 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 09:59:01.441 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:01.445 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:01.446 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:32.708 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.username=? fetch first ? rows only
+2026-06-05 09:59:32.716 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 09:59:32.718 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:INTEGER) <- [1]
+2026-06-05 09:59:32.773 [http-nio-8080-exec-9] INFO  org.tour.tourplannerbackend.controller.LogController - Request received to create log. tourId=2, username=a
+2026-06-05 09:59:32.837 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - select t1_0.id,t1_0.child_friendly,t1_0.description,t1_0.estimated_time,t1_0.name,t1_0.popularity,t1_0.tour_type,t1_0.user_id,u1_0.id,u1_0.email,u1_0.password,u1_0.username from tours t1_0 join users u1_0 on u1_0.id=t1_0.user_id where t1_0.id=?
+2026-06-05 09:59:32.839 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:33.117 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - insert into log (comment,created_at,difficulty,rating,total_distance,total_time,tour_id) values (?,?,?,?,?,?,?)
+2026-06-05 09:59:33.121 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [dferwf]
+2026-06-05 09:59:33.126 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:TIMESTAMP) <- [2026-06-05T09:59:32.857488935]
+2026-06-05 09:59:33.131 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (3:INTEGER) <- [2]
+2026-06-05 09:59:33.133 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (4:INTEGER) <- [2]
+2026-06-05 09:59:33.136 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (5:DOUBLE) <- [3434.0]
+2026-06-05 09:59:33.139 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (6:INTEGER) <- [34534]
+2026-06-05 09:59:33.141 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (7:BIGINT) <- [2]
+2026-06-05 09:59:33.226 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:33.229 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:33.358 [http-nio-8080-exec-9] DEBUG org.hibernate.SQL - update tours set child_friendly=?,description=?,estimated_time=?,name=?,popularity=?,tour_type=?,user_id=? where id=?
+2026-06-05 09:59:33.360 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BOOLEAN) <- [false]
+2026-06-05 09:59:33.364 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:VARCHAR) <- [a very Short Hike]
+2026-06-05 09:59:33.366 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (3:INTEGER) <- [338]
+2026-06-05 09:59:33.369 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (4:VARCHAR) <- [A short Hike (imported)]
+2026-06-05 09:59:33.371 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (5:INTEGER) <- [3]
+2026-06-05 09:59:33.373 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (6:VARCHAR) <- [HIKE]
+2026-06-05 09:59:33.376 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (7:BIGINT) <- [1]
+2026-06-05 09:59:33.378 [http-nio-8080-exec-9] TRACE org.hibernate.orm.jdbc.bind - binding parameter (8:BIGINT) <- [2]
+2026-06-05 09:59:33.398 [http-nio-8080-exec-9] INFO  org.tour.tourplannerbackend.controller.LogController - Created log successfully. logId=9, tourId=2, username=a
+2026-06-05 09:59:33.447 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.username=? fetch first ? rows only
+2026-06-05 09:59:33.449 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 09:59:33.450 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:INTEGER) <- [1]
+2026-06-05 09:59:33.455 [http-nio-8080-exec-1] DEBUG org.tour.tourplannerbackend.controller.TourController - Get tour request received. tourId=2
+2026-06-05 09:59:33.458 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - select t1_0.id,t1_0.child_friendly,t1_0.description,t1_0.estimated_time,t1_0.name,t1_0.popularity,t1_0.tour_type,t1_0.user_id,u1_0.id,u1_0.email,u1_0.password,u1_0.username from tours t1_0 join users u1_0 on u1_0.id=t1_0.user_id where t1_0.id=?
+2026-06-05 09:59:33.460 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:33.464 [http-nio-8080-exec-1] INFO  org.tour.tourplannerbackend.controller.TourController - Returned tour. tourId=2
+2026-06-05 09:59:33.467 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 09:59:33.468 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:33.472 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 09:59:33.473 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:33.476 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:33.478 [http-nio-8080-exec-1] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:41.605 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.username=? fetch first ? rows only
+2026-06-05 09:59:41.609 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 09:59:41.611 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:INTEGER) <- [1]
+2026-06-05 09:59:41.618 [http-nio-8080-exec-2] INFO  org.tour.tourplannerbackend.controller.LogController - Request received to create log. tourId=2, username=a
+2026-06-05 09:59:41.621 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - select t1_0.id,t1_0.child_friendly,t1_0.description,t1_0.estimated_time,t1_0.name,t1_0.popularity,t1_0.tour_type,t1_0.user_id,u1_0.id,u1_0.email,u1_0.password,u1_0.username from tours t1_0 join users u1_0 on u1_0.id=t1_0.user_id where t1_0.id=?
+2026-06-05 09:59:41.622 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:41.629 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - insert into log (comment,created_at,difficulty,rating,total_distance,total_time,tour_id) values (?,?,?,?,?,?,?)
+2026-06-05 09:59:41.633 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [435345]
+2026-06-05 09:59:41.635 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:TIMESTAMP) <- [2026-06-05T09:59:41.628192656]
+2026-06-05 09:59:41.637 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (3:INTEGER) <- [1]
+2026-06-05 09:59:41.638 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (4:INTEGER) <- [3]
+2026-06-05 09:59:41.640 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (5:DOUBLE) <- [345345.0]
+2026-06-05 09:59:41.641 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (6:INTEGER) <- [35345]
+2026-06-05 09:59:41.643 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (7:BIGINT) <- [2]
+2026-06-05 09:59:41.656 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:41.659 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:41.666 [http-nio-8080-exec-2] DEBUG org.hibernate.SQL - update tours set child_friendly=?,description=?,estimated_time=?,name=?,popularity=?,tour_type=?,user_id=? where id=?
+2026-06-05 09:59:41.667 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BOOLEAN) <- [false]
+2026-06-05 09:59:41.668 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:VARCHAR) <- [a very Short Hike]
+2026-06-05 09:59:41.670 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (3:INTEGER) <- [338]
+2026-06-05 09:59:41.671 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (4:VARCHAR) <- [A short Hike (imported)]
+2026-06-05 09:59:41.672 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (5:INTEGER) <- [4]
+2026-06-05 09:59:41.674 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (6:VARCHAR) <- [HIKE]
+2026-06-05 09:59:41.675 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (7:BIGINT) <- [1]
+2026-06-05 09:59:41.676 [http-nio-8080-exec-2] TRACE org.hibernate.orm.jdbc.bind - binding parameter (8:BIGINT) <- [2]
+2026-06-05 09:59:41.684 [http-nio-8080-exec-2] INFO  org.tour.tourplannerbackend.controller.LogController - Created log successfully. logId=10, tourId=2, username=a
+2026-06-05 09:59:41.708 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.username=? fetch first ? rows only
+2026-06-05 09:59:41.712 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 09:59:41.713 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:INTEGER) <- [1]
+2026-06-05 09:59:41.717 [http-nio-8080-exec-3] DEBUG org.tour.tourplannerbackend.controller.TourController - Get tour request received. tourId=2
+2026-06-05 09:59:41.721 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - select t1_0.id,t1_0.child_friendly,t1_0.description,t1_0.estimated_time,t1_0.name,t1_0.popularity,t1_0.tour_type,t1_0.user_id,u1_0.id,u1_0.email,u1_0.password,u1_0.username from tours t1_0 join users u1_0 on u1_0.id=t1_0.user_id where t1_0.id=?
+2026-06-05 09:59:41.722 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:41.727 [http-nio-8080-exec-3] INFO  org.tour.tourplannerbackend.controller.TourController - Returned tour. tourId=2
+2026-06-05 09:59:41.729 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 09:59:41.731 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:41.735 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 09:59:41.736 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:41.741 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:41.742 [http-nio-8080-exec-3] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:55.782 [http-nio-8080-exec-4] INFO  org.tour.tourplannerbackend.controller.AuthController - Login request received for username=a
+2026-06-05 09:59:55.785 [http-nio-8080-exec-4] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.password,u1_0.username from users u1_0 where u1_0.username=?
+2026-06-05 09:59:55.789 [http-nio-8080-exec-4] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 09:59:55.793 [http-nio-8080-exec-4] INFO  org.tour.tourplannerbackend.controller.AuthController - Login successful. userId=1, username=a
+2026-06-05 09:59:55.823 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.username=? fetch first ? rows only
+2026-06-05 09:59:55.827 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 09:59:55.828 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:INTEGER) <- [1]
+2026-06-05 09:59:55.836 [http-nio-8080-exec-5] INFO  org.tour.tourplannerbackend.controller.UserController - Request received to fetch tours for userId=1
+2026-06-05 09:59:55.839 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select t1_0.id,t1_0.child_friendly,t1_0.description,t1_0.estimated_time,t1_0.name,t1_0.popularity,t1_0.tour_type,t1_0.user_id from tours t1_0 where t1_0.user_id=?
+2026-06-05 09:59:55.841 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:55.845 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select u1_0.id,u1_0.email,u1_0.password,u1_0.username from users u1_0 where u1_0.id=?
+2026-06-05 09:59:55.847 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:55.853 [http-nio-8080-exec-5] INFO  org.tour.tourplannerbackend.controller.UserController - Fetched 3 tours for userId=1
+2026-06-05 09:59:55.856 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 09:59:55.858 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [3]
+2026-06-05 09:59:55.869 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 09:59:55.878 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [3]
+2026-06-05 09:59:55.913 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:55.914 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [3]
+2026-06-05 09:59:55.916 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 09:59:55.917 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:55.921 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 09:59:55.922 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:55.931 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:55.932 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [1]
+2026-06-05 09:59:55.937 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 09:59:55.939 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:55.942 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 09:59:55.944 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 09:59:55.947 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 09:59:55.948 [http-nio-8080-exec-5] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 10:00:12.521 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.username=? fetch first ? rows only
+2026-06-05 10:00:12.539 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 10:00:12.540 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:INTEGER) <- [1]
+2026-06-05 10:00:12.550 [http-nio-8080-exec-8] INFO  org.tour.tourplannerbackend.controller.LogController - Request received to delete log. logId=8, tourId=2, username=a
+2026-06-05 10:00:12.553 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - select l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time,t1_0.id,t1_0.child_friendly,t1_0.description,t1_0.estimated_time,t1_0.name,t1_0.popularity,t1_0.tour_type,t1_0.user_id,u1_0.id,u1_0.email,u1_0.password,u1_0.username from log l1_0 left join tours t1_0 on t1_0.id=l1_0.tour_id left join users u1_0 on u1_0.id=t1_0.user_id where l1_0.id=?
+2026-06-05 10:00:12.555 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [8]
+2026-06-05 10:00:12.599 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - delete from log where id=?
+2026-06-05 10:00:12.601 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [8]
+2026-06-05 10:00:12.615 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 10:00:12.616 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 10:00:12.628 [http-nio-8080-exec-8] DEBUG org.hibernate.SQL - update tours set child_friendly=?,description=?,estimated_time=?,name=?,popularity=?,tour_type=?,user_id=? where id=?
+2026-06-05 10:00:12.629 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BOOLEAN) <- [false]
+2026-06-05 10:00:12.631 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:VARCHAR) <- [a very Short Hike]
+2026-06-05 10:00:12.634 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (3:INTEGER) <- [338]
+2026-06-05 10:00:12.635 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (4:VARCHAR) <- [A short Hike (imported)]
+2026-06-05 10:00:12.639 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (5:INTEGER) <- [3]
+2026-06-05 10:00:12.642 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (6:VARCHAR) <- [HIKE]
+2026-06-05 10:00:12.644 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (7:BIGINT) <- [1]
+2026-06-05 10:00:12.645 [http-nio-8080-exec-8] TRACE org.hibernate.orm.jdbc.bind - binding parameter (8:BIGINT) <- [2]
+2026-06-05 10:00:12.654 [http-nio-8080-exec-8] INFO  org.tour.tourplannerbackend.controller.LogController - Deleted log successfully. logId=8, tourId=2, username=a
+2026-06-05 10:00:12.680 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select u1_0.id from users u1_0 where u1_0.username=? fetch first ? rows only
+2026-06-05 10:00:12.682 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:VARCHAR) <- [a]
+2026-06-05 10:00:12.684 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (2:INTEGER) <- [1]
+2026-06-05 10:00:12.695 [http-nio-8080-exec-7] DEBUG org.tour.tourplannerbackend.controller.TourController - Get tour request received. tourId=2
+2026-06-05 10:00:12.700 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select t1_0.id,t1_0.child_friendly,t1_0.description,t1_0.estimated_time,t1_0.name,t1_0.popularity,t1_0.tour_type,t1_0.user_id,u1_0.id,u1_0.email,u1_0.password,u1_0.username from tours t1_0 join users u1_0 on u1_0.id=t1_0.user_id where t1_0.id=?
+2026-06-05 10:00:12.704 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 10:00:12.714 [http-nio-8080-exec-7] INFO  org.tour.tourplannerbackend.controller.TourController - Returned tour. tourId=2
+2026-06-05 10:00:12.718 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select r1_0.tour_id,r1_0.id,r1_0.distance,r1_0.duration,r1_0.from_location,fc1_0.id,fc1_0.lat,fc1_0.lng,r1_0.to_location,tc1_0.id,tc1_0.lat,tc1_0.lng,r1_0.transport_mode from tour_route r1_0 left join coordinates fc1_0 on fc1_0.id=r1_0.from_coordinates_id left join coordinates tc1_0 on tc1_0.id=r1_0.to_coordinates_id where r1_0.tour_id=?
+2026-06-05 10:00:12.721 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 10:00:12.726 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select rc1_0.tour_route_id,rc1_0.id,rc1_0.lat,rc1_0.lng from coordinates rc1_0 where rc1_0.tour_route_id=?
+2026-06-05 10:00:12.729 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]
+2026-06-05 10:00:12.734 [http-nio-8080-exec-7] DEBUG org.hibernate.SQL - select l1_0.tour_id,l1_0.id,l1_0.comment,l1_0.created_at,l1_0.difficulty,l1_0.rating,l1_0.total_distance,l1_0.total_time from log l1_0 where l1_0.tour_id=?
+2026-06-05 10:00:12.735 [http-nio-8080-exec-7] TRACE org.hibernate.orm.jdbc.bind - binding parameter (1:BIGINT) <- [2]

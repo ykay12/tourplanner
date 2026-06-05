@@ -75,13 +75,47 @@ public class Tour {
         }
     }
 
-    public boolean logExists(Long logId){
-        for(Log existingLog : logs){
-            if(existingLog.getId().equals(logId)){
-                return true;
-            }
+    public void calculateChildFriendliness(){
+        //Specification: "child-friendliness (derived from recorded difficulty values, total times and distance)"
+        //difficulty and time from Logs
+        double difficultySum = 0;
+        double timeSum = 0;
+        int numberOfLogs = logs == null ? 0 : logs.size();
+
+        if (numberOfLogs == 0) {
+            childFriendly = false;
         }
-        return false;
+
+        for(Log log : logs){
+            difficultySum = difficultySum + log.getDifficulty();
+            timeSum = timeSum + log.getTotalTime();
+        }
+        double averageDifficulty = difficultySum / numberOfLogs;
+        double averageTime = timeSum / numberOfLogs;
+
+        //distance from TourRoutes
+        double totalDistance = 0;
+        for(TourRoute route : routes){
+            totalDistance = totalDistance + route.getDistance();
+        }
+
+        /*Berechnungsüberlegung:
+        * Mit kindern will ich nicht länger als 4 Stunden unterwegs sein.
+        * Laut https://www.wandern-mit-familie.de/2025/05/die-wandern-mit-familie-zeit-faustregel/
+        * können Kinder 2km/stunde gehen.
+        *   -> wenn die totalDistance > 8000 (8 km) ist, ist die Tour nicht Child-Friendly
+        *   -> wenn averageTime > 250 (250 sekunden entspricht 4 Stunden), ist die Tour nicht Child-Friendly
+        *
+        * Zu letzt denke ich noch, dass die Difficulty nicht > 3 sein sollte, um KinderFreundlich zu sein
+        *
+        * */
+
+        if(totalDistance > 8000 || averageTime > 250 || averageDifficulty > 3){
+            childFriendly = false;
+        }
+        else {
+            childFriendly = true;
+        }
     }
 
 }
