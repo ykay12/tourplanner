@@ -199,24 +199,7 @@ export class AppStateService {
   updateLogInBackend(tourId: number, log: Log) {
     return this.backendFacade.editLog(tourId, log).pipe(
       tap((updatedLog) => {
-        const selectedTour = this.selectedTour();
-        if (!selectedTour) return;
-
-        const updatedLogs = selectedTour.logs.map(l =>
-          l.id === updatedLog.id ? updatedLog : l
-        );
-
-        this.updateTour(new Tour(
-          selectedTour.id,
-          selectedTour.name,
-          selectedTour.description,
-          selectedTour.estimatedTime,
-          selectedTour.popularity,
-          selectedTour.childFriendly,
-          selectedTour.tourType,
-          selectedTour.routes,
-          updatedLogs
-        ));
+        this.refreshTour(tourId).subscribe();
       })
     );
   }
