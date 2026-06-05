@@ -83,7 +83,8 @@ public class Tour {
         int numberOfLogs = logs == null ? 0 : logs.size();
 
         if (numberOfLogs == 0) {
-            childFriendly = false;
+            childFriendly = false; //Weil wir nichts dazu sagen können, besser false!
+            return;
         }
 
         for(Log log : logs){
@@ -104,18 +105,15 @@ public class Tour {
         * Laut https://www.wandern-mit-familie.de/2025/05/die-wandern-mit-familie-zeit-faustregel/
         * können Kinder 2km/stunde gehen.
         *   -> wenn die totalDistance > 8000 (8 km) ist, ist die Tour nicht Child-Friendly
-        *   -> wenn averageTime > 250 (250 sekunden entspricht 4 Stunden), ist die Tour nicht Child-Friendly
+        *   -> wenn averageTime > 14400 (14400 sekunden entspricht 4 Stunden), ist die Tour nicht Child-Friendly
         *
         * Zu letzt denke ich noch, dass die Difficulty nicht > 3 sein sollte, um KinderFreundlich zu sein
         *
         * */
 
-        if(totalDistance > 8000 || averageTime > 250 || averageDifficulty > 3){
-            childFriendly = false;
-        }
-        else {
-            childFriendly = true;
-        }
+        childFriendly = totalDistance <= 8000 && // == 8km
+                        averageTime <= 14400 && // == 4 Std
+                        averageDifficulty <= 3;
     }
 
 }

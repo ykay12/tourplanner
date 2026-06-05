@@ -112,7 +112,7 @@ public class TourService {
 
         // Calculated Values (popularity und childfriendlyness) setzen
         existingTour.calculatePopularityFromNumberOfLogs();
-        //Todo: ChildFriendlieness
+        existingTour.calculateChildFriendliness();
 
         return tourRepo.save(existingTour);
     }
@@ -168,7 +168,7 @@ public class TourService {
 
         // 6.) Calculated Values (popularity und childfriendlyness) setzen
         newTour.calculatePopularityFromNumberOfLogs();
-        //Todo: ChildFriendlieness
+        newTour.calculateChildFriendliness();
 
         // 7.) gespeicherte Tour returnieren
         newTour.setEstimatedTime(totalDuration);

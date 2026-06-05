@@ -67,6 +67,7 @@ public class LogService {
 
         //when the number of Logs change -> Popularity in Tour needs to be adapted!
         tour.calculatePopularityFromNumberOfLogs();
+        tour.calculateChildFriendliness();
         tourRepository.save(tour); //Todo: or is it Update? -> I mean does it automatically update when id exists or does it throw an error?
 
         return savedLog;
@@ -91,6 +92,7 @@ public class LogService {
         Tour tourWithDeletedLog = tourRepository.findById(tourId)
                 .orElseThrow(() -> new NotFoundException("Tour not found: " + tourId));
         tourWithDeletedLog.calculatePopularityFromNumberOfLogs();
+        tourWithDeletedLog.calculateChildFriendliness();
         tourRepository.save(tourWithDeletedLog);
     }
 
