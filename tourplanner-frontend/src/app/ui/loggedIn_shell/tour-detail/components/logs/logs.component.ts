@@ -5,6 +5,7 @@ import { signal } from '@angular/core';
 import { AppStateService } from '../../../../../states/app-state.service';
 import { Log } from '../../../../../models/log.model';
 import { Tour } from '../../../../../models/tour.model';
+import { FormatterService } from '../../../../../services/formatting/formatterService.service';
 
 @Component({
   selector: 'app-logs',
@@ -19,7 +20,8 @@ export class LogsComponent {
 
   constructor(
     @Inject(AppStateService) public state: AppStateService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public formatter: FormatterService
   ) {
     this.logForm = this.fb.group({
       comment: ['', Validators.required],
@@ -118,29 +120,5 @@ export class LogsComponent {
 
   toggle() {
     this.collapsed.update((v) => !v);
-  }
-
-  //function for formatted Log-time
-  formatDuration(seconds: number): string {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-
-    let result = '';
-
-    if (hours > 0) {
-      result += `${hours}h `;
-    }
-
-    if (minutes > 0) {
-      result += `${minutes} min `;
-    }
-
-    // Seconds are only shown, if the step takes less than a minute
-    if (hours === 0 && minutes === 0) {
-      result += `${secs} s`;
-    }
-
-    return result.trim();
   }
 }

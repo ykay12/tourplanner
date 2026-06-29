@@ -23,7 +23,7 @@
           <p><strong>Created at:</strong> {{ log.createdAt | date: 'short' }}</p>
           <p><strong>Difficulty:</strong> {{ log.difficulty }}/5</p>
           <p><strong>Distance:</strong> {{ log.totalDistance }} km</p>
-          <p><strong>Duration:</strong> {{ formatDuration(log.totalTime) }} </p>
+          <p><strong>Duration:</strong> {{ formatter.secondsToHoursMinutesOrSeconds(log.totalTime) }} </p>
           <p><strong>Rating:</strong> {{ log.rating }}/5</p>
         </div>
 
