@@ -68,7 +68,7 @@ export class LogsComponent {
       };
 
       this.state.updateLogInBackend(selectedTour.id, updatedLog).subscribe({ //Funktion im AppStateService die ein Observable zurückgibt
-        next: () => this.closeForm(),
+        next: () => this.closeForm(), //next läuft, nachdem, dass Observable (ein Log) zurückgekommen ist
         error: err => console.error('Error updating log:', err)
       });
 
@@ -120,4 +120,27 @@ export class LogsComponent {
     this.collapsed.update((v) => !v);
   }
 
+  //function for formatted Log-time
+  formatDuration(seconds: number): string {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    let result = '';
+
+    if (hours > 0) {
+      result += `${hours}h `;
+    }
+
+    if (minutes > 0) {
+      result += `${minutes} min `;
+    }
+
+    // Seconds are only shown, if the step takes less than a minute
+    if (hours === 0 && minutes === 0) {
+      result += `${secs} s`;
+    }
+
+    return result.trim();
+  }
 }
