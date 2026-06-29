@@ -39,7 +39,7 @@ export class Tour {
   static fromJson(data: any): Tour {
     //In this Function I am setting all IDs to null because the Tour will be saved to the database as a new Tour and otherwise I will have conficts! (ID == primary key in database)
     return new Tour(
-      null, 
+      null,
 
       data.name,
       data.description,

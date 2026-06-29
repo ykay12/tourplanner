@@ -92,9 +92,8 @@
   transform: translateY(0);
 }
 
-/* TABLET */
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .tour-detail-card {
     padding: 1.25rem;
     border-radius: 20px;

@@ -32,11 +32,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.tour.tourplannerbackend.config.OpenRouteServiceProperties;
-import org.tour.tourplannerbackend.dto.openrouteservice.directions.OpenRouteServiceDirectionsResponseDto;
-import org.tour.tourplannerbackend.dto.openrouteservice.directions.RouteDetailsDto;
-import org.tour.tourplannerbackend.dto.openrouteservice.geocode.OpenRouteServiceGeocodeResponseDto;
-import org.tour.tourplannerbackend.model.Coordinates;
-import org.tour.tourplannerbackend.model.enums.TransportMode;
+import org.tour.tourplannerbackend.presentation.dto.openrouteservice.directions.OpenRouteServiceDirectionsResponseDto;
+import org.tour.tourplannerbackend.presentation.dto.openrouteservice.directions.RouteDetailsDto;
+import org.tour.tourplannerbackend.presentation.dto.openrouteservice.geocode.OpenRouteServiceGeocodeResponseDto;
+import org.tour.tourplannerbackend.persistence.entity.Coordinates;
+import org.tour.tourplannerbackend.persistence.entity.enums.TransportMode;
 
 import java.util.List;
 

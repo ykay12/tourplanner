@@ -5,18 +5,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.tour.tourplannerbackend.model.Tour;
-import org.tour.tourplannerbackend.model.User;
-import org.tour.tourplannerbackend.repository.TourRepository;
-import org.tour.tourplannerbackend.repository.UserRepository;
-import org.tour.tourplannerbackend.service.TourService;
-import org.tour.tourplannerbackend.service.UserService;
+import org.tour.tourplannerbackend.business.exception.NotFoundException;
+import org.tour.tourplannerbackend.integration.OpenRouteServiceFacade;
+import org.tour.tourplannerbackend.persistence.entity.Tour;
+import org.tour.tourplannerbackend.persistence.entity.User;
+import org.tour.tourplannerbackend.persistence.repository.TourRepository;
+import org.tour.tourplannerbackend.persistence.repository.UserRepository;
+import org.tour.tourplannerbackend.business.service.TourService;
+import org.tour.tourplannerbackend.business.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -28,15 +32,15 @@ public class TourServiceTests {
     private TourRepository tourRepository;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private OpenRouteServiceFacade openRouteServiceFacade;
     // Mockito erstellt automatisch den TourService und steckt die Mock-Objekte hinein.
     // sonst müsste man schreiben: tourService = new TourService(tourRepository);
     @InjectMocks
     private TourService tourService;
-    @InjectMocks
-    private UserService userService;
 
     @Test
-    public void findTourById(){
+    public void findTourById() {
         Tour tour = new Tour();
         tour.setId(1L);
         tour.setName("Tour 1");
@@ -52,7 +56,39 @@ public class TourServiceTests {
     }
 
     @Test
-    public void deleteTour(){
+    public void getTourFromUser(){
+        Tour tour = new Tour();
+        tour.setId(1L);
+        tour.setName("Tour 1");
+        tour.setDescription("Leiwande Tour");
+        when(tourRepository.findByUserId(1L)).thenReturn(List.of(tour));
+
+        List<Tour> result = tourService.getToursFromUser(1L);
+        assertEquals(1, result.size());
+        assertEquals("Tour 1", result.getFirst().getName());
+
+        verify(tourRepository).findByUserId(1L);
+
+    }
+
+    @Test
+    public void getAllToursFromUser(){
+        Tour tour = new Tour();
+        tour.setId(1L);
+        tour.setName("Tour 1");
+        tour.setDescription("Leiwande Tour");
+
+        when(tourRepository.findAll()).thenReturn(List.of(tour));
+
+        List<Tour> result = tourService.getAllTours();
+        assertEquals(1, result.size());
+        assertEquals("Tour 1", result.getFirst().getName());
+
+        verify(tourRepository).findAll();
+    }
+
+    @Test
+    public void deleteTour() {
         Tour tour = new Tour();
         tour.setId(1L);
         tour.setName("Tour 1");
@@ -62,8 +98,9 @@ public class TourServiceTests {
         verify(tourRepository).deleteById(1L);
 
     }
+
     @Test
-    public void saveTour(){
+    public void saveTour() {
         User user = new User();
         user.setId(1L);
         user.setUsername("username");
@@ -88,21 +125,18 @@ public class TourServiceTests {
     }
 
     @Test
-    public void updateTour(){
+    public void updateTour() {
         Tour oldTour = new Tour();
         oldTour.setId(1L);
         oldTour.setName("Old Tour");
         oldTour.setDescription("Boring Tour");
         oldTour.setRoutes(new ArrayList<>());
 
-
         Tour newTour = new Tour();
         newTour.setId(1L);
         newTour.setName("Tour 1");
         newTour.setDescription("Leiwande Tour");
         newTour.setRoutes(new ArrayList<>());
-        newTour.setPopularity(5);
-        newTour.setChildFriendly(true);
 
         when(tourRepository.findById(1L)).thenReturn(Optional.of(oldTour));
         when(tourRepository.save(oldTour)).thenReturn(oldTour);
@@ -111,10 +145,28 @@ public class TourServiceTests {
 
         assertEquals("Tour 1", result.getName());
         assertEquals("Leiwande Tour", result.getDescription());
-        assertEquals(5, result.getPopularity());
-        assertEquals(true, result.getChildFriendly());
 
         verify(tourRepository).findById(1L);
         verify(tourRepository).save(oldTour);
+    }
+
+    @Test
+    public void getTour_NotFound() {
+        when(tourRepository.findById(1L)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> tourService.getTour(1L));
+
+        verify(tourRepository).findById(1L);
+    }
+
+    @Test
+    public void updateTour_NotFound() {
+        when(tourRepository.findById(1L)).thenReturn(Optional.empty());
+
+        Tour updated = new Tour();
+
+        assertThrows(NotFoundException.class, () -> tourService.updateTour(1L, updated));
+
+        verify(tourRepository).findById(1L);
     }
 }

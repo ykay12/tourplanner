@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.tour.tourplannerbackend.exception.UnauthorizedException;
-import org.tour.tourplannerbackend.service.AuthService;
+import org.tour.tourplannerbackend.business.exception.UnauthorizedException;
+import org.tour.tourplannerbackend.business.service.AuthService;
 
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
