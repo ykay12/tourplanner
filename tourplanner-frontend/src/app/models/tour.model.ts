@@ -77,6 +77,7 @@ export class Tour {
   }
 
   //Funktionen Sollten eigentlich nicht mehr gebraucht werden, weil im FormatterService formattiert wird
+  /*
   getEstimatedTime(): string {
     const hours = Math.floor(this.estimatedTime / 3600)
     const minutes = Math.floor((this.estimatedTime % 3600) / 60)
@@ -95,6 +96,7 @@ export class Tour {
     }
     return `${(distance / 1000).toFixed(2)} km`;
   }
+    */
 
 
 }

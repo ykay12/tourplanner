@@ -11,7 +11,7 @@
       <p><strong>From:</strong> {{ tour.getStart() }}</p>
       <p><strong>To:</strong> {{ tour.getEnd() }}</p>
       <p><strong>Distance:</strong> {{ formatter.metersToKm(tour.getTotalDistance()) }} </p>
-      <p><strong>Estimated Time:</strong> {{ tour.getEstimatedTime() }}</p>
+      <p><strong>Estimated Time:</strong> {{ formatter.secondsToHoursMinutesOrSeconds(tour.getEstimatedTimeAsSeconds()) }}</p>
       <p><strong>Popularity:</strong> {{ tour.popularity }}</p>
       <p><strong>Child friendly:</strong> {{ tour.childFriendly ? 'Yes' : 'No' }}</p>
     </div>
