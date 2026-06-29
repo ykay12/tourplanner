@@ -38,7 +38,7 @@
     <!-- Estimated Time -->
     <div class="tour-card-field">
       <span class="label">Time:</span>
-      <span>{{ tour.getEstimatedTime() }}</span>
+      <span>{{ formatter.secondsToHoursMinutesOrSeconds(tour.getEstimatedTimeAsSeconds()) }}</span>
     </div>
 
     <!-- ICON (ganz rechts) -->

@@ -11,6 +11,7 @@ import { BackendFacadeService } from '../../../services/backend/backendFacade.se
 import { JsonImporterService } from '../../../services/import_export/json-importer.service';
 import { Log } from '../../../models/log.model';
 import { DatePipe } from '@angular/common';
+import { FormatterService } from '../../../services/formatting/formatterService.service';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class CreatetourComponent {
     private router: Router,
     private appState: AppStateService,
     private backend: BackendFacadeService,
-    private jsonImporter: JsonImporterService
+    private jsonImporter: JsonImporterService,
+    public formatter: FormatterService
   ) { }
 
   onSubmit(): void {
@@ -55,7 +57,6 @@ export class CreatetourComponent {
     console.log("Built Tour object to submit:", tour);
 
     //nicht mehr nur in den state speichern, sondern ans Backend schicken! und dann das was wir zurück bekommen in den state
-
     const userId = this.appState.loggedInUserId();
 
     if (userId === null) {
@@ -308,23 +309,5 @@ export class CreatetourComponent {
   public deleteLog(index: number): void {
     this.logs.update(logs => logs.filter((_, i) => i !== index));
   }
-
-  public formatTotalTime(seconds: number): string {
-
-    const hours = Math.floor(seconds / 3600);
-
-    const minutes = Math.floor((seconds % 3600) / 60);
-
-    if (hours > 0) {
-      return `${hours} h ${minutes} min`;
-    }
-
-    if(minutes > 0) {
-      return `${minutes} min`;
-    }
-
-    return `${seconds} seconds`
-}
-
 
 }

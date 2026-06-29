@@ -8,6 +8,7 @@ import {
 import { Tour } from '../../../../models/tour.model';
 import { LeafletFacadeService } from '../../../../services/leaflet/leafletFacade.service';
 import { Coordinates } from '../../../../models/coordinates.model';
+import { FormatterService } from '../../../../services/formatting/formatterService.service';
 
 @Component({
   selector: 'app-tour-preview',
@@ -21,6 +22,7 @@ export class TourPreviewComponent implements AfterViewInit, OnDestroy {
 
   //Funktionen für die Leaflet-Karte
   private mapFacade = inject(LeafletFacadeService);
+  public formatter = inject(FormatterService);
 
   get mapId(): string {
     return 'map-' + this.tour.id;
