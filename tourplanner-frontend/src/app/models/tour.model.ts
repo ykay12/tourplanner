@@ -72,16 +72,11 @@ export class Tour {
     return this.routes.reduce((sum, r) => sum + r.distance, 0);
   }
 
-  getFormattedDistance(): string {
-    const distance = this.getTotalDistance();
-
-    if (distance < 1000) {
-      return `${distance} m`;
-    }
-    return `${(distance / 1000).toFixed(2)} km`;
+  getEstimatedTimeAsSeconds(): number {
+    return this.estimatedTime;
   }
 
-  //Funktion Sollte eigentlich nicht mehr gebraucht werden, weil im FormatterService formattiert wird
+  //Funktionen Sollten eigentlich nicht mehr gebraucht werden, weil im FormatterService formattiert wird
   getEstimatedTime(): string {
     const hours = Math.floor(this.estimatedTime / 3600)
     const minutes = Math.floor((this.estimatedTime % 3600) / 60)
@@ -92,7 +87,14 @@ export class Tour {
     return `${minutes}min`
   }
 
-  getEstimatedTimeAsSeconds(): number {
-    return this.estimatedTime;
+  getFormattedDistance(): string {
+    const distance = this.getTotalDistance();
+
+    if (distance < 1000) {
+      return `${distance} m`;
+    }
+    return `${(distance / 1000).toFixed(2)} km`;
   }
+
+
 }

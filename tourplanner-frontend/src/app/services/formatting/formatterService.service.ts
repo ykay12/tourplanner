@@ -26,4 +26,11 @@ export class FormatterService {
 
     return result.trim();
   }
+
+  metersToKm(meters: number): string {
+    if (meters < 1000) {
+      return `${meters} m`;
+    }
+    return `${(meters / 1000).toFixed(2)} km`;
+  }
 }

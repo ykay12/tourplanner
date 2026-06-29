@@ -2,6 +2,8 @@ import { Component, Inject, signal } from '@angular/core';
 import { AppStateService } from '../../../../../states/app-state.service';
 import { Router } from '@angular/router';
 import { JsonCreatorService } from '../../../../.../../../services/import_export/json-creator.service';
+import { FormatterService } from '../../../../../services/formatting/formatterService.service';
+
 @Component({
   selector: 'app-overview',
   standalone: true,
@@ -17,7 +19,8 @@ export class OverviewComponent {
   constructor(
     @Inject(AppStateService) public state: AppStateService, 
     public router: Router, 
-    private jsonCreator: JsonCreatorService) {
+    private jsonCreator: JsonCreatorService,
+    public formatter: FormatterService) {
   }
 
   openDeleteModal(): void {
