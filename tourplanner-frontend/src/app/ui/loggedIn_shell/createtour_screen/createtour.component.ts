@@ -80,8 +80,12 @@ export class CreatetourComponent {
         this.router.navigate(['/dashboard/tour-detail']);
       },
       error: (err) => {
-        console.error("Error creating tour:", err);
-        this.errorMsg.set("Failed to create tour /save tour to db)");
+        console.error("Full error:", err);
+        console.error("Status:", err.status);
+        console.error("Body:", err.error);
+        console.error("Tour:", tour);
+
+        this.errorMsg.set(err.error?.error ?? "Failed to create tour");
       }
     });
   }
@@ -265,34 +269,34 @@ export class CreatetourComponent {
 
     console.log(file);
 
-   
+
     try {
 
-    const importedTour =
-      await this.jsonImporter.importTourFromJsonFile(file);
+      const importedTour =
+        await this.jsonImporter.importTourFromJsonFile(file);
 
       console.log(importedTour);
 
-    this.tourName.set(importedTour.name + " (imported)");
-    this.tourDescription.set(importedTour.description);
-    this.from.set(importedTour.getStart() || '');
-    this.to.set(importedTour.getEnd() || '');
-    this.tourType.set(importedTour.tourType);
-    this.logs.set(importedTour.logs);
-    this.transportMode.set(importedTour.routes[0]?.transportMode || 'BIKE'); //setze den Transportmodus basierend auf der ersten Route, oder default auf 'BIKE' wenn keine Routen vorhanden sind
-    //isMixedTour muss nicht gesetzt werden -> wird aus dem tourType abgeleitet
+      this.tourName.set(importedTour.name + " (imported)");
+      this.tourDescription.set(importedTour.description);
+      this.from.set(importedTour.getStart() || '');
+      this.to.set(importedTour.getEnd() || '');
+      this.tourType.set(importedTour.tourType);
+      this.logs.set(importedTour.logs);
+      this.transportMode.set(importedTour.routes[0]?.transportMode || 'BIKE'); //setze den Transportmodus basierend auf der ersten Route, oder default auf 'BIKE' wenn keine Routen vorhanden sind
+      //isMixedTour muss nicht gesetzt werden -> wird aus dem tourType abgeleitet
 
-    if (this.isMixedTour()) { 
-      const segments: MixedSegment[] =
-        importedTour.routes
-          .slice(0, -1) //weil sonst das To auch als letztes Segement auftaucht
-          .map(route => ({
-            to: route.to,
-            transportMode: route.transportMode
-          }));
+      if (this.isMixedTour()) {
+        const segments: MixedSegment[] =
+          importedTour.routes
+            .slice(0, -1) //weil sonst das To auch als letztes Segement auftaucht
+            .map(route => ({
+              to: route.to,
+              transportMode: route.transportMode
+            }));
 
-      this.segments.set(segments);
-    }
+        this.segments.set(segments);
+      }
 
     } catch (error) {
 
