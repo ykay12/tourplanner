@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.tour.tourplannerbackend.integration.OpenRouteServiceFacade;
-import org.tour.tourplannerbackend.model.Coordinates;
+import org.tour.tourplannerbackend.persistence.entity.Coordinates;
 
 import static org.junit.jupiter.api.Assertions.*;
 

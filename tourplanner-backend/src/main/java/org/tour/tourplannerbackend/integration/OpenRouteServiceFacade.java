@@ -31,13 +31,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+import org.tour.tourplannerbackend.business.exception.ValidationException;
 import org.tour.tourplannerbackend.config.OpenRouteServiceProperties;
-import org.tour.tourplannerbackend.dto.openrouteservice.directions.OpenRouteServiceDirectionsResponseDto;
-import org.tour.tourplannerbackend.dto.openrouteservice.directions.RouteDetailsDto;
-import org.tour.tourplannerbackend.dto.openrouteservice.geocode.OpenRouteServiceGeocodeResponseDto;
-import org.tour.tourplannerbackend.model.Coordinates;
-import org.tour.tourplannerbackend.model.enums.TransportMode;
+import org.tour.tourplannerbackend.presentation.dto.openrouteservice.directions.OpenRouteServiceDirectionsResponseDto;
+import org.tour.tourplannerbackend.presentation.dto.openrouteservice.directions.RouteDetailsDto;
+import org.tour.tourplannerbackend.presentation.dto.openrouteservice.geocode.OpenRouteServiceGeocodeResponseDto;
+import org.tour.tourplannerbackend.persistence.entity.Coordinates;
+import org.tour.tourplannerbackend.persistence.entity.enums.TransportMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -87,7 +89,7 @@ public class OpenRouteServiceFacade {
                 || response.getFeatures() == null
                 || response.getFeatures().isEmpty()) {
 
-            throw new RuntimeException("No coordinates found");
+            throw new ValidationException("No location found for name: " + locationName);
         }
 
         System.out.println(response);
@@ -159,21 +161,26 @@ public class OpenRouteServiceFacade {
         var feature = response.getFeatures().get(0);
 
         // 7.) RouteCoordinates aus API-Response bauen
-        List<Coordinates> routeCoordinates =
-                feature.getGeometry()
-                        .getCoordinates()
-                        .stream()
-                        .map(point -> {
+        List<Coordinates> allCoordinates = feature.getGeometry()
+                .getCoordinates()
+                .stream()
+                .map(point -> {
+                    Coordinates coordinate = new Coordinates();
+                    coordinate.setLng(point.get(0));
+                    coordinate.setLat(point.get(1));
+                    return coordinate;
+                })
+                .toList();
 
-                            Coordinates coordinate = new Coordinates();
+        List<Coordinates> routeCoordinates = new ArrayList<>();
 
-                            // OpenRouteService liefert [lng, lat]
-                            coordinate.setLng(point.get(0));
-                            coordinate.setLat(point.get(1));
+        for (int i = 0; i < allCoordinates.size(); i += 20) {
+            routeCoordinates.add(allCoordinates.get(i));
+        }
 
-                            return coordinate;
-                        })
-                        .toList();
+        if (!allCoordinates.isEmpty()) {
+            routeCoordinates.add(allCoordinates.get(allCoordinates.size() - 1));
+        }
 
         // 8.) RouteDetailsDto bauen
         RouteDetailsDto routeDetails = new RouteDetailsDto();
