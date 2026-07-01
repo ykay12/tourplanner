@@ -105,7 +105,7 @@
           <label for="total_distance">Distance (km)</label>
           <input id="total_distance" type="number" step="0.1" formControlName="total_distance" placeholder="0.0" />
           @if (logForm.get('total_distance')?.invalid && logForm.get('total_distance')?.touched) {
-          <span class="error-message">Distance is required and must be >= 0</span>
+          <span class="error-message">Distance must be greater than 0</span>
           }
         </div>
 
@@ -113,7 +113,7 @@
           <label for="total_time">Duration (seconds)</label>
           <input id="total_time" type="number" step="1" formControlName="total_time" placeholder="0" />
           @if (logForm.get('total_time')?.invalid && logForm.get('total_time')?.touched) {
-          <span class="error-message">Duration is required and must be >= 0</span>
+          <span class="error-message">Duration must be greater than 0</span>
           }
         </div>
       </div>

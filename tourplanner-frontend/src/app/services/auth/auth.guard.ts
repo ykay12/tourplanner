@@ -6,7 +6,12 @@ export const authGuard: CanActivateFn = () => {
   const appState = inject(AppStateService);
   const router = inject(Router);
 
-  if (appState.loggedIn()) {
+  // Prüft das Signal (wird beim App-Start aus localStorage befüllt)
+  // sowie direkt localStorage als Fallback für den Fall, dass der
+  // Guard vor dem Konstruktor des AppStateService läuft.
+  const tokenExists = typeof localStorage !== 'undefined' && !!localStorage.getItem('token');
+
+  if (appState.loggedIn() || tokenExists) {
     return true;
   }
 

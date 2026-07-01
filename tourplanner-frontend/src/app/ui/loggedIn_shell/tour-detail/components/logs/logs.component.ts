@@ -26,8 +26,8 @@ export class LogsComponent {
     this.logForm = this.fb.group({
       comment: ['', Validators.required],
       difficulty: ['', [Validators.required, Validators.min(1), Validators.max(5)]],
-      total_distance: ['', [Validators.required, Validators.min(0)]],
-      total_time: ['', [Validators.required, Validators.min(0)]],
+      total_distance: ['', [Validators.required, Validators.min(0.01)]],
+      total_time: ['', [Validators.required, Validators.min(1)]],
       rating: ['', [Validators.required, Validators.min(1), Validators.max(5)]]
     });
   }

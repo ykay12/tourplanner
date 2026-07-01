@@ -158,10 +158,24 @@ export class CreatetourComponent {
   removeSegment(index: number): void {
     this.segments.update(segments => segments.filter((_, i) => i !== index));
   }
+  private isNumericOnly(value: string): boolean {
+    return /^\d+$/.test(value.trim());
+  }
+
   private validate(): boolean {
     if (!this.tourName() || !this.tourDescription() || !this.from() || !this.to()) {
       this.errorMsg.set("Please fill in all required fields.")
       return false
+    }
+
+    if (this.isNumericOnly(this.from())) {
+      this.errorMsg.set("\"From\" location cannot be a number. Please enter a valid place name (e.g. \"Stephansplatz\").");
+      return false;
+    }
+
+    if (this.isNumericOnly(this.to())) {
+      this.errorMsg.set("\"To\" location cannot be a number. Please enter a valid place name (e.g. \"Karlsplatz\").");
+      return false;
     }
 
     if (this.isMixedTour()) {
@@ -174,6 +188,12 @@ export class CreatetourComponent {
 
       if (this.segments().length === 0) {
         this.errorMsg.set('Please add at least one route segment for a mixed tour.');
+        return false;
+      }
+
+      const numericSegment = this.segments().find(segment => this.isNumericOnly(segment.to));
+      if (numericSegment) {
+        this.errorMsg.set(`Route segment "${numericSegment.to}" cannot be a number. Please enter a valid place name.`);
         return false;
       }
     }
