@@ -22,7 +22,7 @@
           <p><strong>Comment:</strong> {{ log.comment }}</p>
           <p><strong>Created at:</strong> {{ log.createdAt | date: 'short' }}</p>
           <p><strong>Difficulty:</strong> {{ log.difficulty }}/5</p>
-          <p><strong>Distance:</strong> {{  formatter.metersToKm(log.totalDistance) }}</p>
+          <p><strong>Distance:</strong> {{ formatter.metersToKm(log.totalDistance) }}</p>
           <p><strong>Duration:</strong> {{ formatter.secondsToHoursMinutesOrSeconds(log.totalTime) }} </p>
           <p><strong>Rating:</strong> {{ log.rating }}/5</p>
         </div>
@@ -102,7 +102,7 @@
 
       <div class="form-row">
         <div class="form-group">
-          <label for="total_distance">Distance (km)</label>
+          <label for="total_distance">Distance (m)</label>
           <input id="total_distance" type="number" step="0.1" formControlName="total_distance" placeholder="0.0" />
           @if (logForm.get('total_distance')?.invalid && logForm.get('total_distance')?.touched) {
           <span class="error-message">Distance must be greater than 0</span>
