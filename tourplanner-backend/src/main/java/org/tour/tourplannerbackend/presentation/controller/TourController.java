@@ -1,5 +1,6 @@
 package org.tour.tourplannerbackend.presentation.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +35,11 @@ public class TourController {
 
     // GET /tours/{id} -> get specific tour
     @GetMapping("/{id}")
-    public Tour getTour(@PathVariable Long id) {
+    public Tour getTour(@PathVariable Long id, HttpServletRequest request) {
+        String username = (String) request.getAttribute("username");
         LOGGER.debug("Get tour request received. tourId={}", id);
 
-        Tour tour = tourService.getTour(id);
+        Tour tour = tourService.getTour(username, id);
         LOGGER.info("Returned tour. tourId={}", id);
 
         return tour;
@@ -45,14 +47,16 @@ public class TourController {
 
     // POST /tours -> create a new tour
     @PostMapping()
-    public Tour createTour(@RequestBody Tour newTour) {
+    public Tour createTour(@RequestBody Tour newTour, HttpServletRequest request) {
         LOGGER.info("Create tour request received. name={}, userId={}",
                 newTour != null ? newTour.getName() : null,
                 newTour != null && newTour.getUser() != null ? newTour.getUser().getId() : null
         );
 
+        String username = (String) request.getAttribute("username");
+
         newTour.setId(null); //Weil in DB gesetzt wird?
-        Tour createdTour = tourService.saveTour(newTour);
+        Tour createdTour = tourService.saveTour(username, newTour);
 
         LOGGER.info("Tour created successfully. tourId={}", createdTour.getId());
         return createdTour;
@@ -60,10 +64,11 @@ public class TourController {
 
     // PUT /tours/{id} -> update an existing tour
     @PutMapping("/{id}")
-    public Tour updateTour(@PathVariable Long id, @RequestBody Tour updatedTour) {
+    public Tour updateTour(@PathVariable Long id, @RequestBody Tour updatedTour, HttpServletRequest request) {
         LOGGER.info("Update tour request received. tourId={}", id);
+        String username = (String) request.getAttribute("username");
 
-        Tour tour = tourService.updateTour(id, updatedTour);
+        Tour tour = tourService.updateTour(username, id, updatedTour);
         LOGGER.info("Tour updated successfully. tourId={}", id);
 
         return tour;
@@ -71,10 +76,12 @@ public class TourController {
 
     // DELETE /tours/{id} -> delete a specific tour
     @DeleteMapping("/{id}")
-    public void deleteTour(@PathVariable Long id) {
+    public void deleteTour(@PathVariable Long id, HttpServletRequest request) {
         LOGGER.info("Delete tour request received. tourId={}", id);
+        String username = (String) request.getAttribute("username");
 
-        tourService.deleteTour(id);
+
+        tourService.deleteTour(username, id);
         LOGGER.info("Tour deleted successfully. tourId={}", id);
     }
 }

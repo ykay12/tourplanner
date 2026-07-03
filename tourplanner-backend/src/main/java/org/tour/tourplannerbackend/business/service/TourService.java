@@ -1,6 +1,7 @@
 package org.tour.tourplannerbackend.business.service;
 
 import org.springframework.stereotype.Service;
+import org.tour.tourplannerbackend.business.exception.UnauthorizedException;
 import org.tour.tourplannerbackend.presentation.dto.openrouteservice.directions.RouteDetailsDto;
 import org.tour.tourplannerbackend.business.exception.NotFoundException;
 import org.tour.tourplannerbackend.integration.OpenRouteServiceFacade;
@@ -33,22 +34,26 @@ public class TourService {
     }
 
     // Todo: aktuell gibt es keinen extra check um nur die touren von dem jeweiligen user zu holen
-    public List<Tour> getAllTours(){
+    public List<Tour> getAllTours() {
         return tourRepo.findAll();
     }
 
-    public Tour getTour(Long id){
-        return tourRepo.findById(id)
+    public Tour getTour(String username, Long id) {
+        Tour tour = tourRepo.findById(id)
                 .orElseThrow(() ->
                         new NotFoundException("Tour not found: " + id));
+
+        validateTourOwner(tour, username);
+        return tour;
     }
 
-    public void deleteTour(Long id){
+    public void deleteTour(String username, Long id) {
+        Tour tour = getTour(username, id);
         tourRepo.deleteById(id);
     }
 
-    public Tour updateTour(Long id, Tour updatedTour) {
-        Tour existingTour = getTour(id);
+    public Tour updateTour(String username, Long id, Tour updatedTour) {
+        Tour existingTour = getTour(username, id);
 
         existingTour.setName(updatedTour.getName());
         existingTour.setDescription(updatedTour.getDescription());
@@ -74,7 +79,7 @@ public class TourService {
                 existingTour.getRoutes().clear();
             }
         Stattdessen genügt: */
-        if(existingTour.getRoutes() != null) {
+        if (existingTour.getRoutes() != null) {
             existingTour.getRoutes().clear();
         }
 
@@ -117,26 +122,22 @@ public class TourService {
     }
 
 
-    public Tour saveTour(Tour newTour) {
-        // 1.) Prüfen ob User vorhanden ist
-        if (newTour.getUser() == null || newTour.getUser().getId() == null) {
-            throw new NotFoundException("User is required for creating a tour");
-        }
+    public Tour saveTour(String username, Tour newTour) {
+        // 1.) Prüfen ob User vorhanden ist und aus DB holen
 
-        // 2.) User aus DB holen
-        User user = userRepo.findById(newTour.getUser().getId())
-                .orElseThrow(() ->
-                        new NotFoundException("User not found: " + newTour.getUser().getId()));
+        User user = userRepo.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("User not found: " + username));
 
+        newTour.setId(null);
         newTour.setUser(user);
         int totalDuration = 0;
 
-        // 3.) Routes setzen
+        // 2.) Routes setzen
         if (newTour.getRoutes() != null) {
             for (TourRoute route : newTour.getRoutes()) {
                 route.setId(null);              // wir müssen die Null setzen, weil die ja automatisch generiert werden sollen!
 
-                // 4.) Koordinaten für Routes von OpenRouteService holen
+                // 3.) Koordinaten für Routes von OpenRouteService holen
                 route.setFromCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getFrom()));
                 route.setToCoordinates(openRouteServiceFacade.getCoordinatesViaNameOfLocation(route.getTo()));
 
@@ -157,7 +158,7 @@ public class TourService {
             }
         }
 
-        // 5.) Logs setzen
+        // 4.) Logs setzen
         if (newTour.getLogs() != null) {
             newTour.getLogs().forEach(log -> {
                 log.setId(null); //Wir müssen die Null setzen, weil die ja automatisch generiert werden sollen
@@ -165,13 +166,19 @@ public class TourService {
             });
         }
 
-        // 6.) Calculated Values (popularity und childfriendlyness) setzen
+        // 5.) Calculated Values (popularity und childfriendlyness) setzen
         newTour.calculatePopularityFromNumberOfLogs();
         newTour.calculateChildFriendliness();
 
-        // 7.) gespeicherte Tour returnieren
+        // 6.) gespeicherte Tour returnieren
         newTour.setEstimatedTime(totalDuration);
 
         return tourRepo.save(newTour);
+    }
+
+    private void validateTourOwner(Tour tour, String username) {
+        if (!tour.getUser().getUsername().equals(username)) {
+            throw new UnauthorizedException("U are not allowed to access this tour!");
+        }
     }
 }

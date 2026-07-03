@@ -46,9 +46,16 @@ public class TourServiceTests {
         tour.setName("Tour 1");
         tour.setDescription("Leiwande Tour");
 
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("password");
+        user.setUsername("max");
+
+        tour.setUser(user);
+
         when(tourRepository.findById(1L)).thenReturn(Optional.of(tour));
 
-        Tour result = tourService.getTour(1L);
+        Tour result = tourService.getTour("max", 1L);
 
         assertEquals("Tour 1", result.getName());
 
@@ -56,7 +63,7 @@ public class TourServiceTests {
     }
 
     @Test
-    public void getTourFromUser(){
+    public void getTourFromUser() {
         Tour tour = new Tour();
         tour.setId(1L);
         tour.setName("Tour 1");
@@ -72,7 +79,7 @@ public class TourServiceTests {
     }
 
     @Test
-    public void getAllToursFromUser(){
+    public void getAllToursFromUser() {
         Tour tour = new Tour();
         tour.setId(1L);
         tour.setName("Tour 1");
@@ -94,7 +101,17 @@ public class TourServiceTests {
         tour.setName("Tour 1");
         tour.setDescription("Leiwande Tour");
 
-        tourService.deleteTour(1L);
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("password");
+        user.setUsername("max");
+        tour.setUser(user);
+
+        when(tourRepository.findById(1L)).thenReturn(Optional.of(tour));
+
+        tourService.deleteTour("max", 1L);
+
+        verify(tourRepository).findById(1L);
         verify(tourRepository).deleteById(1L);
 
     }
@@ -114,13 +131,13 @@ public class TourServiceTests {
         tour.setUser(user);
         tour.setRoutes(new ArrayList<>());
 
-        when(userRepository.findById(1L)).thenReturn(Optional.of(user));
+       when(userRepository.findByUsername("username")).thenReturn(Optional.of(user));
         when(tourRepository.save(tour)).thenReturn(tour);
 
-        Tour result = tourService.saveTour(tour);
+        Tour result = tourService.saveTour("username", tour);
         assertEquals("Tour 1", result.getName());
 
-        verify(userRepository).findById(1L);
+        verify(userRepository).findByUsername("username");
         verify(tourRepository).save(tour);
     }
 
@@ -138,10 +155,18 @@ public class TourServiceTests {
         newTour.setDescription("Leiwande Tour");
         newTour.setRoutes(new ArrayList<>());
 
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("password");
+        user.setUsername("max");
+
+        oldTour.setUser(user);
+        newTour.setUser(user);
+
         when(tourRepository.findById(1L)).thenReturn(Optional.of(oldTour));
         when(tourRepository.save(oldTour)).thenReturn(oldTour);
 
-        Tour result = tourService.updateTour(1L, newTour);
+        Tour result = tourService.updateTour("max", 1L, newTour);
 
         assertEquals("Tour 1", result.getName());
         assertEquals("Leiwande Tour", result.getDescription());
@@ -154,18 +179,25 @@ public class TourServiceTests {
     public void getTour_NotFound() {
         when(tourRepository.findById(1L)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> tourService.getTour(1L));
+        assertThrows(NotFoundException.class, () -> tourService.getTour("max", 1L));
 
         verify(tourRepository).findById(1L);
     }
 
     @Test
     public void updateTour_NotFound() {
+        User user = new User();
+        user.setId(1L);
+        user.setPassword("password");
+        user.setUsername("max");
+
         when(tourRepository.findById(1L)).thenReturn(Optional.empty());
 
         Tour updated = new Tour();
 
-        assertThrows(NotFoundException.class, () -> tourService.updateTour(1L, updated));
+        updated.setUser(user);
+
+        assertThrows(NotFoundException.class, () -> tourService.updateTour("max", 1L, updated));
 
         verify(tourRepository).findById(1L);
     }
