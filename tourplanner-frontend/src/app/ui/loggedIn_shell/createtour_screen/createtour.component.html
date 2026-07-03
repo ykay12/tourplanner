@@ -82,11 +82,6 @@
         </div>
         }
       </div>
-
-      <div class="mb-3">
-        <label for="to" class="form-label">To</label>
-        <input type="text" class="form-control modern-input" id="to" [value]="to()" (input)="onToInput($event)" />
-      </div>
       } @else {
       <div class="form-row">
         <div class="mb-3">
@@ -131,7 +126,8 @@
                 <p><strong class="log-item-label">Created at:</strong> {{ log.createdAt | date:'short' }}</p>
                 <p><strong class="log-item-label">Difficulty:</strong> {{ log.difficulty }}/5</p>
                 <p><strong class="log-item-label">Distance:</strong> {{ log.totalDistance }} km</p>
-                <p><strong class="log-item-label">Duration:</strong> {{ formatter.secondsToHoursMinutesOrSeconds(log.totalTime) }}</p>
+                <p><strong class="log-item-label">Duration:</strong> {{
+                  formatter.secondsToHoursMinutesOrSeconds(log.totalTime) }}</p>
                 <p><strong class="log-item-label">Rating:</strong> {{ log.rating }}/5</p>
 
               </div>

@@ -163,9 +163,15 @@ export class CreatetourComponent {
   }
 
   private validate(): boolean {
-    if (!this.tourName() || !this.tourDescription() || !this.from() || !this.to()) {
-      this.errorMsg.set("Please fill in all required fields.")
-      return false
+
+    if (!this.tourName() || !this.tourDescription() || !this.from()) {
+      this.errorMsg.set("Please fill in all required fields.");
+      return false;
+    }
+
+    if (!this.isMixedTour() && !this.to()) {
+      this.errorMsg.set("Please fill in all required fields.");
+      return false;
     }
 
     if (this.isNumericOnly(this.from())) {
@@ -173,33 +179,39 @@ export class CreatetourComponent {
       return false;
     }
 
-    if (this.isNumericOnly(this.to())) {
+
+    if (!this.isMixedTour() && this.isNumericOnly(this.to())) {
       this.errorMsg.set("\"To\" location cannot be a number. Please enter a valid place name (e.g. \"Karlsplatz\").");
       return false;
     }
 
     if (this.isMixedTour()) {
+      const filledSegments = this.segments().filter(segment => segment.to.trim());
+
+      if (filledSegments.length === 0) {
+        this.errorMsg.set("Please add at least one destination for a mixed tour.");
+        return false;
+      }
+
       const hasEmptySegments = this.segments().some(segment => !segment.to.trim());
 
       if (hasEmptySegments) {
-        this.errorMsg.set('Please fill in all route segments.');
+        this.errorMsg.set("Please fill in all route destinations.");
         return false;
       }
 
-      if (this.segments().length === 0) {
-        this.errorMsg.set('Please add at least one route segment for a mixed tour.');
-        return false;
-      }
+      const numericSegment = this.segments().find(segment =>
+        this.isNumericOnly(segment.to)
+      );
 
-      const numericSegment = this.segments().find(segment => this.isNumericOnly(segment.to));
       if (numericSegment) {
-        this.errorMsg.set(`Route segment "${numericSegment.to}" cannot be a number. Please enter a valid place name.`);
+        this.errorMsg.set(`Route destination "${numericSegment.to}" cannot be a number. Please enter a valid place name.`);
         return false;
       }
     }
 
-    this.errorMsg.set("")
-    return true
+    this.errorMsg.set("");
+    return true;
   }
 
 
@@ -240,19 +252,6 @@ export class CreatetourComponent {
 
       currentFrom = segment.to;
     }
-
-    routes.push({
-      id: null, //muss auf null gesetzt werden, damit der backendMapper weiß dass er eine neue Route anlegen muss und keine bestehende updaten soll
-      from: currentFrom,
-      fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
-      to: this.to(),
-      toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
-      distance: 0,
-      duration: 0,
-      transportMode: filledSegments.length > 0
-        ? filledSegments[filledSegments.length - 1].transportMode
-        : this.transportMode()
-    });
 
     return routes;
   }
@@ -300,24 +299,22 @@ export class CreatetourComponent {
       this.tourName.set(importedTour.name + " (imported)");
       this.tourDescription.set(importedTour.description);
       this.from.set(importedTour.getStart() || '');
-      this.to.set(importedTour.getEnd() || '');
       this.tourType.set(importedTour.tourType);
       this.logs.set(importedTour.logs);
       this.transportMode.set(importedTour.routes[0]?.transportMode || 'BIKE'); //setze den Transportmodus basierend auf der ersten Route, oder default auf 'BIKE' wenn keine Routen vorhanden sind
       //isMixedTour muss nicht gesetzt werden -> wird aus dem tourType abgeleitet
 
       if (this.isMixedTour()) {
-        const segments: MixedSegment[] =
-          importedTour.routes
-            .slice(0, -1) //weil sonst das To auch als letztes Segement auftaucht
-            .map(route => ({
-              to: route.to,
-              transportMode: route.transportMode
-            }));
-
+        this.to.set("")
+        const segments: MixedSegment[] = importedTour.routes.map(route => ({
+          to: route.to,
+          transportMode: route.transportMode
+        }));
         this.segments.set(segments);
+      } else {
+        this.to.set(importedTour.getEnd() || '');
+        this.transportMode.set(importedTour.routes[0]?.transportMode || 'BIKE');
       }
-
     } catch (error) {
 
       console.error('Import failed:', error);

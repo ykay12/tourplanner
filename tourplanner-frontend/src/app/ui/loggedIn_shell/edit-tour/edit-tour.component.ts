@@ -70,19 +70,20 @@ export class EditTourComponent {
 
     if (routes.length > 0) {
       this.from.set(routes[0].from);
-      this.to.set(routes[routes.length - 1].to);
     }
 
     if (tour.tourType === 'MIXED') {
-      const middleRoutes = routes.slice(0, -1);
+      this.to.set("")
+      this.transportMode.set("BIKE")
 
       this.segments.set(
-        middleRoutes.map(route => ({
+        routes.map(route => ({
           to: route.to,
           transportMode: route.transportMode
         }))
       );
     } else {
+      this.to.set(routes[routes.length - 1]?.to ?? '')
       this.transportMode.set(routes[0]?.transportMode ?? 'BIKE');
       this.segments.set([]);
     }
@@ -165,15 +166,21 @@ export class EditTourComponent {
     if (
       !this.tourName().trim() ||
       !this.tourDescription().trim() ||
-      !this.from().trim() ||
-      !this.to().trim()
+      !this.from().trim()
     ) {
       this.errorMsg.set('Please fill in all required fields.');
       return false;
     }
 
+    if (!this.isMixedTour() && !this.to().trim()) {
+      this.errorMsg.set('Please fill in all required fields.');
+      return false;
+    }
+
     if (this.isMixedTour()) {
-      if (this.segments().length === 0) {
+      const filledSegments = this.segments().filter(segment => segment.to.trim());
+
+      if (filledSegments.length === 0) {
         this.errorMsg.set('Please add at least one route segment for a mixed tour.');
         return false;
       }
@@ -194,7 +201,7 @@ export class EditTourComponent {
     if (!this.isMixedTour()) {
       return [
         {
-          id: 0,
+          id: null,
           from: this.from(),
           fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
           to: this.to(),
@@ -215,7 +222,7 @@ export class EditTourComponent {
       const segment = filledSegments[i];
 
       routes.push({
-        id: i,
+        id: null,
         from: currentFrom,
         fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
         to: segment.to,
@@ -227,20 +234,6 @@ export class EditTourComponent {
 
       currentFrom = segment.to;
     }
-
-    routes.push({
-      id: filledSegments.length,
-      from: currentFrom,
-      fromCoordinates: null, //werden im Backend von OpenRouteService abgefragt
-      to: this.to(),
-      toCoordinates: null, //werden im Backend von OpenRouteService abgefragt
-      distance: 0,
-      duration: 0,
-      transportMode:
-        filledSegments.length > 0
-          ? filledSegments[filledSegments.length - 1].transportMode
-          : 'BIKE'
-    });
 
     return routes;
   }
@@ -277,7 +270,8 @@ export class EditTourComponent {
       },
       error: (err) => {
         console.error('Error updating tour:', err);
-        this.errorMsg.set('Failed to update tour.');
+        this.errorMsg.set(err.error?.error ?? "Failed to create tour");
+
       }
     });
   }
