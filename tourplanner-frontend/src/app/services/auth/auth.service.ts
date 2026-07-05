@@ -9,7 +9,7 @@ import { LoginResponse } from '../../types/loginResponse';
 })
 export class AuthService {
 
-  private http = inject(HttpClient);
+  private http = inject(HttpClient); //this is needed to make a http-request
   private baseUrl = 'http://localhost:8080';
 
   constructor(private appState: AppStateService) {}

@@ -4,7 +4,8 @@ import { TourRoute } from "../models/tourRoute.model";
 import { TourDto } from "../dto/TourDto";
 
 export class TourMapper {
-
+  
+//Wandelt ein Backend-DTO in unser Frontend-Tour-Model um
   static fromDto(dto: TourDto): Tour {
 
     const routes: TourRoute[] = (dto.routes ?? []).map((r: any) => ({

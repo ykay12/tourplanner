@@ -8,7 +8,8 @@ export class JsonImporterService {
 
   constructor() { }
 
-  //Todo: Funktion die einen JSON-String entgegennimmt und in ein Tour-Objekt konvertiert.
+  //Liest eine JSON-Datei asynchron ein, parsed sie und konvertiert sie in ein Tour-Objekt
+  
   async importTourFromJsonFile(file: File): Promise<Tour> {
 
     const text = await file.text();

@@ -2,6 +2,7 @@ import { Log } from './log.model';
 import { TourRoute } from './tourRoute.model';
 import { TourType } from '../types/tourTypes';
 
+//Frontend-Model einer Tour; Klasse statt Interface, damit Hilfsmethoden (getStart/getEnd) möglich sind
 export class Tour {
   id: number | null; //Wir haben uns noch nicht geeinigt wie wir die ID anlegen wollen number/string/UUID?
   name: string;

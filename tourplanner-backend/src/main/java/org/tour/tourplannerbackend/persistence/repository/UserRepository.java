@@ -7,6 +7,7 @@ import org.tour.tourplannerbackend.persistence.entity.User;
 import java.util.Optional;
 
 @Repository
+// Repository für User; findByUsername/existsByUsername sind derived queries ohne eigenes SQL.
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByUsername(String username);
     boolean existsByUsername(String username);

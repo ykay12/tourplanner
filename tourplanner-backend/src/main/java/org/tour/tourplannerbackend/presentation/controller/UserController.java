@@ -26,8 +26,6 @@ public class UserController {
         this.tourService = tourService;
     }
 
-    // ... existing code ...
-
     @CrossOrigin
     @GetMapping
     public List<User> getUsers() {
@@ -60,8 +58,6 @@ public class UserController {
         return tours;
     }
 
-    // ... existing code ...
-
     @CrossOrigin
     @GetMapping("/{id}")
     public User getUser(@PathVariable Long id) {
@@ -73,7 +69,6 @@ public class UserController {
         return user;
     }
 
-    // ... existing code ...
 
     @CrossOrigin
     @PutMapping("/{id}")
@@ -89,8 +84,6 @@ public class UserController {
 
         return updatedUser;
     }
-
-    // ... existing code ...
 
     @CrossOrigin
     @DeleteMapping("/{id}")

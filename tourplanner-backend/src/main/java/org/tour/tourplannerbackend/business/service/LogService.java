@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+// Business Layer für Tour-Logs inkl. Ownership-Check und Neuberechnung der computed attributes.
 public class LogService {
 
     private final LogRepository logRepository;
@@ -24,6 +25,7 @@ public class LogService {
         this.tourRepository = tourRepository;
     }
 
+    // Liefert alle Logs einer Tour, nachdem geprüft wurde, dass die Tour dem eingeloggten User gehört.
     public List<Log> getLogsForTour(String username, Long tourId) {
         validateId(tourId, "tourId");
 
@@ -35,6 +37,7 @@ public class LogService {
         return logRepository.findByTourId(tourId);
     }
 
+    // Legt ein neues Log an und berechnet danach Popularity/Child-Friendliness der Tour neu.
     public Log createLog(String username, Long tourId, Log log) {
         validateId(tourId, "tourId");
 
@@ -58,6 +61,7 @@ public class LogService {
         return savedLog;
     }
 
+    // Aktualisiert ein bestehendes Log (createdAt bleibt erhalten) und berechnet die Tour-Statistiken neu.
     public Log updateLog(String username, Long tourId, Long logId, Log log) {
         validateId(tourId, "tourId");
         validateId(logId, "logId");
@@ -89,6 +93,7 @@ public class LogService {
         return savedLog;
     }
 
+    // Löscht ein Log und aktualisiert danach die computed attributes der Tour.
     public void deleteLog(String username, Long tourId, Long logId) {
         validateId(tourId, "tourId");
         validateId(logId, "logId");
@@ -112,17 +117,20 @@ public class LogService {
         tourRepository.save(tourWithDeletedLog);
     }
 
+    // Guard-Klausel gegen null-IDs.
     private void validateId(Long id, String field) {
         if (id == null) {
             throw new ValidationException(field + " must not be null");
         }
     }
 
+    // Autorisierung: nur der Besitzer der Tour darf ihre Logs sehen oder ändern.
     private void validateTourOwner(Tour tour, String username) {
         if (!tour.getUser().getUsername().equals(username)) {
             throw new UnauthorizedException("You are not allowed to access this tour");
         }
     }
+    // Berechnet die computed attributes (popularity, childFriendly) neu und speichert die Tour.
     private void recalculateTourStats(Tour tour) {
         tour.calculatePopularityFromNumberOfLogs();
         tour.calculateChildFriendliness();

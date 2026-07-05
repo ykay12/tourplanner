@@ -9,6 +9,7 @@ import org.tour.tourplannerbackend.persistence.entity.User;
 import org.tour.tourplannerbackend.persistence.repository.UserRepository;
 
 @Service
+// Business Layer: Login-Logik und einfaches Token-Handling (statt JWT).
 public class AuthService {
     private final UserRepository userRepository;
 
@@ -16,6 +17,7 @@ public class AuthService {
         this.userRepository = userRepository;
     }
 
+    // Prüft die Credentials gegen die DB; bei Erfolg werden Token + User-Infos zurückgegeben.
     public LoginResponseDto login(LoginDto loginDto) {
         if (loginDto == null || loginDto.getUsername() == null || loginDto.getPassword() == null) {
             throw new ValidationException("Username or password required");
@@ -36,10 +38,12 @@ public class AuthService {
     }
 
 
+    // Erzeugt einen simplen Token aus dem Username (vereinfachtes Schema für dieses Projekt).
     public String generateToken(String username) {
         return "tourplanner-" + username;
     }
 
+    // Validiert den Token und extrahiert den Username; wird vom AuthInterceptor bei jedem Request genutzt.
     public String extractUsernameFromToken(String token) {
         if (token == null || !token.startsWith("tourplanner-")) {
             throw new UnauthorizedException("Invalid token");
