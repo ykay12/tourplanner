@@ -75,10 +75,11 @@
           <input type="text" class="form-control modern-input" [value]="segment.to"
             (input)="onSegmentToChange($index, $event)" placeholder="Next destination" />
 
-          <select class="form-control modern-input step-select" [value]="segment.transportMode"
-            (change)="onSegmentTransportModeChange($index, $event)">
+          <select class="form-control modern-input step-select" (change)="onSegmentTransportModeChange($index, $event)">
             @for (mode of transportModes; track mode) {
-            <option [value]="mode">{{ mode }}</option>
+            <option [value]="mode" [selected]="mode === segment.transportMode">
+              {{ mode }}
+            </option>
             }
           </select>
 

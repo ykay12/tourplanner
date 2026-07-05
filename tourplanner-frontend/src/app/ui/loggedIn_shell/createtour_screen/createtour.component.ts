@@ -37,6 +37,8 @@ export class CreatetourComponent {
   isMixedTour = computed(() => this.tourType() === "MIXED")
   segments = signal<MixedSegment[]>([]);
   logs = signal<Log[]>([]); //for importing a Tour
+  // Indicates whether a tour is currently being created.
+  // Used to show a loading spinner and prevent duplicate submissions.
   isLoading = signal(false);
 
   constructor(
@@ -47,6 +49,7 @@ export class CreatetourComponent {
     public formatter: FormatterService
   ) { }
 
+  // Validates the form, creates a Tour object and sends it to the backend.
   onSubmit(): void {
     if (!this.validate()) {
       return
@@ -64,7 +67,7 @@ export class CreatetourComponent {
       this.errorMsg.set("Please log in to create a tour!")
       return;
     }
-
+    // Show loading overlay while the backend creates the tour.
     this.isLoading.set(true)
 
     this.backend.saveTour(tour, userId).subscribe({
@@ -219,7 +222,7 @@ export class CreatetourComponent {
     return true;
   }
 
-
+  // Builds the route list from the entered form data.
   private buildRoutes(): TourRoute[] {
     if (!this.isMixedTour()) {
       return [
@@ -240,7 +243,7 @@ export class CreatetourComponent {
     const routes: TourRoute[] = [];
 
     let currentFrom = this.from();
-
+    // Build one route for each segment.
     for (let i = 0; i < filledSegments.length; i++) {
       const segment = filledSegments[i];
 
