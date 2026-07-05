@@ -35,6 +35,8 @@ export class CreatetourComponent {
   errorMsg = signal('');
   transportMode = signal<TransportMode>('BIKE')
   isMixedTour = computed(() => this.tourType() === "MIXED")
+  // Stores the intermediate destinations of a mixed tour.
+  // Each segment becomes an individual route when the tour is created.
   segments = signal<MixedSegment[]>([]);
   logs = signal<Log[]>([]); //for importing a Tour
   // Indicates whether a tour is currently being created.
@@ -156,6 +158,7 @@ export class CreatetourComponent {
     );
   }
 
+  // Adds another destination to the mixed tour.
   addSegment(): void {
     this.segments.update(segments => [
       ...segments,
@@ -163,6 +166,7 @@ export class CreatetourComponent {
     ]);
   }
 
+  // Removes a destination from the mixed tour.
   removeSegment(index: number): void {
     this.segments.update(segments => segments.filter((_, i) => i !== index));
   }
@@ -176,7 +180,6 @@ export class CreatetourComponent {
       this.errorMsg.set("Please fill in all required fields.");
       return false;
     }
-
     if (!this.isMixedTour() && !this.to()) {
       this.errorMsg.set("Please fill in all required fields.");
       return false;
@@ -193,6 +196,7 @@ export class CreatetourComponent {
       return false;
     }
 
+    // Mixed tours require at least one destination and every segment must be valid.
     if (this.isMixedTour()) {
       const filledSegments = this.segments().filter(segment => segment.to.trim());
 
@@ -242,7 +246,9 @@ export class CreatetourComponent {
     const filledSegments = this.segments().filter(segment => segment.to.trim());
     const routes: TourRoute[] = [];
 
+    // The starting point of each new route is the destination of the previous one.
     let currentFrom = this.from();
+
     // Build one route for each segment.
     for (let i = 0; i < filledSegments.length; i++) {
       const segment = filledSegments[i];
