@@ -1,4 +1,10 @@
 <div class="tour-form-wrapper">
+  @if (isLoading()) {
+  <div class="loading-overlay">
+    <div class="spinner"></div>
+    <p>Creating tour...</p>
+  </div>
+  }
   <section class="tour-form-card">
     <div class="tour-form-header">
       <p class="form-kicker">TourPlanner</p>
@@ -151,8 +157,12 @@
       </div>
       }
 
-      <button type="submit" class="btn modern-btn mt-2">
+      <button type="submit" class="btn modern-btn mt-2" [disabled]="isLoading()">
+        @if (isLoading()) {
+        Creating Tour...
+        } @else {
         Create Tour
+        }
       </button>
     </form>
   </section>

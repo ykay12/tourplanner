@@ -37,6 +37,7 @@ export class CreatetourComponent {
   isMixedTour = computed(() => this.tourType() === "MIXED")
   segments = signal<MixedSegment[]>([]);
   logs = signal<Log[]>([]); //for importing a Tour
+  isLoading = signal(false);
 
   constructor(
     private router: Router,
@@ -64,8 +65,11 @@ export class CreatetourComponent {
       return;
     }
 
+    this.isLoading.set(true)
+
     this.backend.saveTour(tour, userId).subscribe({
       next: (responseTour) => {
+        this.isLoading.set(false)
         this.appState.addTour(responseTour);
 
         console.log("Created new Tour:", responseTour);
@@ -80,6 +84,7 @@ export class CreatetourComponent {
         this.router.navigate(['/dashboard/tour-detail']);
       },
       error: (err) => {
+        this.isLoading.set(false)
         console.error("Full error:", err);
         console.error("Status:", err.status);
         console.error("Body:", err.error);

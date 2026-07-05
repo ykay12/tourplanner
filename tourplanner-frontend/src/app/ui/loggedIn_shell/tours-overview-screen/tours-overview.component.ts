@@ -64,7 +64,10 @@ export class ToursOverviewComponent {
     const term = this.searchTerm().toLowerCase().trim();
 
     // ich will, dass wenn die searchbar leer ist, alle Touren gezeigt werden
-    if (!term) return tours;
+    // Touren werden nach ids sortiert weil wir fortlaufende zahlen haben, so zeigen wir die neuste Tour zuerst an
+    if (!term) {
+      return tours.sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
+    }
 
     return tours
       .map((tour) => ({
@@ -163,7 +166,7 @@ function getTourScore(tour: any, term: string): number {
   // 3. Volltextsuche über alle Felder
   if (termInTour(tour, term)) score += 200;
 
- 
+
   // 5. Popularity Boost
   if (matchesKeyword(term, FILTER_KEYWORDS.popular) && (tour.popularity ?? 0) >= 4) {
     score += 500;
@@ -171,6 +174,6 @@ function getTourScore(tour: any, term: string): number {
 
   // 6. Child-friendly boost (wenn relevant)
   if (tour.isChildfriendly) score += 10;
-  
+
   return score;
 }

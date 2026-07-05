@@ -16,33 +16,31 @@
     <h2>Recent Tours</h2>
     <span>Inspiration from your latest adventures</span>
   </div>
+  @if (recentTours(); as tours) {
+  @if (tours.length > 0) {
 
   <div class="tour-gallery">
-    <article class="tour-card">
-      <div class="tour-card-image image-one">
+    @for (tour of tours; track tour.id; let i = $index) {
+    <article class="tour-card" (click)="goToTour(tour.id!)">
+      <div class="tour-card-image" [ngClass]="['image-one', 'image-two', 'image-three'][i % 3]">
         <div class="tour-card-overlay">
-          <h3>Alpine Escape</h3>
-          <p>Mountain route planning</p>
+          <h3>{{tour.name}}</h3>
+          <p>{{tour.description}}</p>
         </div>
       </div>
     </article>
-
-    <article class="tour-card">
-      <div class="tour-card-image image-two">
-        <div class="tour-card-overlay">
-          <h3>City Explorer</h3>
-          <p>Urban walking tour</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="tour-card">
-      <div class="tour-card-image image-three">
-        <div class="tour-card-overlay">
-          <h3>Lake View Trail</h3>
-          <p>Relaxed scenic route</p>
-        </div>
-      </div>
-    </article>
+    }
   </div>
+  }
+  @else {
+  <div class="empty-tours-card">
+    <div class="empty-icon">🗺️</div>
+    <h3>No tours yet</h3>
+    <p>Looks like you have not created any tours yet. Start planning your first adventure.</p>
+    <a routerLink="/dashboard/createtour" class="btn modern-btn">
+      Create your first tour
+    </a>
+  </div>
+  }
+  }
 </section>

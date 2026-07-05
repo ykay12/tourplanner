@@ -118,7 +118,7 @@
   background: #f9fbff;
 }
 
-.btn-check:checked + .tour-type-btn {
+.btn-check:checked+.tour-type-btn {
   background: linear-gradient(135deg, #7c6cff, #9b8cff);
   border-color: transparent;
   color: #ffffff;
@@ -297,6 +297,7 @@
 .import-btn:hover {
   box-shadow: 0 10px 20px rgba(18, 77, 145, 0.3);
 }
+
 ////////////
 //  LOGS  //
 ////////////
@@ -342,7 +343,7 @@
   background: linear-gradient(135deg, #ffffff, #f8faff);
   border-radius: 24px;
   padding: 2.25rem;
-  
+
   //margin: 0.9rem;
   margin-top: 0.9rem;
 
@@ -350,7 +351,7 @@
   border: 1px solid rgba(124, 108, 255, 0.12);
 }
 
-.delete-log-btn{
+.delete-log-btn {
   width: 34px;
   height: 34px;
   border: none;
@@ -386,4 +387,31 @@
   color: #374151;
   font-size: 0.92rem;
   line-height: 1.45;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  z-index: 9999;
+}
+
+.spinner {
+  width: 56px;
+  height: 56px;
+  border: 6px solid #e5e5e5;
+  border-top-color: #2f7d32;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
